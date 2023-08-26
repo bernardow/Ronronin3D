@@ -42,7 +42,7 @@ namespace Units.Player
             Vector3 direction = playerPosition - enemyPosition;
             direction = enemyPosition == playerPosition ? Vector3.up : direction;
             float knockbackForce = _knockbackTreshold / Vector3.Distance(enemyPosition, playerPosition); 
-            _player.PlayerRigidbody2D.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+            _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
 
         private IEnumerator StartBlink(Collider2D col = null)

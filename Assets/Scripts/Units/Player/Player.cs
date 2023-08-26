@@ -10,7 +10,7 @@ namespace Units.Player
         
         public Transform PlayerTransform { get; private set; }
         
-        public Rigidbody2D PlayerRigidbody2D { get; private set; }
+        public Rigidbody PlayerRigidbody { get; private set; }
 
         private void Start()
         {
@@ -18,7 +18,7 @@ namespace Units.Player
             PlayerHealth = GetComponent<BaseUnit>();
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerTransform = transform;
-            PlayerRigidbody2D = GetComponent<Rigidbody2D>();
+            PlayerRigidbody = GetComponent<Rigidbody>();
         }
     }
 }
