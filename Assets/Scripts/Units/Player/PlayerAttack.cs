@@ -8,7 +8,8 @@ namespace Units.Player
     {
         #region Proprieties
         
-        [SerializeField] private float _attackSpeed = 12; 
+        [SerializeField] private float _attackSpeed = 12;
+        [SerializeField] private float _impulseForce = 5;
         public readonly float AttackDamage = 8;
 
         private float _counter; //Used to see if the user held the key or finger for > 0.8f
@@ -35,37 +36,29 @@ namespace Units.Player
         private void Slash()
         {
             //Touch setup
-            if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
-                Touch touch = Input.GetTouch(0);
-                
-                // Checks if the touch phase has begun to catch initial position
-                if(touch.phase == TouchPhase.Began)
-                    _inputPos = touch.position;
-                
                 //Disables player movement and increases counter
                 _counter += Time.deltaTime;
                 _player.PlayerMovement.enabled = false;
-
-                //Handles the last part of the touch
-                if (touch.phase == TouchPhase.Ended || Input.GetKeyUp(KeyCode.Space))
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                //if counter it's lesser than 0.8f nothing happens and player movement get active again
+                if (_counter <= 0.8f)
                 {
-                    //if counter it's lesser than 0.8f nothing happens and player movement get active again
-                    if (_counter <= 0.8f)
-                    {
-                        _player.PlayerMovement.enabled = true;
-                        return;
-                    }
-
-                    //Otherwise it moves the player in the correct direction and set attack delay
-                    Vector3 currentDir = Helpers.GetDirection(_inputPos, touch.position, false);
-
-                    StartCoroutine(SetAttackDelay());
-                    _current = 0;
-                    _castPos = transform.position;
-                    _goalPos = _castPos + currentDir * 1.5f;
-                    _counter = 0;
+                    _player.PlayerMovement.enabled = true;
+                    return;
                 }
+
+                //Otherwise it moves the player in the correct direction and set attack delay
+                Vector3 currentDir = Helpers.GetDirection();
+
+                StartCoroutine(SetAttackDelay());
+                _current = 0;
+                _castPos = transform.position;
+                _goalPos = _castPos + currentDir * _impulseForce;
+                _counter = 0;
             }
 
             //handles the movement of the slash trough lerp

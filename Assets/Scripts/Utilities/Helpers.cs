@@ -9,8 +9,9 @@ namespace Utilities
     {
         private const float Vector2RightMagnitude = 1;
         
-        public static Vector3 GetDirection(Vector2 inputPos, Vector2 outPos, bool lockedDirections, bool mobile = true)
+        public static Vector3 GetDirection(bool mobile = false)
         {
+            /*
             if (mobile)
             {
                 Vector2 dir = outPos - inputPos;
@@ -23,14 +24,12 @@ namespace Utilities
                 dotProduct = dir.y < 0? dotProduct * -1: dotProduct;
                 dir = lockedDirections? ClampedAngleLockedDirections(dotProduct) : ClampedAngle(dotProduct);
                 return dir;
-            }
+            }*/
             
             float horVal = Input.GetAxisRaw("Horizontal");
             float verVal = Input.GetAxisRaw("Vertical");
-
-            return new Vector3(horVal, verVal, 0);
-
             
+            return new Vector3(horVal, 0, verVal);
         }
         
         private static Vector2 ClampedAngle(float angle)

@@ -31,7 +31,7 @@ namespace Units.Player
 
         void Update()
         {
-            if (mobile)
+            if (!mobile)
             {
                 Move();
                 if (_isMoving)
@@ -44,22 +44,12 @@ namespace Units.Player
     
         private void Move()
         {
-            if (Input.touchCount > 0)
+            if (Input.anyKeyDown)
             {
-                Touch touch = Input.GetTouch(0);
-                
-
-                if (touch.phase == TouchPhase.Began)
-                    _inputPos = touch.position;
-            
-                if (touch.phase == TouchPhase.Ended)
-                {
-                    Vector2 outPos = touch.position;
-                    _current = 0;
-                    _castPos = _player.PlayerTransform.position;
-                    _goalPos = _castPos + Helpers.GetDirection(_inputPos, outPos, true) * 0.5f;
-                    StartCoroutine(SetMoveDelay());
-                }    
+                _current = 0;
+                _castPos = _player.PlayerTransform.position;
+                _goalPos = _castPos + Helpers.GetDirection() * 0.5f;
+                StartCoroutine(SetMoveDelay());
             }
         }
 
