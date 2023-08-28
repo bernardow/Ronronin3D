@@ -29,7 +29,7 @@ namespace Utilities
             float horVal = Input.GetAxisRaw("Horizontal");
             float verVal = Input.GetAxisRaw("Vertical");
             
-            return new Vector3(horVal, 0, verVal);
+            return new Vector3(horVal, 0, verVal); 
         }
         
         private static Vector2 ClampedAngle(float angle)

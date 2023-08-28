@@ -25,19 +25,19 @@ namespace Units.Funghy
         private void SpawnSpores(Vector3 direction)
         {
             GameObject newSpore = Instantiate(_sporePrefab, _fungiCenter);
-            Rigidbody2D newSporeRb = newSpore.GetComponent<Rigidbody2D>();
+            Rigidbody newSporeRb = newSpore.GetComponent<Rigidbody>();
             
-            newSporeRb.AddForce(direction * _shotForce, ForceMode2D.Impulse);
+            newSporeRb.AddForce(direction * _shotForce, ForceMode.Impulse);
         }
 
-        private void RotateCenter() => _fungiCenter.Rotate(-Vector3.forward * 10 * Time.deltaTime);
+        private void RotateCenter() => _fungiCenter.Rotate(-Vector3.up * 10 * Time.deltaTime);
 
         private IEnumerator Shooter()
         {
             for (int i = 0; i < 4; i++)
             {
-                SpawnSpores(_fungiCenter.up);
-                SpawnSpores(-_fungiCenter.up);
+                SpawnSpores(_fungiCenter.forward);
+                SpawnSpores(-_fungiCenter.forward);
                 SpawnSpores(_fungiCenter.right);
                 SpawnSpores(-_fungiCenter.right);
                 yield return new WaitForSeconds(3f);

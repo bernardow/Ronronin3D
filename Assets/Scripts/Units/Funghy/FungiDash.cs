@@ -29,7 +29,8 @@ namespace Units.Funghy
 
         private IEnumerator StartDash(float castTime)
         {
-            _goalPos = Helpers.GetPlayerPosition();
+            Vector3 playerPos = Helpers.GetPlayerPosition();
+            _goalPos = new Vector3(playerPos.x, transform.position.y, playerPos.z);
             yield return new WaitForSeconds(castTime);
             _isAttacking = true;
             _castPos = transform.position;
