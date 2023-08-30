@@ -8,7 +8,7 @@ namespace Units.Funghy
     {
         [SerializeField] private Transform _fungiCenter;
         private Funghy _funghy;
-        [SerializeField] private GameObject _sporePrefab;
+        [SerializeField] private GameObject[] _sporePool;
         [SerializeField] private float _shotForce;
 
         private bool _isShooting;
@@ -22,12 +22,19 @@ namespace Units.Funghy
                 RotateCenter();
         }
 
-        private void SpawnSpores(Vector3 direction)
+        private void GetSpores(Vector3 direction)
         {
-            GameObject newSpore = Instantiate(_sporePrefab, _fungiCenter);
-            Rigidbody newSporeRb = newSpore.GetComponent<Rigidbody>();
-            
-            newSporeRb.AddForce(direction * _shotForce, ForceMode.Impulse);
+            foreach (GameObject spore in _sporePool)
+            {
+                if (!spore.activeSelf)
+                {
+                    spore.SetActive(true);
+                    spore.transform.position = _fungiCenter.position;
+                    Rigidbody newSporeRb = spore.GetComponent<Rigidbody>();
+                    newSporeRb.AddForce(direction * _shotForce, ForceMode.Impulse);
+                    break;
+                }
+            }
         }
 
         private void RotateCenter() => _fungiCenter.Rotate(-Vector3.up * 10 * Time.deltaTime);
@@ -36,10 +43,10 @@ namespace Units.Funghy
         {
             for (int i = 0; i < 4; i++)
             {
-                SpawnSpores(_fungiCenter.forward);
-                SpawnSpores(-_fungiCenter.forward);
-                SpawnSpores(_fungiCenter.right);
-                SpawnSpores(-_fungiCenter.right);
+                GetSpores(_fungiCenter.forward);
+                GetSpores(-_fungiCenter.forward);
+                GetSpores(_fungiCenter.right);
+                GetSpores(-_fungiCenter.right);
                 yield return new WaitForSeconds(3f);
             }
         }

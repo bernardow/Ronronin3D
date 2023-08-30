@@ -11,25 +11,25 @@ namespace Units.Player
 
         private void Start() => _player = GetComponent<Player>();
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnCollisionEnter(Collision other)
         {
-            if (col.gameObject.layer == 3)
+            if (other.gameObject.layer == 3)
             {
-                BaseUnit target = col.GetComponent<BaseUnit>();
+                BaseUnit target = other.collider.GetComponent<BaseUnit>();
                 if (_player.PlayerAttack.IsSlashing)
                 {
                     target.RemoveLife(_player.PlayerAttack.AttackDamage);
-                    StartCoroutine(StartBlink(col));
+                    //StartCoroutine(StartBlink(other.collider));
                     return;
                 }
                 
                 _player.PlayerHealth.RemoveLife(target.Damage);
-                StartCoroutine(StartBlink());
-                StartCoroutine(StartKnockBack(col));
+                //StartCoroutine(StartBlink());
+                StartCoroutine(StartKnockBack(other.collider));
             }
         }
 
-        private IEnumerator StartKnockBack(Collider2D col)
+        private IEnumerator StartKnockBack(Collider col)
         {
             Vector3 enemyPosition = col.transform.position;
             Vector3 playerPosition = _player.PlayerTransform.position;
@@ -45,22 +45,24 @@ namespace Units.Player
             _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
 
-        private IEnumerator StartBlink(Collider2D col = null)
+        /*
+        private IEnumerator StartBlink(Collider col = null)
         {
             Blink(out Material blinkMaterial, col);
             yield return new WaitForSeconds(.5f);
             blinkMaterial.SetFloat("_Blink", 0);
         }
-
-        private void Blink(out Material blinkMaterial, Collider2D col = null)
+        
+        
+        private void Blink(out Material blinkMaterial, Collider col = null)
         {
-            col = col == null? GetComponent<Collider2D>() : col!.GetComponent<Collider2D>();
+            col = col == null? GetComponent<Collider>() : col!.GetComponent<Collider>();
             SpriteRenderer spriteRenderer = col.GetComponent<SpriteRenderer>();
             Material blinkMat = spriteRenderer.sharedMaterial;
             
             
             blinkMat.SetFloat("_Blink", 1);
             blinkMaterial = blinkMat;
-        }
+        }*/
     }
 }

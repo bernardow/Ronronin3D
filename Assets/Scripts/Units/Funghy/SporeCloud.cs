@@ -33,7 +33,7 @@ namespace Units.Funghy
 
         private IEnumerator StartCloudExpansion(float timer)
         {
-            _sporeCloud.localScale = Vector3.one;
+            _sporeCloud.localScale = Vector3.one / 2;
             _sporeCloud.gameObject.SetActive(true);
             yield return new WaitForSeconds(timer);
             _isExpanding = true;

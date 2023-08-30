@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Units
 {
@@ -45,11 +46,11 @@ namespace Units
         {
             if(!HasHealthBar)
                 return;
-            
-            Material healthBarMaterial = HealthBar.GetComponent<SpriteRenderer>().sharedMaterial;
+
+            Material healthBarMaterial = HealthBar.GetComponent<Image>().material;
             healthBarMaterial.SetFloat("_Life", Life / 100);
         }
 
-        public void SelfDestroy() => Destroy(gameObject);
+        public void SelfDestroy() => gameObject.SetActive(false);
     }
 }
