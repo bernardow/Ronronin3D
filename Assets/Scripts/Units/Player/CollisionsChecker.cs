@@ -25,15 +25,32 @@ namespace Units.Player
                 
                 _player.PlayerHealth.RemoveLife(target.Damage);
                 //StartCoroutine(StartBlink());
-                StartCoroutine(StartKnockBack(other.collider));
+                StartKnockBack(other.collider);
             }
         }
 
-        private IEnumerator StartKnockBack(Collider col)
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer == 3)
+            {
+                BaseUnit target = other.GetComponent<BaseUnit>();
+                if (_player.PlayerAttack.IsSlashing)
+                {
+                    target.RemoveLife(_player.PlayerAttack.AttackDamage);
+                    //StartCoroutine(StartBlink(other.collider));
+                    return;
+                }
+                
+                _player.PlayerHealth.RemoveLife(target.Damage);
+                //StartCoroutine(StartBlink());
+                StartKnockBack(other);
+            }
+        }
+
+        private void StartKnockBack(Collider col)
         {
             Vector3 enemyPosition = col.transform.position;
             Vector3 playerPosition = _player.PlayerTransform.position;
-            yield return new WaitForSeconds(0.2f);
             KnockBack(playerPosition, enemyPosition);
         }
 
