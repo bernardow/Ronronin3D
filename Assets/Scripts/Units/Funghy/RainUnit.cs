@@ -17,14 +17,14 @@ namespace Units.Funghy
         void Start()
         {
             _castScale = new Vector3(0.1f, 0.04f, 0.1f);
-            _goalScale = new Vector3(1, 0.4f, 1);
+            _goalScale = new Vector3(1, 0, 1);
             StartCoroutine(SpawnDrop());
         }
 
         private IEnumerator SpawnDrop()
         {
+            Instantiate(_drop, transform.position + Vector3.up * 8, Quaternion.identity);
             yield return new WaitForSeconds(1 / _dropSpeed);
-            Instantiate(_drop, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
 

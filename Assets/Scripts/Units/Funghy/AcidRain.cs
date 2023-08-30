@@ -7,7 +7,7 @@ namespace Units.Funghy
     //Todo transform this in object pooling
     public class AcidRain : MonoBehaviour, IObserver
     {
-        [SerializeField] private float _maxX, _minX, _maxY, _minY;
+        [SerializeField] private float _maxX, _minX, _maxZ, _minZ;
         [SerializeField] private GameObject _shadow;
         [SerializeField] private float _spawnInterval;
         
@@ -20,8 +20,8 @@ namespace Units.Funghy
         private Vector3 PickRandomPointInMap()
         {
             float randomX = Random.Range(_minX, _maxX);
-            float randomY = Random.Range(_minY, _maxY);
-            Vector3 randomPos = new Vector3(randomX, randomY, 0);
+            float randomZ = Random.Range(_minZ, _maxZ);
+            Vector3 randomPos = new Vector3(randomX, -0.8f, randomZ);
             return randomPos;
         }
 
