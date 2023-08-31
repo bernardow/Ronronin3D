@@ -1,49 +1,52 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Units.Funghy
 {
     public class FungiDash : MonoBehaviour, IObserver
     {
         private Funghy _funghy;
+
+        [SerializeField] private float _duration;
+        [SerializeField] private float _dashForce;
+        private float _counter;
+        private Vector3 _direction;
+        private bool _isDashing;
         
-        private float _current;
-        private Vector3 _castPos, _goalPos;
-        [SerializeField] private AnimationCurve _evaluationCurve;
-        [SerializeField] private float _castingTime = 2f;
-        [SerializeField] private float _dashSpeed = 5f;
-
-        private bool _isAttacking;
-
-        private void Start() => _funghy = GetComponent<Funghy>();
-
-        private void Update()
+        private void Start()
         {
-            if (_isAttacking)
+            _funghy = GetComponent<Funghy>();
+            _direction = new Vector3(Random.Range(0, 100), 0, Random.Range(0, 100));
+        }
+
+        private void FixedUpdate()
+        {
+            if (_isDashing)
             {
-                _current = Mathf.MoveTowards(_current, 1, _dashSpeed * Time.deltaTime);
-                transform.position = Vector3.Lerp(_castPos, _goalPos, _evaluationCurve.Evaluate(_current));
+                _counter += Time.deltaTime;
+                _funghy.FungyRigidbody.AddForce(_direction * _dashForce, ForceMode.Force);
+            }
+
+            if (_counter >= _duration)
+            {
+                _isDashing = false;
+                _counter = 0;
+                _funghy.RunStateMachine();
             }
         }
 
-        private IEnumerator StartDash(float castTime)
+        private void OnCollisionEnter(Collision other)
         {
-            Vector3 playerPos = Helpers.GetPlayerPosition();
-            _goalPos = new Vector3(playerPos.x, transform.position.y, playerPos.z);
-            yield return new WaitForSeconds(castTime);
-            _isAttacking = true;
-            _castPos = transform.position;
-            
-            _current = 0;
-            yield return new WaitForSeconds(castTime);
-            _isAttacking = false;
-            _funghy.RunStateMachine();
+            if (!other.collider.CompareTag("Ground"))
+                _direction = Vector3.Cross(Vector3.up, _direction);
         }
-        
+
         public void OnNotify()
         {
-            StartCoroutine(StartDash(_castingTime));
+            _isDashing = true;
         }
     }
 }

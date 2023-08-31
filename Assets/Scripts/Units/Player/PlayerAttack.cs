@@ -16,6 +16,11 @@ namespace Units.Player
         private float _current; //Responsible for the movement using lerp
         [SerializeField] private AnimationCurve _evaluationCurve; //Used to create smoother movements
 
+        [SerializeField] private float _maxX;
+        [SerializeField] private float _minX;
+        [SerializeField] private float _maxZ;
+        [SerializeField] private float _minZ;
+        
         private Vector3 _castPos, _goalPos; //Cast and goal position for movement
         private Vector2 _inputPos; //Touch position
 
@@ -24,6 +29,7 @@ namespace Units.Player
         //References
         private Player _player;
         
+
         #endregion
 
         private void Start() => _player = GetComponent<Player>();
@@ -58,6 +64,7 @@ namespace Units.Player
                 _current = 0;
                 _castPos = transform.position;
                 _goalPos = _castPos + currentDir * _impulseForce;
+                _goalPos = Helpers.CheckForOutScreen(_maxX, _minX, _maxZ, _minZ,  _goalPos);
                 _counter = 0;
             }
 

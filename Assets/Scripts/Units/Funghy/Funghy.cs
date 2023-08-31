@@ -10,6 +10,7 @@ namespace Units.Funghy
         private FungiStates _currentState;
         private List<FungiAttacks> _currentAtacks = new List<FungiAttacks>();
         
+        public Rigidbody FungyRigidbody { get; private set; }
         public BaseUnit FunghyHealth { get; private set; }
         private Spores _spores;
         private SporeCloud _sporeCloud;
@@ -28,7 +29,8 @@ namespace Units.Funghy
             _sporeCloud = GetComponent<SporeCloud>();
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
-        
+            FungyRigidbody = GetComponent<Rigidbody>();
+            
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
             

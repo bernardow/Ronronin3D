@@ -72,12 +72,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Life: 0.6
+    - _Life: -0.04
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.43867922, g: 1, b: 0.44811457, a: 0}
+    - _ColorA: {r: 1, g: 0.28485322, b: 0.23113209, a: 0}
     - _ColorB: {r: 1, g: 0.32547167, b: 0.32547167, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

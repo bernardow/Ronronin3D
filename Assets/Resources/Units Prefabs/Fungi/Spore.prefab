@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5662083327010857403}
   - component: {fileID: 1111434780130329551}
   - component: {fileID: 1097340933377904368}
+  - component: {fileID: 2524418195228073702}
   m_Layer: 3
   m_Name: Spore
   m_TagString: Projectiles
@@ -93,7 +94,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4161454127652090804}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d768337c81bac484ab992525e39e9a3e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e4b1c10b01f53469806d143f37a20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 1
+  Life: 4
   HasHealthBar: 0
   HealthBar: {fileID: 0}
 --- !u!54 &1097340933377904368
@@ -149,3 +150,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2524418195228073702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161454127652090804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcfed2c7811a16469d92ea6908c3a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

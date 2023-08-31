@@ -62,6 +62,23 @@ namespace Utilities
             }
         }
 
+        public static Vector3 CheckForOutScreen(float maxX, float minX, float maxZ, float minZ, Vector3  currentDestination)
+        {
+            Vector3 newDestination =  currentDestination;
+
+            if (currentDestination.x > maxX)
+                newDestination.x = maxX;
+            else if (currentDestination.x < minX)
+                newDestination.x = minX;
+
+            if (currentDestination.z > maxZ)
+                newDestination.z = maxZ;
+            else if (currentDestination.z < minZ)
+                newDestination.z = minZ;
+
+            return newDestination;
+        }
+
         private static Vector2 ClampedAngleLockedDirections(float angle)
         {
             switch (angle)

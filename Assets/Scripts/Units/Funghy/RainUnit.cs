@@ -23,7 +23,7 @@ namespace Units.Funghy
 
         private IEnumerator SpawnDrop()
         {
-            Instantiate(_drop, transform.position + Vector3.up * 8, Quaternion.identity);
+            Instantiate(_drop, transform.position + Vector3.up * 30, Quaternion.identity);
             yield return new WaitForSeconds(1 / _dropSpeed);
             Destroy(gameObject);
         }

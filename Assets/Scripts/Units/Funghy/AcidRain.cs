@@ -8,7 +8,7 @@ namespace Units.Funghy
     public class AcidRain : MonoBehaviour, IObserver
     {
         [SerializeField] private float _maxX, _minX, _maxZ, _minZ;
-        [SerializeField] private GameObject _shadow;
+        [SerializeField] private GameObject _drop;
         [SerializeField] private float _spawnInterval;
         
         private Funghy _funghy;
@@ -21,7 +21,7 @@ namespace Units.Funghy
         {
             float randomX = Random.Range(_minX, _maxX);
             float randomZ = Random.Range(_minZ, _maxZ);
-            Vector3 randomPos = new Vector3(randomX, -0.8f, randomZ);
+            Vector3 randomPos = new Vector3(randomX, 0, randomZ);
             return randomPos;
         }
 
@@ -29,7 +29,7 @@ namespace Units.Funghy
         {
             while (_isRaining)
             {
-                Instantiate(_shadow, PickRandomPointInMap(), Quaternion.identity);
+                Instantiate(_drop, PickRandomPointInMap() + Vector3.up * 30, Quaternion.identity);
                 yield return new WaitForSeconds(_spawnInterval);
             }
         }
