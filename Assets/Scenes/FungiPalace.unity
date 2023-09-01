@@ -4155,7 +4155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 268fa7c863f8d8c418b886dc86e00c4b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4211,7 +4211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 12
-  _impulseForce: 7.5
+  _impulseForce: 9
   AttackDamage: 16
   _evaluationCurve:
     serializedVersion: 2
@@ -4345,6 +4345,7 @@ GameObject:
   - component: {fileID: 1185095436}
   - component: {fileID: 1185095441}
   - component: {fileID: 1185095442}
+  - component: {fileID: 1185095444}
   m_Layer: 3
   m_Name: Fungi
   m_TagString: Boss
@@ -4526,7 +4527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 12
-  _dashForce: 15
+  _dashForce: 10
 --- !u!114 &1185095440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4645,6 +4646,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1185095444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185095431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveForce: 3
+  _directionTimer: 8
+  _changeType: 2
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,

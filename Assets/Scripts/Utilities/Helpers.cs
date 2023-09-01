@@ -121,7 +121,9 @@ namespace Utilities
         public static Vector3 GetBossPosition()
         {
             Transform boss = GameObject.FindWithTag("Boss").transform;
-            return boss.position;
+            Vector3 o = Vector3.zero;
+            o = boss != null ? boss.position : o;
+            return o;
         }
     }
 }

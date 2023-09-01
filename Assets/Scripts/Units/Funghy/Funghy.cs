@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Utilities;
 
 namespace Units.Funghy
@@ -9,7 +10,8 @@ namespace Units.Funghy
     {
         private FungiStates _currentState;
         private List<FungiAttacks> _currentAtacks = new List<FungiAttacks>();
-        
+
+        public Transform FungiTransform { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
         public BaseUnit FunghyHealth { get; private set; }
         private Spores _spores;
@@ -17,11 +19,14 @@ namespace Units.Funghy
         private FungiDash _fungiDash;
         private AcidRain _acidRain;
         private FungiMinions _fungiMinions;
+        private FungiIdle _fungiIdle;
 
         private ObservableObject _observableObject;
         
-        private void Start()
+        private void Awake()
         {
+            FungiTransform = transform;
+            FungyRigidbody = GetComponent<Rigidbody>();
             FunghyHealth = GetComponent<BaseUnit>();
             _observableObject = new ObservableObject();
             _spores = GetComponent<Spores>();
@@ -29,8 +34,11 @@ namespace Units.Funghy
             _sporeCloud = GetComponent<SporeCloud>();
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
-            FungyRigidbody = GetComponent<Rigidbody>();
-            
+            _fungiIdle = GetComponent<FungiIdle>();
+        }
+
+        private void Start()
+        {
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
             
@@ -89,6 +97,7 @@ namespace Units.Funghy
         }
 
         public void RunStateMachine() => FungiStateMachine();
+
         public void PhaseChecker()
         {
             if (FunghyHealth.Life > FunghyHealth.InitialLife * 0.66f)
@@ -107,5 +116,7 @@ namespace Units.Funghy
                 CheckForAttacksUpdates();
             }
         }
+
+        public void ManageIdleMovement() => _fungiIdle.enabled = !_fungiIdle.enabled;
     }
 }

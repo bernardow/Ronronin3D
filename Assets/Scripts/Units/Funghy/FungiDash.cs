@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -15,13 +16,17 @@ namespace Units.Funghy
         private float _counter;
         private Vector3 _direction;
         private bool _isDashing;
-        
-        private void Start()
+
+        private void Awake()
         {
             _funghy = GetComponent<Funghy>();
-            _direction = new Vector3(Random.Range(0, 100), 0, Random.Range(0, 100));
         }
 
+        private void Start()
+        {
+            _direction = new Vector3(Random.Range(0, 100), _funghy.FungiTransform.position.y, Random.Range(0, 100));
+        }
+        
         private void FixedUpdate()
         {
             if (_isDashing)
@@ -34,6 +39,7 @@ namespace Units.Funghy
             {
                 _isDashing = false;
                 _counter = 0;
+                _funghy.ManageIdleMovement();
                 _funghy.RunStateMachine();
             }
         }
@@ -46,6 +52,7 @@ namespace Units.Funghy
 
         public void OnNotify()
         {
+            _funghy.ManageIdleMovement();
             _isDashing = true;
         }
     }

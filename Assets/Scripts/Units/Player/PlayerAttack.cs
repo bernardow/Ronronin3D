@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Utilities;
 
@@ -28,12 +29,16 @@ namespace Units.Player
 
         //References
         private Player _player;
-        
+        private Material _material;
 
         #endregion
 
-        private void Start() => _player = GetComponent<Player>();
-    
+        private void Start()
+        {
+            _player = GetComponent<Player>();
+            _material = GetComponent<MeshRenderer>().sharedMaterial;
+        }
+
         private void Update() => Slash();
         
         /// <summary>
@@ -47,9 +52,16 @@ namespace Units.Player
                 //Disables player movement and increases counter
                 _counter += Time.deltaTime;
                 _player.PlayerMovement.enabled = false;
+
+                if (_counter >= 0.8f)
+                {
+                    _material.SetInt("_Blink", 1);
+                }
             }
             else if (Input.GetKeyUp(KeyCode.Space))
             {
+                _material.SetInt("_Blink", 0);
+                
                 //if counter it's lesser than 0.8f nothing happens and player movement get active again
                 if (_counter <= 0.8f)
                 {
