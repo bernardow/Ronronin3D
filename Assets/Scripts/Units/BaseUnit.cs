@@ -9,7 +9,7 @@ namespace Units
     {
         public float Life;
         public float InitialLife { get; private set; }
-        public readonly float Damage = 8;
+        public float Damage = 8;
 
         public bool HasHealthBar;
         [HideInInspector] public GameObject HealthBar;
@@ -48,7 +48,7 @@ namespace Units
                 return;
 
             Material healthBarMaterial = HealthBar.GetComponent<Image>().material;
-            healthBarMaterial.SetFloat("_Life", Life / 100);
+            healthBarMaterial.SetFloat("_Life", Life / InitialLife);
         }
 
         public void SelfDestroy() => gameObject.SetActive(false);

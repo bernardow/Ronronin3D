@@ -117,5 +117,11 @@ namespace Utilities
             Transform player = GameObject.FindWithTag("Player").transform;
             return player.position;
         }
+        
+        public static Vector3 GetBossPosition()
+        {
+            Transform boss = GameObject.FindWithTag("Boss").transform;
+            return boss.position;
+        }
     }
 }

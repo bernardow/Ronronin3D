@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectiles
   - Ground
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - Boss
   - Minions
-  - 
-  - 
+  - PlayerProjectile
+  - Player
   - 
   - 
   - 

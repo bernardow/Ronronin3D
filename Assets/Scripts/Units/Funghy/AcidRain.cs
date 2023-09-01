@@ -39,9 +39,11 @@ namespace Units.Funghy
             yield return new WaitForSeconds(timer);
             _isRaining = true;
             StartCoroutine(SpawnRain());
+            yield return new WaitForSeconds(timer);
+            _funghy.RunStateMachine();
+            
             yield return new WaitForSeconds(12f);
             _isRaining = false;
-            _funghy.RunStateMachine();
         }
         
         public void OnNotify()

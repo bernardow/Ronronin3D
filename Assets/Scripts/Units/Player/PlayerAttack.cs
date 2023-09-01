@@ -10,7 +10,7 @@ namespace Units.Player
         
         [SerializeField] private float _attackSpeed = 12;
         [SerializeField] private float _impulseForce = 5;
-        public readonly float AttackDamage = 8;
+        public float AttackDamage = 8;
 
         private float _counter; //Used to see if the user held the key or finger for > 0.8f
         private float _current; //Responsible for the movement using lerp

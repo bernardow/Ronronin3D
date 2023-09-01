@@ -1134,7 +1134,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 2160, y: 125}
+  m_SizeDelta: {x: 1240, y: 75}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &313723042
 MonoBehaviour:
@@ -1156,8 +1156,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 73449076e55b01240aa3176cfcfd7ca8, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3577,6 +3577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 999
+  Damage: 8
   HasHealthBar: 0
   HealthBar: {fileID: 0}
 --- !u!1 &1051675682 stripped
@@ -4090,7 +4091,8 @@ GameObject:
   - component: {fileID: 1178893208}
   - component: {fileID: 1178893212}
   - component: {fileID: 1178893213}
-  m_Layer: 0
+  - component: {fileID: 1178893214}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4106,7 +4108,7 @@ Transform:
   m_GameObject: {fileID: 1178893203}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.2, y: 0, z: -8.72}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4209,7 +4211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 12
-  _impulseForce: 5
+  _impulseForce: 7.5
+  AttackDamage: 16
   _evaluationCurve:
     serializedVersion: 2
     m_Curve:
@@ -4304,8 +4307,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 100
+  Damage: 16
   HasHealthBar: 1
   HealthBar: {fileID: 1994376132}
+--- !u!114 &1178893214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178893203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274ce971dfcfea64991064d0aadf2f44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _kunai: {fileID: 3643134206074831819, guid: 5ef49865b17cf54449d3eda7c56aace9, type: 3}
+  _kunaiSpeed: 8
+  _cooldownTimer: 0.75
 --- !u!1 &1185095431
 GameObject:
   m_ObjectHideFlags: 0
@@ -4328,7 +4347,7 @@ GameObject:
   - component: {fileID: 1185095442}
   m_Layer: 3
   m_Name: Fungi
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4595,7 +4614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e4b1c10b01f53469806d143f37a20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 100
+  Life: 600
+  Damage: 8
   HasHealthBar: 1
   HealthBar: {fileID: 313723040}
 --- !u!54 &1185095443
@@ -5659,13 +5679,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631220678}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1185095432}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1 &1638193044 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
@@ -6355,7 +6375,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -50}
-  m_SizeDelta: {x: 1024, y: 100}
+  m_SizeDelta: {x: 760, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1994376134
 MonoBehaviour:
@@ -6377,8 +6397,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 73449076e55b01240aa3176cfcfd7ca8, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
