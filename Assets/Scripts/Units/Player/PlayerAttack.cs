@@ -47,7 +47,7 @@ namespace Units.Player
         private void Slash()
         {
             //Touch setup
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button0))
             {
                 //Disables player movement and increases counter
                 _counter += Time.deltaTime;
@@ -58,7 +58,7 @@ namespace Units.Player
                     _material.SetInt("_Blink", 1);
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.Space))
+            else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Joystick1Button0))
             {
                 _material.SetInt("_Blink", 0);
                 

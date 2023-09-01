@@ -20,16 +20,13 @@ namespace Units.Player
         
         private void Move()
         {
-            if (Input.anyKey)
+            if (!_rigidbody)
             {
-                if (!_rigidbody)
-                {
-                    _player.PlayerTransform.position += Helpers.GetDirection() * _speed * Time.deltaTime;
-                    return;
-                }
-
-                _player.PlayerRigidbody.AddForce(Helpers.GetDirection() * _speed, ForceMode.Force);
+                _player.PlayerTransform.position += Helpers.GetDirection() * _speed * Time.deltaTime;
+                return;
             }
+
+            _player.PlayerRigidbody.AddForce(Helpers.GetDirection() * _speed, ForceMode.Force);
         }
     }
 }

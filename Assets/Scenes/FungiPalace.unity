@@ -4211,7 +4211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 12
-  _impulseForce: 9
+  _impulseForce: 10
   AttackDamage: 16
   _evaluationCurve:
     serializedVersion: 2
