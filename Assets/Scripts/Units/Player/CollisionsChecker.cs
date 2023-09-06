@@ -31,7 +31,7 @@ namespace Units.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == 3)
+            if (other.gameObject.layer == 3 || other.gameObject.layer == 7)
             {
                 BaseUnit target = other.GetComponent<BaseUnit>();
                 if (_player.PlayerAttack.IsSlashing)
@@ -61,25 +61,5 @@ namespace Units.Player
             float knockbackForce = _knockbackTreshold / Vector3.Distance(enemyPosition, playerPosition); 
             _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
-
-        /*
-        private IEnumerator StartBlink(Collider col = null)
-        {
-            Blink(out Material blinkMaterial, col);
-            yield return new WaitForSeconds(.5f);
-            blinkMaterial.SetFloat("_Blink", 0);
-        }
-        
-        
-        private void Blink(out Material blinkMaterial, Collider col = null)
-        {
-            col = col == null? GetComponent<Collider>() : col!.GetComponent<Collider>();
-            SpriteRenderer spriteRenderer = col.GetComponent<SpriteRenderer>();
-            Material blinkMat = spriteRenderer.sharedMaterial;
-            
-            
-            blinkMat.SetFloat("_Blink", 1);
-            blinkMaterial = blinkMat;
-        }*/
     }
 }

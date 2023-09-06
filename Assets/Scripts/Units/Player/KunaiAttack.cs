@@ -17,7 +17,7 @@ namespace Units.Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Joystick1Button3) && _canShoot)
+            if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Joystick1Button3)) && _canShoot)
             {
                 StartCoroutine(ShootCooldown());
                 ShootKunai();

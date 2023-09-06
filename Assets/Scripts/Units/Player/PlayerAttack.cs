@@ -8,7 +8,8 @@ namespace Units.Player
     public class PlayerAttack : MonoBehaviour
     {
         #region Proprieties
-        
+
+        [SerializeField] private float _holdTime;
         [SerializeField] private float _attackSpeed = 12;
         [SerializeField] private float _impulseForce = 5;
         public float AttackDamage = 8;
@@ -53,7 +54,7 @@ namespace Units.Player
                 _counter += Time.deltaTime;
                 _player.PlayerMovement.enabled = false;
 
-                if (_counter >= 0.8f)
+                if (_counter >= _holdTime)
                 {
                     _material.SetInt("_Blink", 1);
                 }
@@ -63,7 +64,7 @@ namespace Units.Player
                 _material.SetInt("_Blink", 0);
                 
                 //if counter it's lesser than 0.8f nothing happens and player movement get active again
-                if (_counter <= 0.8f)
+                if (_counter <= _holdTime)
                 {
                     _player.PlayerMovement.enabled = true;
                     return;
@@ -95,7 +96,7 @@ namespace Units.Player
         private IEnumerator SetAttackDelay()
         {
             IsSlashing = true;
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
             IsSlashing = false;
             _player.PlayerMovement.enabled = true;
         }

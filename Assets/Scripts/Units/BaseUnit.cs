@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Units
@@ -15,6 +16,8 @@ namespace Units
         [HideInInspector] public GameObject HealthBar;
 
         private bool _canTakeDamage = true;
+
+        public static UnityEvent PlayerDeath;
 
         private void Start()
         {
@@ -46,8 +49,13 @@ namespace Units
 
         private void CheckLife()
         {
-            if(Life <= 0)
+            if (Life <= 0)
+            {
                 SelfDestroy();
+                if(tag == "Player")
+                    PlayerDeath.Invoke();
+            }
+                
         }
 
         private void UpdateHealthBar()
