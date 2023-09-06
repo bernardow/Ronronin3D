@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589245, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2508,13 +2508,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1335102495}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5965,9 +5965,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6676c410ab3244a805e975d172ea4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coolDownTimer: 5
   _attackSpeed: 12
-  _impulseForce: 10
-  AttackDamage: 16
+  _impulseForce: 14
+  AttackDamage: 100
   _evaluationCurve:
     serializedVersion: 2
     m_Curve:
@@ -6079,7 +6080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _kunai: {fileID: 3643134206074831819, guid: 5ef49865b17cf54449d3eda7c56aace9, type: 3}
   _kunaiSpeed: 8
-  _cooldownTimer: 0.75
+  _cooldownTimer: 0.7
 --- !u!1 &1185095431
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -9,12 +10,11 @@ namespace Units.Player
     {
         #region Proprieties
 
-        [SerializeField] private float _holdTime;
+        [SerializeField] private float _coolDownTimer;
         [SerializeField] private float _attackSpeed = 12;
         [SerializeField] private float _impulseForce = 5;
         public float AttackDamage = 8;
 
-        private float _counter; //Used to see if the user held the key or finger for > 0.8f
         private float _current; //Responsible for the movement using lerp
         [SerializeField] private AnimationCurve _evaluationCurve; //Used to create smoother movements
 
@@ -27,17 +27,16 @@ namespace Units.Player
         private Vector2 _inputPos; //Touch position
 
         public bool IsSlashing { get; private set; } //Checks if player is slashing
+        private bool _canSlash = true;
 
         //References
         private Player _player;
-        private Material _material;
 
         #endregion
 
         private void Start()
         {
             _player = GetComponent<Player>();
-            _material = GetComponent<MeshRenderer>().sharedMaterial;
         }
 
         private void Update() => Slash();
@@ -47,46 +46,28 @@ namespace Units.Player
         /// </summary>
         private void Slash()
         {
-            //Touch setup
-            if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button0))
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && _canSlash)
             {
-                //Disables player movement and increases counter
-                _counter += Time.deltaTime;
                 _player.PlayerMovement.enabled = false;
 
-                if (_counter >= _holdTime)
-                {
-                    _material.SetInt("_Blink", 1);
-                }
-            }
-            else if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Joystick1Button0))
-            {
-                _material.SetInt("_Blink", 0);
-                
-                //if counter it's lesser than 0.8f nothing happens and player movement get active again
-                if (_counter <= _holdTime)
-                {
-                    _player.PlayerMovement.enabled = true;
-                    return;
-                }
-
                 //Otherwise it moves the player in the correct direction and set attack delay
-                Vector3 currentDir = Helpers.GetDirection();
+                Vector3 bossPosition = Helpers.GetBossPosition();
+                Vector3 currentPosition = _player.PlayerTransform.position;
+                Vector3 currentDir = new Vector3(bossPosition.x, currentPosition.y, bossPosition.z) - currentPosition;
 
                 StartCoroutine(SetAttackDelay());
-                _current = 0;
-                _castPos = transform.position;
-                _goalPos = _castPos + currentDir * _impulseForce;
+                _goalPos = currentPosition + currentDir * _impulseForce;
                 _goalPos = Helpers.CheckForOutScreen(_maxX, _minX, _maxZ, _minZ,  _goalPos);
-                _counter = 0;
+                _player.PlayerTransform.DOMove(_goalPos, .5f).SetEase(Ease.OutSine);
+                StartCoroutine(SetAttackCooldown(_coolDownTimer));
             }
+        }
 
-            //handles the movement of the slash trough lerp
-            if (IsSlashing)
-            {
-                _current = Mathf.MoveTowards(_current, 1, _attackSpeed * Time.deltaTime);
-                _player.PlayerTransform.position = Vector3.Lerp(_castPos, _goalPos, _evaluationCurve.Evaluate(_current));
-            }
+        private IEnumerator SetAttackCooldown(float timer)
+        {
+            _canSlash = false;
+            yield return new WaitForSeconds(timer);
+            _canSlash = true;
         }
     
         /// <summary>
