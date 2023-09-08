@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,22 +17,39 @@ namespace Managers
         
         private void Start()
         {
-            selectorDictionary.Add(0, new Vector3(0, 205, 0));
+            selectorDictionary.Add(0, _pointer.anchoredPosition);
             selectorDictionary.Add(1, Vector3.zero);
             selectorDictionary.Add(2, new Vector3(0, -205, 0));
         }
 
         private void Update()
         {
-            _pointer.position = selectorDictionary[_indexer];
             CheckForArrowUpdate();
         }
 
         private void CheckForArrowUpdate()
         {
-            if (Input.GetAxis("Vertical") < 0)
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                _indexer++;
+                _indexer = _indexer == 2 ? 0 : _indexer++;
+                _pointer.DOAnchorPos(selectorDictionary[_indexer], 1).SetEase(Ease.OutSine);
+            }else if (Input.GetKeyDown(KeyCode.W))
+            {
+                _indexer = _indexer == 0 ? 2 : _indexer--;
+                _pointer.DOAnchorPos(selectorDictionary[_indexer], 1).SetEase(Ease.OutSine);
+            }
+            else if(Input.GetKeyDown(KeyCode.KeypadEnter)){
+                switch (_indexer)
+                {
+                    case 0: ChangeScene(1);
+                        break;
+                    case 1: DisplayOptions();
+                        break;
+                    case 2: Application.Quit();
+                        break;
+                    default: Debug.LogError("Index out of scope");
+                        break;
+                }
             }
         }
 
