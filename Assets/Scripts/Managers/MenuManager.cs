@@ -31,11 +31,11 @@ namespace Managers
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                _indexer = _indexer == 2 ? 0 : _indexer++;
+                _indexer = _indexer == 2 ? 0 : _indexer + 1;
                 _pointer.DOAnchorPos(selectorDictionary[_indexer], 1).SetEase(Ease.OutSine);
             }else if (Input.GetKeyDown(KeyCode.W))
             {
-                _indexer = _indexer == 0 ? 2 : _indexer--;
+                _indexer = _indexer == 0 ? 2 : _indexer - 1;
                 _pointer.DOAnchorPos(selectorDictionary[_indexer], 1).SetEase(Ease.OutSine);
             }
             else if(Input.GetKeyDown(KeyCode.KeypadEnter)){
