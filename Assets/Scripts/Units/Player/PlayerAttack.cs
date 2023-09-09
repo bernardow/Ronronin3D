@@ -53,12 +53,12 @@ namespace Units.Player
                 //Otherwise it moves the player in the correct direction and set attack delay
                 Vector3 bossPosition = Helpers.GetBossPosition();
                 Vector3 currentPosition = _player.PlayerTransform.position;
-                Vector3 currentDir = new Vector3(bossPosition.x, currentPosition.y, bossPosition.z) - currentPosition;
+                _goalPos = new Vector3(bossPosition.x, currentPosition.y, bossPosition.z);
+                Vector3 direction = _goalPos - currentPosition;
 
                 StartCoroutine(SetAttackDelay());
-                _goalPos = currentPosition + currentDir * _impulseForce;
                 _goalPos = Helpers.CheckForOutScreen(_maxX, _minX, _maxZ, _minZ,  _goalPos);
-                _player.PlayerTransform.DOMove(_goalPos, .5f).SetEase(Ease.OutSine);
+                _player.PlayerTransform.DOMove(_goalPos + direction.normalized * _impulseForce, .5f).SetEase(Ease.OutSine);
                 StartCoroutine(SetAttackCooldown(_coolDownTimer));
             }
         }

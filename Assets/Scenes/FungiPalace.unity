@@ -5965,9 +5965,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6676c410ab3244a805e975d172ea4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coolDownTimer: 5
+  _coolDownTimer: 0.5
   _attackSpeed: 12
-  _impulseForce: 14
+  _impulseForce: 5
   AttackDamage: 100
   _evaluationCurve:
     serializedVersion: 2

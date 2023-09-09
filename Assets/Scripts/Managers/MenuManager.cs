@@ -38,7 +38,7 @@ namespace Managers
                 _indexer = _indexer == 0 ? 2 : _indexer - 1;
                 _pointer.DOAnchorPos(selectorDictionary[_indexer], 1).SetEase(Ease.OutSine);
             }
-            else if(Input.GetKeyDown(KeyCode.KeypadEnter)){
+            else if(Input.GetKeyDown(KeyCode.Return)){
                 switch (_indexer)
                 {
                     case 0: ChangeScene(1);
