@@ -11,40 +11,31 @@ namespace Units.Player
 
         private void Start() => _player = GetComponent<Player>();
 
-        private void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.layer == 3 || other.gameObject.layer == 7)
-            {
-                BaseUnit target = other.collider.GetComponent<BaseUnit>();
-                if (_player.PlayerAttack.IsSlashing)
-                {
-                    target.RemoveLife(_player.PlayerAttack.AttackDamage);
-                    //StartCoroutine(StartBlink(other.collider));
-                    return;
-                }
-                
-                _player.PlayerHealth.RemoveLife(target.Damage);
-                //StartCoroutine(StartBlink());
-                StartKnockBack(other.collider);
-            }
-        }
+        private void OnCollisionEnter(Collision other) => CheckColliders(other.collider);
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) => CheckColliders(other);
+        
+
+        private void CheckColliders(Collider other)
         {
             if (other.gameObject.layer == 3 || other.gameObject.layer == 7)
             {
                 BaseUnit target = other.GetComponent<BaseUnit>();
                 if (_player.PlayerAttack.IsSlashing)
                 {
-                    target.RemoveLife(_player.PlayerAttack.AttackDamage);
-                    //StartCoroutine(StartBlink(other.collider));
+                    DealDamage(target);
                     return;
                 }
                 
                 _player.PlayerHealth.RemoveLife(target.Damage);
-                //StartCoroutine(StartBlink());
                 StartKnockBack(other);
             }
+        }
+
+        private void DealDamage(BaseUnit target)
+        {
+            VulnerableState vulnerableState = target.GetComponent<VulnerableState>();
+            target.RemoveLife(vulnerableState != null && vulnerableState.IsVulnerable? _player.PlayerAttack.AttackDamage * 2 : _player.PlayerAttack.AttackDamage);
         }
 
         private void StartKnockBack(Collider col)

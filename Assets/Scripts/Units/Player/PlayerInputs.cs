@@ -22,8 +22,8 @@ namespace Units.Player
         {
             FireJoystick = Input.GetKeyDown(KeyCode.Joystick1Button0);
             FireKeyboard = Input.GetKeyDown(KeyCode.Space);
-            FireKunaiJoystick = Input.GetKeyDown(KeyCode.Joystick1Button3);
-            FireKunaiKeyboard = Input.GetKeyDown(KeyCode.K);
+            FireKunaiJoystick = Input.GetKey(KeyCode.Joystick1Button3);
+            FireKunaiKeyboard = Input.GetKey(KeyCode.K);
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");
 
