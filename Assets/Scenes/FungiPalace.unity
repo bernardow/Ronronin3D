@@ -6109,8 +6109,8 @@ GameObject:
   - component: {fileID: 1185095437}
   - component: {fileID: 1185095436}
   - component: {fileID: 1185095441}
-  - component: {fileID: 1185095444}
   - component: {fileID: 1185095445}
+  - component: {fileID: 1185095446}
   m_Layer: 3
   m_Name: Fungi
   m_TagString: Boss
@@ -6395,21 +6395,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1185095444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185095431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveForce: 3
-  _directionTimer: 8
-  _changeType: 2
 --- !u!114 &1185095445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6425,6 +6410,21 @@ MonoBehaviour:
   Life: 600
   Damage: 8
   _healthbar: {fileID: 313723040}
+--- !u!114 &1185095446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185095431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveForce: 1
+  _directionTimer: 4
+  _changeType: 2
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,

@@ -53,8 +53,9 @@ namespace Units.Player
                 Vector3 direction = _goalPos - currentPosition;
 
                 StartCoroutine(SetAttackDelay());
+                _goalPos += direction.normalized * _impulseForce;
                 _goalPos = Helpers.CheckForOutScreen(_maxX, _minX, _maxZ, _minZ,  _goalPos);
-                _player.PlayerTransform.DOMove(_goalPos + direction.normalized * _impulseForce, .5f).SetEase(Ease.OutSine);
+                _player.PlayerTransform.DOMove(_goalPos, .5f).SetEase(Ease.OutSine);
                 StartCoroutine(SetAttackCooldown(_coolDownTimer));
             }
         }

@@ -39,13 +39,16 @@ public class FungiIdle : MonoBehaviour
         while (enabled)
         {
             await DirectionTask(_directionTimer);
+            if (this == null)
+                break;
         }
     }
 
     private async Task DirectionTask(int timer)
     {
         await Task.Delay(timer * 1000);
-        _currentDirection = ChangeDirection(_currentDirection, _changeType);
+        if(this != null)
+            _currentDirection = ChangeDirection(_currentDirection, _changeType);
     }
 
     private void OnCollisionEnter(Collision other)

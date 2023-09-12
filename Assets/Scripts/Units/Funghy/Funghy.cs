@@ -113,6 +113,6 @@ namespace Units.Funghy
             }
         }
 
-        public void ManageIdleMovement() => _fungiIdle.enabled = !_fungiIdle.enabled;
+        public void ManageIdleMovement() => _fungiIdle!.enabled = !_fungiIdle!.enabled;
     }
 }
