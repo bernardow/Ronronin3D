@@ -7,31 +7,6 @@ namespace Utilities
 {
     public static class Helpers
     {
-        private const float Vector2RightMagnitude = 1;
-        
-        public static Vector3 GetDirection(bool mobile = false)
-        {
-            /*
-            if (mobile)
-            {
-                Vector2 dir = outPos - inputPos;
-                float dotProduct = Vector2.Dot(dir, Vector2.right);
-                float combinedMagnitudes = Vector3.Magnitude(dir) * Vector2RightMagnitude;
-
-                dotProduct /= combinedMagnitudes;
-                dotProduct = Mathf.Acos(dotProduct);
-                dotProduct *= (180 / Mathf.PI);
-                dotProduct = dir.y < 0? dotProduct * -1: dotProduct;
-                dir = lockedDirections? ClampedAngleLockedDirections(dotProduct) : ClampedAngle(dotProduct);
-                return dir;
-            }*/
-            
-            float horVal = Input.GetAxisRaw("Horizontal");
-            float verVal = Input.GetAxisRaw("Vertical");
-            
-            return new Vector3(horVal, 0, verVal); 
-        }
-        
         private static Vector2 ClampedAngle(float angle)
         {
             switch (angle)

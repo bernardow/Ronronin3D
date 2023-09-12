@@ -13,7 +13,7 @@ namespace Units.Funghy
 
         public Transform FungiTransform { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
-        public BaseUnit FunghyHealth { get; private set; }
+        public SpecialUnit FunghyHealth { get; private set; }
         private Spores _spores;
         private SporeCloud _sporeCloud;
         private FungiDash _fungiDash;
@@ -27,7 +27,7 @@ namespace Units.Funghy
         {
             FungiTransform = transform;
             FungyRigidbody = GetComponent<Rigidbody>();
-            FunghyHealth = GetComponent<BaseUnit>();
+            FunghyHealth = GetComponent<SpecialUnit>();
             _observableObject = new ObservableObject();
             _spores = GetComponent<Spores>();
             _fungiDash = GetComponent<FungiDash>();
@@ -35,15 +35,11 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
-        }
-
-        private void Start()
-        {
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
-            
-            FungiStateMachine();
         }
+
+        private void Start() => RunStateMachine();
 
         private void FungiStateMachine()
         {

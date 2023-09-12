@@ -1,6 +1,5 @@
 using System.Collections;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using Utilities;
 
@@ -11,11 +10,9 @@ namespace Units.Player
         #region Proprieties
 
         [SerializeField] private float _coolDownTimer;
-        [SerializeField] private float _attackSpeed = 12;
         [SerializeField] private float _impulseForce = 5;
         public float AttackDamage = 8;
 
-        private float _current; //Responsible for the movement using lerp
         [SerializeField] private AnimationCurve _evaluationCurve; //Used to create smoother movements
 
         [SerializeField] private float _maxX;
@@ -23,7 +20,7 @@ namespace Units.Player
         [SerializeField] private float _maxZ;
         [SerializeField] private float _minZ;
         
-        private Vector3 _castPos, _goalPos; //Cast and goal position for movement
+        private Vector3 _goalPos; //Cast and goal position for movement
         private Vector2 _inputPos; //Touch position
 
         public bool IsSlashing { get; private set; } //Checks if player is slashing
@@ -37,16 +34,15 @@ namespace Units.Player
         private void Start()
         {
             _player = GetComponent<Player>();
+            _player.PlayerInputs.OnFireSpecialAttack += Slash;
         }
-
-        private void Update() => Slash();
         
         /// <summary>
         /// Takes care of slash mechanic
         /// </summary>
         private void Slash()
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && _canSlash)
+            if (_canSlash)
             {
                 _player.PlayerMovement.enabled = false;
 

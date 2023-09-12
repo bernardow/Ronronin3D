@@ -1,28 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Units.Funghy;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class FungiIdle : MonoBehaviour
 {
     [SerializeField] private float _moveForce;
-    [SerializeField] private float _directionTimer;
+    [SerializeField] private int _directionTimer;
     [SerializeField] private ChangeTypes _changeType;
-    private float _initialTimer;
+    private int _initialTimer;
     private Vector3 _currentDirection;
     private Funghy _funghy;
-
+    
     private void Start()
     {
         _initialTimer = _directionTimer;
         _funghy = GetComponent<Funghy>();
         _currentDirection = new Vector3(0.5f, _funghy.transform.position.y, -0.5f);
+
     }
 
-    private void OnEnable() => StartCoroutine(DirectionTimer(_directionTimer));
+    private void OnEnable() => DirectionTimer();
 
     private void Update()
     {
@@ -30,13 +34,18 @@ public class FungiIdle : MonoBehaviour
     }
 
   
-    private IEnumerator DirectionTimer(float timer)
+    private async void DirectionTimer()
     {
         while (enabled)
         {
-            yield return new WaitForSeconds(timer);
-            _currentDirection = ChangeDirection(_currentDirection, _changeType);
+            await DirectionTask(_directionTimer);
         }
+    }
+
+    private async Task DirectionTask(int timer)
+    {
+        await Task.Delay(timer * 1000);
+        _currentDirection = ChangeDirection(_currentDirection, _changeType);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -45,7 +54,6 @@ public class FungiIdle : MonoBehaviour
         {
             _currentDirection = ChangeDirection(_currentDirection, ChangeTypes.CROSS);
             _directionTimer = _initialTimer;
-
         }
     }
 

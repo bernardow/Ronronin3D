@@ -12,71 +12,36 @@ namespace Units
         public float InitialLife { get; private set; }
         public float Damage = 8;
 
-        public bool HasHealthBar;
-        [HideInInspector] public GameObject HealthBar;
-
-        private bool _canTakeDamage = true;
-
-        public static UnityEvent PlayerDeath;
+        public bool CanTakeDamage { get; set; }
 
         private void Start()
         {
             InitialLife = Life;
-            UpdateHealthBar();
+            CanTakeDamage = true;
         }
 
-        public void AddLife(float amount)
+        public virtual void AddLife(float amount)
         {
             Life += amount;
-            UpdateHealthBar();
         }
 
-        public void RemoveLife(float amount)
+        public virtual void RemoveLife(float amount)
         {
-            if(!_canTakeDamage)
+            if(!CanTakeDamage)
                 return;
             
             Life -= amount;
-            UpdateHealthBar();
-            CheckLife();
-            
-            IBoss boss = GetComponent<IBoss>();
-            boss?.PhaseChecker();
-
-            if (tag == "Player")
-                StartCoroutine(Invincibility());
         }
 
-        private void CheckLife()
+        public virtual void CheckLife()
         {
             if (Life <= 0)
             {
                 SelfDestroy();
-                if(tag == "Player")
-                    PlayerDeath.Invoke();
             }
                 
         }
 
-        private void UpdateHealthBar()
-        {
-            if(!HasHealthBar)
-                return;
-
-            Material healthBarMaterial = HealthBar.GetComponent<Image>().material;
-            healthBarMaterial.SetFloat("_Life", Life / InitialLife);
-        }
-
         public void SelfDestroy() => gameObject.SetActive(false);
-
-        private IEnumerator Invincibility()
-        {
-            Material blinkMat = GetComponent<MeshRenderer>().sharedMaterial;
-            blinkMat.SetInt("_Blink", 1);
-            _canTakeDamage = false;
-            yield return new WaitForSeconds(1f);
-            blinkMat.SetInt("_Blink", 0);
-            _canTakeDamage = true;
-        }
     }
 }

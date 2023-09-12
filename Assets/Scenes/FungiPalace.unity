@@ -5333,8 +5333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 999
   Damage: 8
-  HasHealthBar: 0
-  HealthBar: {fileID: 0}
 --- !u!1 &1051675682 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
@@ -5841,12 +5839,13 @@ GameObject:
   - component: {fileID: 1178893206}
   - component: {fileID: 1178893205}
   - component: {fileID: 1178893211}
+  - component: {fileID: 1178893215}
   - component: {fileID: 1178893210}
   - component: {fileID: 1178893209}
   - component: {fileID: 1178893208}
   - component: {fileID: 1178893212}
-  - component: {fileID: 1178893213}
   - component: {fileID: 1178893214}
+  - component: {fileID: 1178893216}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -5966,7 +5965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coolDownTimer: 0.5
-  _attackSpeed: 12
   _impulseForce: 5
   AttackDamage: 100
   _evaluationCurve:
@@ -6050,22 +6048,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1178893213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178893203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e4b1c10b01f53469806d143f37a20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Life: 100
-  Damage: 16
-  HasHealthBar: 1
-  HealthBar: {fileID: 1994376132}
 --- !u!114 &1178893214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6081,6 +6063,33 @@ MonoBehaviour:
   _kunai: {fileID: 3643134206074831819, guid: 5ef49865b17cf54449d3eda7c56aace9, type: 3}
   _kunaiSpeed: 8
   _cooldownTimer: 0.7
+--- !u!114 &1178893215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178893203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049ea1d2d486a814aa63af875547bd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1178893216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178893203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05deb608f55f4ed4f82ddf5633db978a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Life: 100
+  Damage: 8
+  _healthbar: {fileID: 1994376132}
 --- !u!1 &1185095431
 GameObject:
   m_ObjectHideFlags: 0
@@ -6100,8 +6109,8 @@ GameObject:
   - component: {fileID: 1185095437}
   - component: {fileID: 1185095436}
   - component: {fileID: 1185095441}
-  - component: {fileID: 1185095442}
   - component: {fileID: 1185095444}
+  - component: {fileID: 1185095445}
   m_Layer: 3
   m_Name: Fungi
   m_TagString: Boss
@@ -6359,22 +6368,6 @@ MonoBehaviour:
   - {fileID: 252660067}
   - {fileID: 463415650}
   _shotForce: 5
---- !u!114 &1185095442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185095431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e4b1c10b01f53469806d143f37a20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Life: 600
-  Damage: 8
-  HasHealthBar: 1
-  HealthBar: {fileID: 313723040}
 --- !u!54 &1185095443
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6417,6 +6410,21 @@ MonoBehaviour:
   _moveForce: 3
   _directionTimer: 8
   _changeType: 2
+--- !u!114 &1185095445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185095431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05deb608f55f4ed4f82ddf5633db978a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Life: 600
+  Damage: 8
+  _healthbar: {fileID: 313723040}
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,

@@ -13,11 +13,15 @@ namespace Units.Player
 
         private bool _canShoot = true;
 
-        private void Start() => _player = GetComponent<Player>();
-
-        private void Update()
+        private void Start()
         {
-            if ((Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.Joystick1Button3)) && _canShoot)
+            _player = GetComponent<Player>();
+            _player.PlayerInputs.OnFireKunai += FireKunai;
+        }
+
+        private void FireKunai()
+        {
+            if (_canShoot)
             {
                 StartCoroutine(ShootCooldown());
                 ShootKunai();

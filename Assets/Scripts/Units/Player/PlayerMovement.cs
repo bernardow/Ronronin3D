@@ -22,11 +22,11 @@ namespace Units.Player
         {
             if (!_rigidbody)
             {
-                _player.PlayerTransform.position += Helpers.GetDirection() * _speed * Time.deltaTime;
+                _player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * _speed * Time.deltaTime;
                 return;
             }
 
-            _player.PlayerRigidbody.AddForce(Helpers.GetDirection() * _speed, ForceMode.Force);
+            _player.PlayerRigidbody.AddForce(_player.PlayerInputs.MovementDirection * _speed, ForceMode.Force);
         }
     }
 }

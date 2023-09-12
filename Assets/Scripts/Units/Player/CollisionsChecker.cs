@@ -13,7 +13,7 @@ namespace Units.Player
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.layer == 3)
+            if (other.gameObject.layer == 3 || other.gameObject.layer == 7)
             {
                 BaseUnit target = other.collider.GetComponent<BaseUnit>();
                 if (_player.PlayerAttack.IsSlashing)
