@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -35,6 +36,15 @@ namespace Units.Player
         {
             _player = GetComponent<Player>();
             _player.PlayerInputs.OnFireSpecialAttack += Slash;
+            _player.PlayerCollisions.OnCollision += Attack;
+        }
+
+        private void Attack(object sender, OnCollisionArgs e)
+        {
+            if (IsSlashing)
+            {
+                e.Collider.RemoveLife(AttackDamage);
+            }
         }
         
         /// <summary>

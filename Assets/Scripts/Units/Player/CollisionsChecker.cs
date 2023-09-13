@@ -8,6 +8,8 @@ namespace Units.Player
     {
         private Player _player;
         [SerializeField] private float _knockbackTreshold;
+        
+        public event EventHandler<OnCollisionArgs> OnCollision = delegate {  };
 
         private void Start() => _player = GetComponent<Player>();
 
@@ -20,6 +22,12 @@ namespace Units.Player
         {
             if (other.gameObject.layer == 3 || other.gameObject.layer == 7)
             {
+                OnCollisionArgs args = new OnCollisionArgs
+                {
+                    Collider = other.GetComponent<BaseUnit>()
+                };
+                OnCollision.Invoke(null, args);
+                /*
                 BaseUnit target = other.GetComponent<BaseUnit>();
                 if (_player.PlayerAttack.IsSlashing)
                 {
@@ -28,7 +36,7 @@ namespace Units.Player
                 }
                 
                 _player.PlayerHealth.RemoveLife(target.Damage);
-                StartKnockBack(other);
+                StartKnockBack(other);*/
             }
         }
 
@@ -52,5 +60,10 @@ namespace Units.Player
             float knockbackForce = _knockbackTreshold / Vector3.Distance(enemyPosition, playerPosition); 
             _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
+    }
+
+    public class OnCollisionArgs : EventArgs
+    {
+        public BaseUnit Collider { get; set; }
     }
 }

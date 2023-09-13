@@ -13,7 +13,7 @@ namespace Units.Funghy
 
         public Transform FungiTransform { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
-        public SpecialUnit FunghyHealth { get; private set; }
+        public BaseUnit FunghyHealth { get; private set; }
         private Spores _spores;
         private SporeCloud _sporeCloud;
         private FungiDash _fungiDash;
@@ -27,7 +27,7 @@ namespace Units.Funghy
         {
             FungiTransform = transform;
             FungyRigidbody = GetComponent<Rigidbody>();
-            FunghyHealth = GetComponent<SpecialUnit>();
+            FunghyHealth = GetComponent<BaseUnit>();
             _observableObject = new ObservableObject();
             _spores = GetComponent<Spores>();
             _fungiDash = GetComponent<FungiDash>();
