@@ -20,6 +20,7 @@ namespace Units.Funghy
         private AcidRain _acidRain;
         private FungiMinions _fungiMinions;
         private FungiIdle _fungiIdle;
+        private FungiUltimate _fungiUltimate;
 
         private ObservableObject _observableObject;
         
@@ -35,6 +36,7 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
+            _fungiUltimate = GetComponent<FungiUltimate>();
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
         }
@@ -44,7 +46,7 @@ namespace Units.Funghy
         private void FungiStateMachine()
         {
             int attackIndex = _currentAtacks.GetRandomValueInList();
-            _observableObject.NotifySingleObserver(attackIndex);
+            _observableObject.NotifySingleObserver(2);
         }
 
         private void CheckForAttacksUpdates()
@@ -57,13 +59,21 @@ namespace Units.Funghy
                     
                     _observableObject.AddObserver(_spores);
                     _observableObject.AddObserver(_fungiDash);
+                    
+                    /*
+                     * Teste
+                     */
+                    _currentAtacks.Add(FungiAttacks.Ultimate);
+                    _observableObject.AddObserver(_fungiUltimate);
                     break;
                 case FungiStates.PhaseTwo: 
                     _currentAtacks.Add(FungiAttacks.AcidRain);
                     _currentAtacks.Add(FungiAttacks.SporeCloud);
+                    _currentAtacks.Add(FungiAttacks.Ultimate);
                     
                     _observableObject.AddObserver(_acidRain);
                     _observableObject.AddObserver(_sporeCloud);
+                    _observableObject.AddObserver(_fungiUltimate);
                     break;
                 case FungiStates.PhaseThree: 
                     _currentAtacks.Add(FungiAttacks.Minions);
@@ -89,7 +99,8 @@ namespace Units.Funghy
             SporeCloud,
             AcidRain,
             Dash,
-            Minions
+            Minions,
+            Ultimate
         }
 
         public void RunStateMachine() => FungiStateMachine();
