@@ -30,15 +30,13 @@ public class FungiIdle : MonoBehaviour
   
     private async void DirectionTimer()
     {
-        while (enabled)
+        while (this != null)
         {
-            await DirectionTask(_directionTimer);
-            if (this == null)
-                break;
+            await ChangeDirectionTask(_directionTimer);
         }
     }
 
-    private async Task DirectionTask(int timer)
+    private async Task ChangeDirectionTask(int timer)
     {
         await Task.Delay(timer * 1000);
         if(this != null)

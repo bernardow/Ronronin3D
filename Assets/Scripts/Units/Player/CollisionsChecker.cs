@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Units.Player
@@ -11,7 +10,11 @@ namespace Units.Player
         
         public event EventHandler<OnCollisionArgs> OnCollision = delegate {  };
 
-        private void Start() => _player = GetComponent<Player>();
+        private void Start()
+        {
+            _player = GetComponent<Player>();
+            OnCollision += StartKnockBack;
+        }
 
         private void OnCollisionEnter(Collision other) => CheckColliders(other.collider);
 
@@ -27,27 +30,12 @@ namespace Units.Player
                     Collider = other.GetComponent<BaseUnit>()
                 };
                 OnCollision.Invoke(null, args);
-                /*
-                BaseUnit target = other.GetComponent<BaseUnit>();
-                if (_player.PlayerAttack.IsSlashing)
-                {
-                    DealDamage(target);
-                    return;
-                }
-                
-                _player.PlayerHealth.RemoveLife(target.Damage);
-                StartKnockBack(other);*/
             }
         }
 
-        private void DealDamage(BaseUnit target)
+        private void StartKnockBack(object sender, OnCollisionArgs args)
         {
-            VulnerableState vulnerableState = target.GetComponent<VulnerableState>();
-            target.RemoveLife(vulnerableState != null && vulnerableState.IsVulnerable? _player.PlayerAttack.AttackDamage * 2 : _player.PlayerAttack.AttackDamage);
-        }
-
-        private void StartKnockBack(Collider col)
-        {
+            Collider col = args.Collider.GetComponent<Collider>();
             Vector3 enemyPosition = col.transform.position;
             Vector3 playerPosition = _player.PlayerTransform.position;
             KnockBack(playerPosition, enemyPosition);
@@ -60,10 +48,5 @@ namespace Units.Player
             float knockbackForce = _knockbackTreshold / Vector3.Distance(enemyPosition, playerPosition); 
             _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
         }
-    }
-
-    public class OnCollisionArgs : EventArgs
-    {
-        public BaseUnit Collider { get; set; }
     }
 }

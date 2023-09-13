@@ -24,6 +24,13 @@ namespace Units.Player
             PlayerRigidbody = GetComponent<Rigidbody>();
             PlayerInputs = GetComponent<PlayerInputs>();
             PlayerCollisions = GetComponent<CollisionsChecker>();
+
+            PlayerCollisions.OnCollision += TakeDamage;
+        }
+
+        private void TakeDamage(object sender, OnCollisionArgs args)
+        {
+            PlayerHealth.RemoveLife(args.Collider.Damage);
         }
     }
 }
