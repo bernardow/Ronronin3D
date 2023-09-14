@@ -6837,6 +6837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72c70b1362dfb24aa24274ad2a2f12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _funghy: {fileID: 1185095440}
 --- !u!54 &1178893212
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7122,6 +7123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e32a3a76440754084690c00d676c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FungiUltimate: {fileID: 1185095447}
 --- !u!114 &1185095441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7258,15 +7260,7 @@ MonoBehaviour:
   _ultimateDuration: 17.72
   _rotationAnglesPerTime: 20
   _fungiCenter: {fileID: 1631220679}
-  _lasers:
-  - {fileID: 1126164716}
-  - {fileID: 156206584}
-  - {fileID: 327951316}
-  - {fileID: 2085307640}
-  - {fileID: 379848728}
-  - {fileID: 1127048229}
-  - {fileID: 845154987}
-  - {fileID: 1638693752}
+  LaserAttack: {fileID: 1631220680}
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
@@ -8467,6 +8461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1631220679}
+  - component: {fileID: 1631220680}
   m_Layer: 0
   m_Name: Fungi Center
   m_TagString: Untagged
@@ -8483,7 +8478,7 @@ Transform:
   m_GameObject: {fileID: 1631220678}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.65460885, z: -0, w: -0.75596774}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8497,6 +8492,28 @@ Transform:
   - {fileID: 1638693751}
   m_Father: {fileID: 1185095432}
   m_LocalEulerAnglesHint: {x: 0, y: 998.22, z: 0}
+--- !u!114 &1631220680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631220678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ad3e09dd67b7144a12a8d30c174766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lasers:
+  - {fileID: 1126164716}
+  - {fileID: 156206584}
+  - {fileID: 327951316}
+  - {fileID: 2085307640}
+  - {fileID: 379848728}
+  - {fileID: 1127048229}
+  - {fileID: 845154987}
+  - {fileID: 1638693752}
+  _widthMultiplier: 3
 --- !u!1 &1638193044 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
