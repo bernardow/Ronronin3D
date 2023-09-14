@@ -15,6 +15,8 @@ namespace Units.Player
         public PlayerInputs PlayerInputs { get; private set; }
         public CollisionsChecker PlayerCollisions { get; private set; }
 
+        [SerializeField] private Funghy.Funghy _funghy;
+
         private void Awake()
         {
             PlayerAttack = GetComponent<PlayerAttack>();
@@ -26,11 +28,17 @@ namespace Units.Player
             PlayerCollisions = GetComponent<CollisionsChecker>();
 
             PlayerCollisions.OnCollision += TakeDamage;
+            _funghy.FungiUltimate.OnUltimateHit += TakeDamage;
         }
 
         private void TakeDamage(object sender, OnCollisionArgs args)
         {
             PlayerHealth.RemoveLife(args.Collider.Damage);
+        }
+        
+        private void TakeDamage(object sender, OnUltimateArgs args)
+        {
+            PlayerHealth.RemoveLife(args.Damage);
         }
     }
 }

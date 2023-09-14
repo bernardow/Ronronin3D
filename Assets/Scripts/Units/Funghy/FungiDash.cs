@@ -39,7 +39,6 @@ namespace Units.Funghy
             {
                 _isDashing = false;
                 _counter = 0;
-                //_funghy.ManageIdleMovement();
                 _funghy.RunStateMachine();
             }
         }
@@ -52,7 +51,7 @@ namespace Units.Funghy
 
         public void OnNotify()
         {
-            //_funghy.ManageIdleMovement();
+            _funghy.ManageIdleMovement();
             _isDashing = true;
         }
     }

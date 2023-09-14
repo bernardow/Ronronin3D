@@ -20,7 +20,7 @@ namespace Units.Funghy
         private AcidRain _acidRain;
         private FungiMinions _fungiMinions;
         private FungiIdle _fungiIdle;
-        private FungiUltimate _fungiUltimate;
+        public FungiUltimate FungiUltimate { get; private set; }
 
         private ObservableObject _observableObject;
         
@@ -36,7 +36,7 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
-            _fungiUltimate = GetComponent<FungiUltimate>();
+            FungiUltimate = GetComponent<FungiUltimate>();
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
         }
@@ -64,7 +64,7 @@ namespace Units.Funghy
                      * Teste
                      */
                     _currentAtacks.Add(FungiAttacks.Ultimate);
-                    _observableObject.AddObserver(_fungiUltimate);
+                    _observableObject.AddObserver(FungiUltimate);
                     break;
                 case FungiStates.PhaseTwo: 
                     _currentAtacks.Add(FungiAttacks.AcidRain);
@@ -73,7 +73,7 @@ namespace Units.Funghy
                     
                     _observableObject.AddObserver(_acidRain);
                     _observableObject.AddObserver(_sporeCloud);
-                    _observableObject.AddObserver(_fungiUltimate);
+                    _observableObject.AddObserver(FungiUltimate);
                     break;
                 case FungiStates.PhaseThree: 
                     _currentAtacks.Add(FungiAttacks.Minions);
@@ -103,7 +103,11 @@ namespace Units.Funghy
             Ultimate
         }
 
-        public void RunStateMachine() => FungiStateMachine();
+        public void RunStateMachine()
+        {
+            ManageIdleMovement();
+            FungiStateMachine();
+        }
 
         public void PhaseChecker()
         {
