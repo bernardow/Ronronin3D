@@ -64,5 +64,15 @@ namespace Units.Funghy
         {
             StartCoroutine(SetAttackTime(12));
         }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

@@ -49,5 +49,15 @@ namespace Units.Funghy
         {
             StartCoroutine(StartCloudExpansion(3));
         }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

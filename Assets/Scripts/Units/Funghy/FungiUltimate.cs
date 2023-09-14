@@ -72,4 +72,13 @@ public class FungiUltimate : MonoBehaviour, IObserver
     private void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
     
     public void OnNotify() => StartCoroutine(CastUltimate(_castingTimer));
+    public void Disable()
+    {
+        enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
+    }
 }

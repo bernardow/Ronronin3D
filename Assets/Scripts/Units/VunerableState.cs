@@ -1,18 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Units;
 using UnityEngine;
+using Utilities;
 
 public class VulnerableState : MonoBehaviour
 {
-    private bool _isVulnerable;
+    [SerializeField] private float _timer;
+    private IBoss _boss;
+    private SpecialUnit _baseUnit;
 
-    public bool IsVulnerable { get; private set; }
-
-    private IEnumerator TurnVulnerable()
+    private void Awake()
     {
-        _isVulnerable = true;
-        yield return new WaitForSeconds(5);
-        _isVulnerable = false;
+        _boss = GameObject.FindWithTag("Boss").GetComponent<IBoss>();
+        _baseUnit = GetComponent<SpecialUnit>();
+    }
+
+    public void RunVulnerableState()
+    {
+        _boss.StopStateMachine();
+        StartCoroutine(SetVulnerableState(_timer));
+    }
+
+    private IEnumerator SetVulnerableState(float timer)
+    {
+        _baseUnit.DamageMultiplier = 2;
+        yield return new WaitForSeconds(timer);
+        _baseUnit.DamageMultiplier = 1;
+        _boss.RunStateMachine();
     }
 }

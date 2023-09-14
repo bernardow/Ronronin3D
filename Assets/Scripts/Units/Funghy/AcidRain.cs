@@ -50,5 +50,15 @@ namespace Units.Funghy
         {
             StartCoroutine(RunRain(2f));
         }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

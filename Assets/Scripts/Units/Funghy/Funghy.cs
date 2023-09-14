@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -22,6 +23,8 @@ namespace Units.Funghy
         private FungiIdle _fungiIdle;
         public FungiUltimate FungiUltimate;
 
+        private List<IObserver> _attacksComponents = new List<IObserver>();
+
         private ObservableObject _observableObject;
         
         private void Awake()
@@ -36,6 +39,14 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
+            
+            _attacksComponents.Add(_spores);
+            _attacksComponents.Add(_fungiDash);
+            _attacksComponents.Add(FungiUltimate);
+            _attacksComponents.Add(_sporeCloud);
+            _attacksComponents.Add(_acidRain);
+            _attacksComponents.Add(_fungiMinions);
+            
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
         }
@@ -100,6 +111,15 @@ namespace Units.Funghy
         {
             ManageIdleMovement();
             FungiStateMachine();
+        }
+
+        public IEnumerator StopStateMachine()
+        {
+            foreach (IObserver attack in _attacksComponents)
+                attack.Disable();
+            yield return new WaitForSeconds(0.2f);
+            foreach (IObserver attack in _attacksComponents)
+                attack.Enable();
         }
 
         public void PhaseChecker()

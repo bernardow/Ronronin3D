@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LaserAttack : MonoBehaviour
 {
-    public float Damage { get; private set; }
+    public float Damage = 20;
     public LineRenderer[] Lasers = new LineRenderer[8];
     [SerializeField] private float _widthMultiplier;
     private bool _canDealDamage;

@@ -54,5 +54,15 @@ namespace Units.Funghy
             _funghy.ManageIdleMovement();
             _isDashing = true;
         }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

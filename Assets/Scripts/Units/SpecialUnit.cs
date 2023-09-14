@@ -8,9 +8,14 @@ namespace Units
     public class SpecialUnit : BaseUnit
     {
         [SerializeField] private GameObject _healthbar;
+        public float DamageMultiplier { get; set; }
         public event Action PlayerDeath = delegate {  };
 
-        private void Awake() => UpdateHealthBar();
+        private void Awake()
+        {
+            DamageMultiplier = 1;
+            UpdateHealthBar();
+        }
 
         public override void AddLife(float amount)
         {
@@ -20,7 +25,7 @@ namespace Units
 
         public override void RemoveLife(float amount)
         {
-            base.RemoveLife(amount);
+            base.RemoveLife(amount * DamageMultiplier);
             UpdateHealthBar();
             CheckLife();
             

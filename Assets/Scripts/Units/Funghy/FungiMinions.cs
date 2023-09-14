@@ -30,5 +30,15 @@ namespace Units.Funghy
         {
             StartCoroutine(SpawnMinions(_spawnInterval));
         }
+
+        public void Disable()
+        {
+            enabled = false;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
     }
 }

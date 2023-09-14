@@ -6929,6 +6929,7 @@ GameObject:
   - component: {fileID: 1185095445}
   - component: {fileID: 1185095446}
   - component: {fileID: 1185095447}
+  - component: {fileID: 1185095448}
   m_Layer: 3
   m_Name: Fungi
   m_TagString: Boss
@@ -7261,6 +7262,19 @@ MonoBehaviour:
   _rotationAnglesPerTime: 20
   _fungiCenter: {fileID: 1631220679}
   LaserAttack: {fileID: 1631220680}
+--- !u!114 &1185095448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185095431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3c4034ca0d2a946a8cefa86b32efad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timer: 5
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
@@ -8504,6 +8518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ad3e09dd67b7144a12a8d30c174766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 20
   Lasers:
   - {fileID: 1126164716}
   - {fileID: 156206584}
