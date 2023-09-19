@@ -20,7 +20,7 @@ public class VulnerableState : MonoBehaviour
 
     public void RunVulnerableState()
     {
-        _boss.StopStateMachine();
+        StartCoroutine(_boss.StopStateMachine());
         StartCoroutine(SetVulnerableState(_timer));
     }
 

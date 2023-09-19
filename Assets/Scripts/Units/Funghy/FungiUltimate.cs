@@ -75,6 +75,8 @@ public class FungiUltimate : MonoBehaviour, IObserver
     public void Disable()
     {
         enabled = false;
+        _shootLaser = false;
+        StopAllCoroutines();
     }
 
     public void Enable()

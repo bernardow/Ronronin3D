@@ -34,7 +34,9 @@ public class MinionUnit : MonoBehaviour
 
     private void Update()
     {
-        _minionTransform.position += (Helpers.GetPlayerPosition() - _minionTransform.position) * _minionSpeed * Time.deltaTime;
+        Vector3 position = _minionTransform.position;
+        position += (Helpers.GetPlayerPosition() - position) * _minionSpeed * Time.deltaTime; 
+        _minionTransform.position = position;
     }
 
     private IEnumerator SetLifeTime(float timer)

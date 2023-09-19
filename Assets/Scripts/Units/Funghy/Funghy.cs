@@ -49,9 +49,8 @@ namespace Units.Funghy
             
             _currentState = FungiStates.PhaseOne;
             CheckForAttacksUpdates();
+            RunStateMachine();
         }
-
-        private void Start() => RunStateMachine();
 
         private void FungiStateMachine()
         {
@@ -66,9 +65,11 @@ namespace Units.Funghy
                 case FungiStates.PhaseOne: 
                     _currentAtacks.Add(FungiAttacks.CrossShot);
                     _currentAtacks.Add(FungiAttacks.Dash);
+                    _currentAtacks.Add(FungiAttacks.Minions);
                     
                     _observableObject.AddObserver(_spores);
                     _observableObject.AddObserver(_fungiDash);
+                    _observableObject.AddObserver(_fungiMinions);
                     break;
                 case FungiStates.PhaseTwo: 
                     _currentAtacks.Add(FungiAttacks.AcidRain);

@@ -44,10 +44,12 @@ namespace Units.Player
             if (IsSlashing)
             {
                 e.Collider.RemoveLife(AttackDamage);
-                if (e.Collider.gameObject.name == "Fungi")
+                if (e.Collider.CompareTag("Boss"))
                 {
                     VulnerableState vulnerableState = e.Collider.GetComponent<VulnerableState>();
-                    vulnerableState.RunVulnerableState();
+                    FungiUltimate fungiUltimate = e.Collider.GetComponent<FungiUltimate>();
+                    if(fungiUltimate.CanTurnVulnerable)
+                        vulnerableState.RunVulnerableState();
                 }
             }
         }
