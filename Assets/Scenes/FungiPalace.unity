@@ -6767,7 +6767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ab332795c55e849ad08d518d7a9724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackTreshold: 75
+  _knockbackTreshold: 25
 --- !u!114 &1178893209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7237,7 +7237,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185095431}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
   m_Name: 

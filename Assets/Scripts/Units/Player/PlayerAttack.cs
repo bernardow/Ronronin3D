@@ -44,7 +44,7 @@ namespace Units.Player
             if (IsSlashing)
             {
                 e.Collider.RemoveLife(AttackDamage);
-                if (e.Collider.GetComponent<FungiUltimate>()!.CanTurnVulnerable)
+                if (e.Collider.gameObject.name == "Fungi")
                 {
                     VulnerableState vulnerableState = e.Collider.GetComponent<VulnerableState>();
                     vulnerableState.RunVulnerableState();

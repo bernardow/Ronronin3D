@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Units.Funghy;
 using UnityEngine;
@@ -17,30 +19,27 @@ public class FungiIdle : MonoBehaviour
         _initialTimer = _directionTimer;
         _funghy = GetComponent<Funghy>();
         _currentDirection = new Vector3(0.5f, _funghy.transform.position.y, -0.5f);
+        StartCoroutine(DirectionTimer());
 
     }
-
-    private void OnEnable() => DirectionTimer();
-
     private void Update()
     {
         _funghy.FungiTransform.position += _currentDirection * _moveForce * Time.deltaTime;
     }
 
   
-    private async void DirectionTimer()
+    private IEnumerator DirectionTimer()
     {
-        while (this != null)
+        while (enabled)
         {
-            await ChangeDirectionTask(_directionTimer);
+            yield return ChangeDirectionTask(_directionTimer);
         }
     }
 
-    private async Task ChangeDirectionTask(int timer)
+    private IEnumerator ChangeDirectionTask(int timer)
     {
-        await Task.Delay(timer * 1000);
-        if(this != null)
-            _currentDirection = ChangeDirection(_currentDirection, _changeType);
+        yield return new WaitForSeconds(timer);
+        _currentDirection = ChangeDirection(_currentDirection, _changeType);
     }
 
     private void OnCollisionEnter(Collision other)

@@ -32,7 +32,7 @@ namespace Units
             IBoss boss = GetComponent<IBoss>();
             boss?.PhaseChecker();
 
-            if (tag == "Player")
+            if (tag == "Player" && gameObject.activeSelf)
                 StartCoroutine(Invincibility());
         }
 
