@@ -14,13 +14,20 @@ namespace Units.Funghy
 
         private Funghy _funghy;
 
-        private void Start() => _funghy = GetComponent<Funghy>();
+        private void Awake() => _funghy = GetComponent<Funghy>();
 
         private IEnumerator SpawnMinions(float  timer)
         {
+            _funghy.FungiCenter.LookAt(Helpers.GetPlayerPosition());
+            
             for (int i = 0; i < _minionsNumber; i++)
             {
-                Instantiate(_minionPrefab, transform);
+                Transform minion = Instantiate(_minionPrefab, _funghy.FungiCenter).transform;
+                Vector3 position = Vector3.zero;
+                position.x = (i - 2) * 0.5f;
+                position.z = -1 * (position.x * position.x * 0.1f - 2);
+                minion.transform.localPosition += position;
+                minion.transform.SetParent(transform.parent.parent);
                 yield return new WaitForSeconds(timer);
             }
             _funghy.RunStateMachine();

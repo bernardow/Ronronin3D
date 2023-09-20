@@ -13,6 +13,7 @@ namespace Units.Funghy
         private List<FungiAttacks> _currentAtacks = new List<FungiAttacks>();
 
         public Transform FungiTransform { get; private set; }
+        public Transform FungiCenter { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
         public BaseUnit FunghyHealth { get; private set; }
         private Spores _spores;
@@ -39,6 +40,7 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
+            FungiCenter = transform.GetChild(1);
             
             _attacksComponents.Add(_spores);
             _attacksComponents.Add(_fungiDash);

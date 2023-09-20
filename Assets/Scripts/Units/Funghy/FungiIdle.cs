@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Units.Funghy;
 using UnityEngine;
+using static FungiUtilities;
 using Random = UnityEngine.Random;
 
 public class FungiIdle : MonoBehaviour
@@ -46,38 +47,7 @@ public class FungiIdle : MonoBehaviour
     {
         if (!other.collider.CompareTag("Ground") && !other.collider.CompareTag("Projectiles"))
         {
-            _currentDirection = ChangeDirection(_currentDirection, ChangeTypes.CROSS);
             _directionTimer = _initialTimer;
         }
-    }
-
-    private Vector3 ChangeDirection(Vector3 currentDirection, ChangeTypes changeType)
-    {
-        Vector3 newDirection = currentDirection;
-        
-        switch (changeType)
-        {
-            case ChangeTypes.CROSS:
-                newDirection = Vector3.Cross(currentDirection, Vector3.up);
-                break;
-            case ChangeTypes.RANDOM:
-                newDirection = new Vector3(Random.Range(0, 100), 0 ,Random.Range(0, 1));
-                break;
-            case ChangeTypes.ANGLE:
-                float randomAngle = Random.Range(-180, 180);
-                randomAngle = randomAngle * (Mathf.PI / 180);
-                newDirection.x = currentDirection.magnitude * Mathf.Cos(randomAngle);
-                newDirection.z = currentDirection.magnitude * Mathf.Sin(randomAngle);
-                break;
-        }
-
-        return newDirection;
-    }
-
-    private enum ChangeTypes
-    {
-        CROSS,
-        RANDOM,
-        ANGLE
     }
 }

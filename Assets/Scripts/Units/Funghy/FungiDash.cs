@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -46,7 +47,9 @@ namespace Units.Funghy
         private void OnCollisionEnter(Collision other)
         {
             if (!other.collider.CompareTag("Ground"))
-                _direction = Vector3.Cross(Vector3.up, _direction);
+            {
+                _direction = FungiUtilities.ChangeDirection(_direction, FungiUtilities.ChangeTypes.CROSS);
+            }
         }
 
         public void OnNotify()
