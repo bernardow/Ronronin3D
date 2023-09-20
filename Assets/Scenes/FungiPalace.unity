@@ -955,7 +955,7 @@ GameObject:
   - component: {fileID: 213225128}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5719,7 +5719,7 @@ GameObject:
   - component: {fileID: 1001532644}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7050,9 +7050,9 @@ GameObject:
   - component: {fileID: 1185095436}
   - component: {fileID: 1185095441}
   - component: {fileID: 1185095445}
-  - component: {fileID: 1185095446}
   - component: {fileID: 1185095447}
   - component: {fileID: 1185095448}
+  - component: {fileID: 1185095449}
   m_Layer: 3
   m_Name: Fungi
   m_TagString: Boss
@@ -7220,7 +7220,7 @@ MonoBehaviour:
   _minionPrefab: {fileID: 1118937405689230995, guid: 573428445f1fdde4193a80e5964e1df6,
     type: 3}
   _spawnInterval: 0.5
-  _minionsNumber: 4
+  _minionsNumber: 5
 --- !u!114 &1185095439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7234,7 +7234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 12
-  _dashForce: 10
+  _dashForce: 2
 --- !u!114 &1185095440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7353,21 +7353,6 @@ MonoBehaviour:
   Life: 800
   Damage: 8
   _healthbar: {fileID: 313723040}
---- !u!114 &1185095446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185095431}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveForce: 2
-  _directionTimer: 8
-  _changeType: 2
 --- !u!114 &1185095447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7398,6 +7383,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timer: 5
+--- !u!114 &1185095449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185095431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fab7e34674c088418c646f79fe849e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveForce: 2
+  _directionTimer: 8
+  _changeType: 2
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
@@ -7792,7 +7792,7 @@ GameObject:
   - component: {fileID: 1348173624}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7994,7 +7994,7 @@ GameObject:
   - component: {fileID: 1358768662}
   m_Layer: 0
   m_Name: Cube (6)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8099,7 +8099,7 @@ GameObject:
   - component: {fileID: 1378941122}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9173,7 +9173,7 @@ GameObject:
   - component: {fileID: 1766384706}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9351,7 +9351,7 @@ GameObject:
   - component: {fileID: 1779422256}
   m_Layer: 0
   m_Name: Cube (5)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9462,7 +9462,7 @@ GameObject:
   - component: {fileID: 1802112179}
   m_Layer: 0
   m_Name: Cube (7)
-  m_TagString: Untagged
+  m_TagString: Setup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

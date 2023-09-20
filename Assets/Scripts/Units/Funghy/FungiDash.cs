@@ -25,7 +25,7 @@ namespace Units.Funghy
 
         private void Start()
         {
-            _direction = new Vector3(Random.Range(0, 100), _funghy.FungiTransform.position.y, Random.Range(0, 100));
+            _direction = new Vector3(Random.Range(0, 100), _funghy.FungiTransform.localPosition.y, Random.Range(0, 100));
         }
         
         private void FixedUpdate()
@@ -33,7 +33,8 @@ namespace Units.Funghy
             if (_isDashing)
             {
                 _counter += Time.deltaTime;
-                _funghy.FungyRigidbody.AddForce(_direction * _dashForce, ForceMode.Force);
+                _funghy.FungiTransform.position += _direction * _dashForce * Time.deltaTime;
+                Debug.DrawLine(transform.localPosition, _direction, Color.red);
             }
 
             if (_counter >= _duration)
@@ -49,6 +50,13 @@ namespace Units.Funghy
             if (!other.collider.CompareTag("Ground"))
             {
                 _direction = FungiUtilities.ChangeDirection(_direction, FungiUtilities.ChangeTypes.CROSS);
+                _direction.Normalize();
+                Ray ray = new Ray(_funghy.FungiTransform.localPosition, _direction * 0.1f);
+                if (Physics.Raycast(ray, out RaycastHit hit, 1))
+                {
+                    if (hit.collider.CompareTag("Setup"))
+                        _direction = -_direction;
+                }
             }
         }
 

@@ -57,7 +57,7 @@ namespace Units.Funghy
         private void FungiStateMachine()
         {
             int attackIndex = _currentAtacks.GetRandomValueInList();
-            _observableObject.NotifySingleObserver(attackIndex);
+            _observableObject.NotifySingleObserver(1);
         }
 
         private void CheckForAttacksUpdates()
