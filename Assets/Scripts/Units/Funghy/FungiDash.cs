@@ -37,13 +37,13 @@ namespace Units.Funghy
                 _counter += Time.deltaTime;
                 _funghy.FungiTransform.position += _direction * _dashForce * Time.deltaTime;
                 
-                
+                /*  DEBUG
                 Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up) * 2f;
                 Vector3 rightPoint = -leftPoint;
                 
                 Debug.DrawRay(leftPoint + transform.localPosition, _direction * _rayCastRange, Color.red);
                 Debug.DrawRay(rightPoint + transform.localPosition, _direction * _rayCastRange, Color.red);
-                
+                */
             }
 
             if (_counter >= _duration)
@@ -61,38 +61,15 @@ namespace Units.Funghy
             {
                 _direction = FungiUtilities.ChangeDirection(_direction, FungiUtilities.ChangeTypes.CROSS);
                 _direction.Normalize();
-                SearchForWalls(_funghy.FungiTransform.localPosition);
+                _direction = Helpers.SearchForWalls(_funghy.FungiTransform.localPosition, _direction, _mask);
                 StartCoroutine(SecondSearch());
             }
         }
-
-        private void SearchForWalls(Vector3 startPoint)
-        {
-            Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up);
-            Vector3 rightPoint = -leftPoint;
-            
-            Ray ray = new Ray(rightPoint + startPoint, _direction * _rayCastRange);
-            if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _mask))
-            {
-                if (hit.collider.CompareTag("Setup"))
-                {
-                    _direction = -_direction;
-                    return;
-                }
-            }
-            
-            Ray leftRay =  new Ray(leftPoint + startPoint, _direction * _rayCastRange);
-            if (Physics.Raycast(leftRay, out RaycastHit hitInfo, _rayCastRange, _mask))
-            {
-                if (hitInfo.collider.CompareTag("Setup"))
-                    _direction = -_direction;
-            }
-        }
-
+        
         private IEnumerator SecondSearch()
         {
             yield return new WaitForSeconds(1f);
-            SearchForWalls(_funghy.FungiTransform.localPosition);
+            _direction = Helpers.SearchForWalls(_funghy.FungiTransform.localPosition, _direction, _mask);
             
         }
 
@@ -106,7 +83,7 @@ namespace Units.Funghy
 
         public void OnNotify()
         {
-            _funghy.ManageIdleMovement();
+            _funghy.ManageIdleMovement(false);
             StartCoroutine(DashStartDelay());
         }
 

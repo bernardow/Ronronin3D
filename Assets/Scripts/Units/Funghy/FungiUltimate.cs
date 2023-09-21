@@ -53,7 +53,7 @@ public class FungiUltimate : MonoBehaviour, IObserver
     private IEnumerator CastUltimate(float timer)
     {
         CanTurnVulnerable = true;
-        _funghy.ManageIdleMovement();
+        _funghy.ManageIdleMovement(false);
         yield return new WaitForSeconds(timer);
         CanTurnVulnerable = false;
         StartCoroutine(StartUltimate(_ultimateDuration));
@@ -63,7 +63,6 @@ public class FungiUltimate : MonoBehaviour, IObserver
     {
         _shootLaser = true;
         yield return new WaitForSeconds(timer * 0.33f);
-        _funghy.ManageIdleMovement();
         yield return StartCoroutine(LaserAttack.LaserBehaviour(timer));
         _shootLaser = false;
         _funghy.RunStateMachine();

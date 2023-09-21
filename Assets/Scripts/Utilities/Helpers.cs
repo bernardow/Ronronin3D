@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -99,6 +100,34 @@ namespace Utilities
             Vector3 o = Vector3.zero;
             o = boss != null ? boss.position : o;
             return o;
+        }
+        
+        public static Vector3 SearchForWalls(Vector3 startPoint, Vector3 direction, LayerMask mask,float range = 2.5f)
+        {
+            Vector3 leftPoint = Vector3.Cross(direction, Vector3.up);
+            Vector3 rightPoint = -leftPoint;
+            
+            Ray ray = new Ray(rightPoint + startPoint, direction * range);
+            if (Physics.Raycast(ray, out RaycastHit hit, range, mask))
+            {
+                if (hit.collider.CompareTag("Setup"))
+                {
+                    direction = -direction;
+                    return direction;
+                }
+            }
+            
+            Ray leftRay =  new Ray(leftPoint + startPoint, direction * range);
+            if (Physics.Raycast(leftRay, out RaycastHit hitInfo, range, mask))
+            {
+                if (hitInfo.collider.CompareTag("Setup"))
+                {
+                    direction = -direction;
+                    return direction;
+                }
+            }
+
+            return direction;
         }
     }
 }

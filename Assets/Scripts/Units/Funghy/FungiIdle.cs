@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Units.Funghy;
 using UnityEngine;
+using Utilities;
 using static FungiUtilities;
 using Random = UnityEngine.Random;
 
@@ -11,7 +12,8 @@ public class FungiIdle : MonoBehaviour
     [SerializeField] private float _moveForce;
     [SerializeField] private int _directionTimer;
     [SerializeField] private ChangeTypes _changeType;
-    [SerializeField] private bool _deactivate;
+    [SerializeField] private LayerMask _mask;
+    public bool Deactivate;
     private int _initialTimer;
     private Vector3 _currentDirection;
     private Funghy _funghy;
@@ -26,16 +28,16 @@ public class FungiIdle : MonoBehaviour
     }
     private void Update()
     {
-        if(!_deactivate)
-            _funghy.FungiTransform.position += _currentDirection * _moveForce * Time.deltaTime;
+        if(Deactivate)
+            _funghy.FungiTransform.localPosition += _currentDirection * _moveForce * Time.deltaTime;
     }
 
   
     private IEnumerator DirectionTimer()
     {
-        while (enabled)
+        while (!Deactivate)
         {
-            yield return ChangeDirectionTask(_directionTimer);
+            yield return StartCoroutine(ChangeDirectionTask(_directionTimer));
         }
     }
 
@@ -43,6 +45,14 @@ public class FungiIdle : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         _currentDirection = ChangeDirection(_currentDirection, _changeType);
+        _currentDirection = Helpers.SearchForWalls(_funghy.FungiTransform.localPosition, _currentDirection, _mask);
+    }
+    
+    private IEnumerator SecondSearch()
+    {
+        yield return new WaitForSeconds(1f);
+        _currentDirection = Helpers.SearchForWalls(_funghy.FungiTransform.localPosition, _currentDirection, _mask);
+            
     }
 
     private void OnCollisionEnter(Collision other)
@@ -50,6 +60,10 @@ public class FungiIdle : MonoBehaviour
         if (!other.collider.CompareTag("Ground") && !other.collider.CompareTag("Projectiles"))
         {
             _directionTimer = _initialTimer;
+            _currentDirection = ChangeDirection(_currentDirection, ChangeTypes.CROSS);
+            _currentDirection.Normalize();
+            _currentDirection = Helpers.SearchForWalls(_funghy.FungiTransform.localPosition, _currentDirection, _mask);
+            StartCoroutine(SecondSearch());
         }
     }
 }
