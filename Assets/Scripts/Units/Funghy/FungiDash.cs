@@ -14,6 +14,7 @@ namespace Units.Funghy
 
         [SerializeField] private float _duration;
         [SerializeField] private float _dashForce;
+        [SerializeField] private LayerMask _mask;
         private float _counter;
         private Vector3 _direction;
         private bool _isDashing;
@@ -28,13 +29,19 @@ namespace Units.Funghy
             _direction = new Vector3(Random.Range(0, 100), _funghy.FungiTransform.localPosition.y, Random.Range(0, 100));
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
             if (_isDashing)
             {
                 _counter += Time.deltaTime;
                 _funghy.FungiTransform.position += _direction * _dashForce * Time.deltaTime;
-                Debug.DrawLine(transform.localPosition, _direction, Color.red);
+                
+                Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up) * 2f;
+                Vector3 rightPoint = -leftPoint;
+                
+                Debug.DrawRay(leftPoint + transform.localPosition, _direction * 2.5f, Color.red);
+                Debug.DrawRay(rightPoint + transform.localPosition, _direction * 2.5f, Color.red);
+                
             }
 
             if (_counter >= _duration)
@@ -51,19 +58,51 @@ namespace Units.Funghy
             {
                 _direction = FungiUtilities.ChangeDirection(_direction, FungiUtilities.ChangeTypes.CROSS);
                 _direction.Normalize();
-                Ray ray = new Ray(_funghy.FungiTransform.localPosition, _direction * 0.1f);
-                if (Physics.Raycast(ray, out RaycastHit hit, 1))
+                SearchForWalls(_funghy.FungiTransform.localPosition);
+                StartCoroutine(SecondSearch());
+            }
+        }
+
+        private void SearchForWalls(Vector3 startPoint)
+        {
+            Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up);
+            Vector3 rightPoint = -leftPoint;
+            
+            Ray ray = new Ray(rightPoint + startPoint, _direction * 2.5f);
+            if (Physics.Raycast(ray, out RaycastHit hit, 2.5f, _mask))
+            {
+                if (hit.collider.CompareTag("Setup"))
                 {
-                    if (hit.collider.CompareTag("Setup"))
-                        _direction = -_direction;
+                    _direction = -_direction;
+                    return;
                 }
             }
+            
+            Ray leftRay =  new Ray(leftPoint + startPoint, _direction * 2.5f);
+            if (Physics.Raycast(leftRay, out RaycastHit hitInfo, 2.5f, _mask))
+            {
+                if (hitInfo.collider.CompareTag("Setup"))
+                    _direction = -_direction;
+            }
+        }
+
+        private IEnumerator SecondSearch()
+        {
+            yield return new WaitForSeconds(1f);
+            SearchForWalls(_funghy.FungiTransform.localPosition);
+            
+        }
+
+        private IEnumerator DashStartDelay()
+        {
+            yield return new WaitForSeconds(2f);
+            _isDashing = true;
         }
 
         public void OnNotify()
         {
             _funghy.ManageIdleMovement();
-            _isDashing = true;
+            StartCoroutine(DashStartDelay());
         }
 
         public void Disable()

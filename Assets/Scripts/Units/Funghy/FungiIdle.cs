@@ -11,6 +11,7 @@ public class FungiIdle : MonoBehaviour
     [SerializeField] private float _moveForce;
     [SerializeField] private int _directionTimer;
     [SerializeField] private ChangeTypes _changeType;
+    [SerializeField] private bool _deactivate;
     private int _initialTimer;
     private Vector3 _currentDirection;
     private Funghy _funghy;
@@ -25,7 +26,8 @@ public class FungiIdle : MonoBehaviour
     }
     private void Update()
     {
-        _funghy.FungiTransform.position += _currentDirection * _moveForce * Time.deltaTime;
+        if(!_deactivate)
+            _funghy.FungiTransform.position += _currentDirection * _moveForce * Time.deltaTime;
     }
 
   
