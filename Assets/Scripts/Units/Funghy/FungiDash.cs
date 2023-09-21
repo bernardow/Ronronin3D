@@ -18,7 +18,8 @@ namespace Units.Funghy
         private float _counter;
         private Vector3 _direction;
         private bool _isDashing;
-
+        private readonly float _rayCastRange = 2.5f;
+        
         private void Awake()
         {
             _funghy = GetComponent<Funghy>();
@@ -26,7 +27,7 @@ namespace Units.Funghy
 
         private void Start()
         {
-            _direction = new Vector3(Random.Range(0, 100), _funghy.FungiTransform.localPosition.y, Random.Range(0, 100));
+            _direction = new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
         }
         
         private void Update()
@@ -36,11 +37,12 @@ namespace Units.Funghy
                 _counter += Time.deltaTime;
                 _funghy.FungiTransform.position += _direction * _dashForce * Time.deltaTime;
                 
+                
                 Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up) * 2f;
                 Vector3 rightPoint = -leftPoint;
                 
-                Debug.DrawRay(leftPoint + transform.localPosition, _direction * 2.5f, Color.red);
-                Debug.DrawRay(rightPoint + transform.localPosition, _direction * 2.5f, Color.red);
+                Debug.DrawRay(leftPoint + transform.localPosition, _direction * _rayCastRange, Color.red);
+                Debug.DrawRay(rightPoint + transform.localPosition, _direction * _rayCastRange, Color.red);
                 
             }
 
@@ -48,6 +50,7 @@ namespace Units.Funghy
             {
                 _isDashing = false;
                 _counter = 0;
+                _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);
                 _funghy.RunStateMachine();
             }
         }
@@ -68,8 +71,8 @@ namespace Units.Funghy
             Vector3 leftPoint = Vector3.Cross(_direction, Vector3.up);
             Vector3 rightPoint = -leftPoint;
             
-            Ray ray = new Ray(rightPoint + startPoint, _direction * 2.5f);
-            if (Physics.Raycast(ray, out RaycastHit hit, 2.5f, _mask))
+            Ray ray = new Ray(rightPoint + startPoint, _direction * _rayCastRange);
+            if (Physics.Raycast(ray, out RaycastHit hit, _rayCastRange, _mask))
             {
                 if (hit.collider.CompareTag("Setup"))
                 {
@@ -78,8 +81,8 @@ namespace Units.Funghy
                 }
             }
             
-            Ray leftRay =  new Ray(leftPoint + startPoint, _direction * 2.5f);
-            if (Physics.Raycast(leftRay, out RaycastHit hitInfo, 2.5f, _mask))
+            Ray leftRay =  new Ray(leftPoint + startPoint, _direction * _rayCastRange);
+            if (Physics.Raycast(leftRay, out RaycastHit hitInfo, _rayCastRange, _mask))
             {
                 if (hitInfo.collider.CompareTag("Setup"))
                     _direction = -_direction;
@@ -96,6 +99,8 @@ namespace Units.Funghy
         private IEnumerator DashStartDelay()
         {
             yield return new WaitForSeconds(2f);
+            _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);
+            yield return new WaitForSeconds(0.5f);
             _isDashing = true;
         }
 

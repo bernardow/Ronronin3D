@@ -33,12 +33,14 @@ namespace Units.Player
 
         private void TakeDamage(object sender, OnCollisionArgs args)
         {
-            PlayerHealth.RemoveLife(args.Collider.Damage);
+            if(!PlayerAttack.IsSlashing)
+                PlayerHealth.RemoveLife(args.Collider.Damage);
         }
         
         private void TakeDamage(object sender, OnUltimateArgs args)
         {
-            PlayerHealth.RemoveLife(args.Damage);
+            if(!PlayerAttack.IsSlashing)
+                PlayerHealth.RemoveLife(args.Damage);
         }
     }
 }
