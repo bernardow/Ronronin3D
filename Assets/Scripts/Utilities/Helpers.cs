@@ -58,15 +58,18 @@ namespace Utilities
         public static Vector3 CheckForInSetupCollision(Vector3 currentDirection, Transform currentTransform, Collider collider, LayerMask mask)
         {
             Vector3 newDirection = currentDirection;
-            Ray ray = new Ray(currentTransform.position, currentDirection);
-            Debug.DrawRay(currentTransform.position, currentDirection * 8);
-            if (Physics.Raycast(ray, out RaycastHit hit, 8, mask))
+            Vector3 currentPosition = currentTransform.localPosition;
+            Ray ray = new Ray(currentPosition, currentDirection);
+            //Debug.DrawRay(currentPosition, currentDirection * 1);
+            if (Physics.Raycast(ray, out RaycastHit hit, 4.5f, mask))
             {
+                Debug.Log("Pegou");
                 if (hit.collider.CompareTag("Setup"))
                 {
                     Bounds playerBounds = collider.bounds;
                     Vector3 size = playerBounds.size;
-                    newDirection = hit.point - new Vector3(size.x, 0, size.z);
+                    newDirection = newDirection.normalized * Vector3.Distance(currentPosition, hit.point);// - new Vector3(size.x, 0, size.z);
+                    //Debug.DrawLine(currentPosition, newDirection, Color.magenta);
                     return newDirection;
                 }
             }

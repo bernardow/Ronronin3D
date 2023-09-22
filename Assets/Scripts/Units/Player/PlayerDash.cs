@@ -24,13 +24,19 @@ public class PlayerDash : MonoBehaviour
         _player.PlayerInputs.OnDashActivate += Dash;
     }
 
+    private void Update()
+    {
+        //Debug.DrawRay(_player.PlayerTransform.localPosition, _player.PlayerInputs.MovementDirectionRaw * _dashImpulse, Color.magenta);
+    }
+
     private void Dash()
     {
         if (_canDash)
         {
-            Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * _dashImpulse + _player.PlayerTransform.localPosition;
+            Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * _dashImpulse; //+ _player.PlayerTransform.localPosition;
+            goalPos = Helpers.CheckForInSetupCollision(goalPos, _player.PlayerTransform, _player.PlayerCollider, _mask);
+            goalPos += _player.PlayerTransform.localPosition;
             goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
-            //goalPos = Helpers.CheckForInSetupCollision(goalPos, _player.PlayerTransform, _player.PlayerCollider, _mask);
             _player.PlayerTransform.DOMove(goalPos, 0.25f).SetEase(Ease.Linear);
             StartCoroutine(SetDashCooldown());
         }
