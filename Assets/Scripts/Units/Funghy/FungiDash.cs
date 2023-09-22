@@ -18,7 +18,6 @@ namespace Units.Funghy
         private float _counter;
         private Vector3 _direction;
         private bool _isDashing;
-        private readonly float _rayCastRange = 2.5f;
         
         private void Awake()
         {

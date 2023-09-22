@@ -11,6 +11,7 @@ public class PlayerDash : MonoBehaviour
     private Player _player;
     private bool _canDash = true;
     [SerializeField] private float _dashImpulse = 5;
+    [SerializeField] private LayerMask _mask;
 
     private void Awake()
     {
@@ -23,15 +24,14 @@ public class PlayerDash : MonoBehaviour
         _player.PlayerInputs.OnDashActivate += Dash;
     }
 
-
     private void Dash()
     {
         if (_canDash)
         {
-            Vector3 goalPos = (new Vector3(_player.PlayerInputs.Horizontal, _player.PlayerTransform.localPosition.y, //todo fix
-                _player.PlayerInputs.Vertical) + _player.PlayerTransform.localPosition).normalized * _dashImpulse;
-            goalPos.CheckForOutScreen(22, -20, 17.7f, -8.7f);
-            _player.PlayerTransform.DOMove(goalPos, 0.5f).SetEase(Ease.Linear);
+            Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * _dashImpulse + _player.PlayerTransform.localPosition;
+            goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
+            //goalPos = Helpers.CheckForInSetupCollision(goalPos, _player.PlayerTransform, _player.PlayerCollider, _mask);
+            _player.PlayerTransform.DOMove(goalPos, 0.25f).SetEase(Ease.Linear);
             StartCoroutine(SetDashCooldown());
         }
     }

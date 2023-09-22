@@ -13,7 +13,10 @@ namespace Units.Player
         public bool DashJoystick { get; private set; }
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
+        public float HorizontalRaw { get; private set; }
+        public float VerticalRaw { get; private set; }
         public Vector3 MovementDirection { get; private set; }
+        public Vector3 MovementDirectionRaw { get; private set; }
         
         
         public event Action OnFireSpecialAttack = delegate {  }; 
@@ -30,8 +33,11 @@ namespace Units.Player
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");
+            HorizontalRaw = Input.GetAxisRaw("Horizontal");
+            VerticalRaw = Input.GetAxisRaw("Vertical");
 
             MovementDirection = new Vector3(Horizontal, 0, Vertical);
+            MovementDirectionRaw = new Vector3(HorizontalRaw, 0, VerticalRaw);
             
             if (FireJoystick || FireKeyboard)
                 OnFireSpecialAttack.Invoke(); 

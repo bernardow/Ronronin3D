@@ -38,7 +38,7 @@ namespace Utilities
             }
         }
 
-        public static Vector3 CheckForOutScreen(this Vector3 currentDestination, float maxX, float minX, float maxZ, float minZ)
+        public static Vector3 CheckForOutScreen(Vector3 currentDestination, float maxX, float minX, float maxZ, float minZ)
         {
             Vector3 newDestination =  currentDestination;
 
@@ -53,6 +53,25 @@ namespace Utilities
                 newDestination.z = minZ;
 
             return newDestination;
+        }
+
+        public static Vector3 CheckForInSetupCollision(Vector3 currentDirection, Transform currentTransform, Collider collider, LayerMask mask)
+        {
+            Vector3 newDirection = currentDirection;
+            Ray ray = new Ray(currentTransform.position, currentDirection);
+            Debug.DrawRay(currentTransform.position, currentDirection * 8);
+            if (Physics.Raycast(ray, out RaycastHit hit, 8, mask))
+            {
+                if (hit.collider.CompareTag("Setup"))
+                {
+                    Bounds playerBounds = collider.bounds;
+                    Vector3 size = playerBounds.size;
+                    newDirection = hit.point - new Vector3(size.x, 0, size.z);
+                    return newDirection;
+                }
+            }
+
+            return newDirection;
         }
 
         private static Vector2 ClampedAngleLockedDirections(float angle)
