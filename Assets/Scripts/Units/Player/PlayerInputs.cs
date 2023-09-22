@@ -16,10 +16,9 @@ namespace Units.Player
         public Vector3 MovementDirection { get; private set; }
         
         
-        
         public event Action OnFireSpecialAttack = delegate {  }; 
         public event Action OnFireKunai = delegate {  };
-        public event Action OnDashActivate = delegate {  }; 
+        public event Action OnDashActivate = delegate {  };
 
         private void Update()
         {
@@ -39,7 +38,9 @@ namespace Units.Player
             
             if(FireKunaiJoystick || FireKunaiKeyboard)
                 OnFireKunai.Invoke();
-                
+            
+            if(DashJoystick || DashKeyboard)
+                OnDashActivate.Invoke();
         }
     }
 }

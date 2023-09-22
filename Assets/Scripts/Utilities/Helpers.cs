@@ -38,7 +38,7 @@ namespace Utilities
             }
         }
 
-        public static Vector3 CheckForOutScreen(float maxX, float minX, float maxZ, float minZ, Vector3  currentDestination)
+        public static Vector3 CheckForOutScreen(this Vector3 currentDestination, float maxX, float minX, float maxZ, float minZ)
         {
             Vector3 newDestination =  currentDestination;
 

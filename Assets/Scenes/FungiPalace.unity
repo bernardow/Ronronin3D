@@ -6772,6 +6772,7 @@ GameObject:
   - component: {fileID: 1178893214}
   - component: {fileID: 1178893216}
   - component: {fileID: 1178893217}
+  - component: {fileID: 1178893218}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -6928,7 +6929,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178893203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb19cf91b4b3c5b4488039669a217874, type: 3}
   m_Name: 
@@ -7030,6 +7031,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enableDPSMeter: 0
+--- !u!114 &1178893218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178893203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5778b4e44ee3f09428971e2392f9ec01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dashImpulse: 2
 --- !u!1 &1185095431
 GameObject:
   m_ObjectHideFlags: 0
@@ -7401,7 +7415,10 @@ MonoBehaviour:
   _moveForce: 2
   _directionTimer: 8
   _changeType: 2
-  _deactivate: 1
+  _mask:
+    serializedVersion: 2
+    m_Bits: 0
+  Deactivate: 0
 --- !u!1 &1194123529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4161454127652090804, guid: 04af40640d3574913ba6d57b207eac36,
