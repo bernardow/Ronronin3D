@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Units.Bosses.Base;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Utilities;
+using FungiAttacksSet = Units.Bosses.Base.FungiAttacksSet;
 
 namespace Units.Funghy
 {
     public class Funghy : MonoBehaviour, IBoss
     {
+        [SerializeField] private List<FungiAttacksSet> _attacksSets = new List<FungiAttacksSet>();
+        
         private FungiStates _currentState;
-        private List<FungiAttacks> _currentAtacks = new List<FungiAttacks>();
+        private List<FungiUtilities.FungiAttacks> _currentAtacks = new List<FungiUtilities.FungiAttacks>();
 
         public Transform FungiTransform { get; private set; }
         public Transform FungiCenter { get; private set; }
@@ -65,25 +69,25 @@ namespace Units.Funghy
             switch (_currentState)
             {
                 case FungiStates.PhaseOne: 
-                    _currentAtacks.Add(FungiAttacks.CrossShot);
-                    _currentAtacks.Add(FungiAttacks.Dash);
-                    _currentAtacks.Add(FungiAttacks.Minions);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.CrossShot);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.Dash);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.Minions);
                     
                     _observableObject.AddObserver(_spores);
                     _observableObject.AddObserver(_fungiDash);
                     _observableObject.AddObserver(_fungiMinions);
                     break;
                 case FungiStates.PhaseTwo: 
-                    _currentAtacks.Add(FungiAttacks.AcidRain);
-                    _currentAtacks.Add(FungiAttacks.SporeCloud);
-                    _currentAtacks.Add(FungiAttacks.Ultimate);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.AcidRain);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.SporeCloud);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.Ultimate);
                     
                     _observableObject.AddObserver(_acidRain);
                     _observableObject.AddObserver(_sporeCloud);
                     _observableObject.AddObserver(FungiUltimate);
                     break;
                 case FungiStates.PhaseThree: 
-                    _currentAtacks.Add(FungiAttacks.Minions);
+                    _currentAtacks.Add(FungiUtilities.FungiAttacks.Minions);
                     
                     _observableObject.AddObserver(_fungiMinions);
                     break;
@@ -98,16 +102,6 @@ namespace Units.Funghy
             PhaseOne,
             PhaseTwo,
             PhaseThree
-        }
-    
-        private enum FungiAttacks
-        {
-            CrossShot,
-            SporeCloud,
-            AcidRain,
-            Dash,
-            Minions,
-            Ultimate
         }
 
         public void RunStateMachine()

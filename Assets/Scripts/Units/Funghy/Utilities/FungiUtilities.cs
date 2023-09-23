@@ -33,4 +33,14 @@ public static class FungiUtilities
         RANDOM,
         ANGLE
     }
+    
+    public enum FungiAttacks
+    {
+        CrossShot,
+        SporeCloud,
+        AcidRain,
+        Dash,
+        Minions,
+        Ultimate
+    }
 }

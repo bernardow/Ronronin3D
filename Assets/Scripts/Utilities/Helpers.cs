@@ -151,5 +151,10 @@ namespace Utilities
 
             return direction;
         }
+
+        public enum Bosses
+        {
+            Fungi
+        }
     }
 }
