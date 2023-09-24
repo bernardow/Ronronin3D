@@ -35,7 +35,7 @@ public class MinionUnit : MonoBehaviour
     private void Update()
     {
         Vector3 position = _minionTransform.position;
-        position += (Helpers.GetPlayerPosition() - position).normalized * _minionSpeed * Time.deltaTime; 
+        position += (Helpers.GetPlayerPosition()! - position).normalized * _minionSpeed * Time.deltaTime; 
         _minionTransform.position = position;
     }
 

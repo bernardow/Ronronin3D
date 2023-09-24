@@ -39,6 +39,7 @@ namespace Units.Player
         {
             Vector3 goalPosition = Helpers.GetBossPosition() - _player.PlayerTransform.position;
             Rigidbody kunaiRigidbody = Instantiate(_kunai, _player.PlayerTransform).GetComponent<Rigidbody>();
+            kunaiRigidbody.transform.SetParent(transform.parent);
             kunaiRigidbody.AddForce(goalPosition * _kunaiSpeed, ForceMode.Impulse);
         }
     }
