@@ -1,9 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DG.Tweening;
-using TMPro.EditorUtilities;
 using Units.Funghy;
 using UnityEngine;
 using Utilities;
