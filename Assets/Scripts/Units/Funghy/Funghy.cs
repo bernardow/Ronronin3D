@@ -12,6 +12,8 @@ namespace Units.Funghy
     public class Funghy : MonoBehaviour, IBoss
     {
         [SerializeField] private List<FungiAttacksSet> _attacksSets = new List<FungiAttacksSet>();
+        private Queue<IObserver> _attackQueue;
+        
         
         private FungiStates _currentState;
         private List<FungiUtilities.FungiAttacks> _currentAtacks = new List<FungiUtilities.FungiAttacks>();
@@ -45,6 +47,8 @@ namespace Units.Funghy
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
             FungiCenter = transform.GetChild(1);
+
+            _attackQueue = new Queue<IObserver>();
             
             _attacksComponents.Add(_spores);
             _attacksComponents.Add(_fungiDash);
@@ -104,6 +108,7 @@ namespace Units.Funghy
             PhaseThree
         }
 
+        #region IBoss
         public void RunStateMachine()
         {
             ManageIdleMovement();
@@ -137,6 +142,52 @@ namespace Units.Funghy
                 CheckForAttacksUpdates();
             }
         }
+        #endregion
+
+        #region AttackSets
+        private void RunAttackSet(int index)
+        {
+            if (_attackQueue.Length == 0)
+            {
+                List<IObserver> attackSet = new List<IObserver>();
+                _attacksSets[index].AttacksList.Reverse();
+                foreach (FungiUtilities.FungiAttacks fungiAttack in _attacksSets[index].AttacksList)
+                {
+                    IObserver currentAttack = GetRespectiveIObserver(fungiAttack);
+                    _attackQueue.AddToQueue(currentAttack);
+                }
+            }
+        }
+
+        private void StopAttackSet(bool stopStateMachine = false)
+        {
+            _attackQueue.ClearQueue();
+            if(stopStateMachine)
+                StartCoroutine(StopStateMachine());
+        }
+
+        private IObserver GetRespectiveIObserver(FungiUtilities.FungiAttacks attack)
+        {
+            switch (attack)
+            {
+                case FungiUtilities.FungiAttacks.AcidRain:
+                    return _acidRain;
+                case FungiUtilities.FungiAttacks.SporeCloud:
+                    return _sporeCloud;
+                case FungiUtilities.FungiAttacks.CrossShot:
+                    return _spores;
+                case FungiUtilities.FungiAttacks.Minions:
+                    return _fungiMinions;
+                case FungiUtilities.FungiAttacks.Ultimate:
+                    return FungiUltimate;
+                case FungiUtilities.FungiAttacks.Dash:
+                    return _fungiDash;
+                default:
+                    Debug.LogError("Attack not found");
+                    return null;
+            }
+        }
+        #endregion
 
         public void ManageIdleMovement(bool active = true) => _fungiIdle.Deactivate = active;
     }

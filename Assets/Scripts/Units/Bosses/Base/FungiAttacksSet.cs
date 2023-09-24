@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Units.Bosses.Base
 {
-    [CreateAssetMenu(menuName = "Bosses/AttackSetFungi", fileName = "NewFungiAttackSet")]
-    public class FungiAttacksSet : ScriptableObject, IAttackSet
+    [Serializable]
+    public class FungiAttacksSet : IAttackSet
     {
         [SerializeField] private int iD;
         [SerializeField] private string setName;
@@ -17,12 +18,6 @@ namespace Units.Bosses.Base
             set => value = iD;
         }
 
-        public string SetName { get; set; }
-    }
-
-    public interface IAttackSet
-    {
-        public int ID { get; set; }
         public string SetName { get; set; }
     }
 }
