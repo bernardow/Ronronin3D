@@ -7183,6 +7183,7 @@ MonoBehaviour:
   _minZ: -8
   _drop: {fileID: 2293403214524435321, guid: 92f216a713e017044ab3b7b444354c4c, type: 3}
   _spawnInterval: 0.4
+  _duration: 0
 --- !u!114 &1185095437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7222,6 +7223,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _sporeCloud: {fileID: 1041861659}
+  _duration: 3
 --- !u!114 &1185095438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7267,6 +7269,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e32a3a76440754084690c00d676c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attacksSets:
+  - iD: 1
+    setName: Fase 1 Set 1
+    AttacksList: 00000000030000000400000003000000
+  - iD: 2
+    setName: Fase 1 Set 2
+    AttacksList: 03000000000000000400000000000000
+  - iD: 3
+    setName: Fase 2 Set 1
+    AttacksList: 0200000000000000010000000300000005000000
+  - iD: 4
+    setName: Fase 2 Set 2
+    AttacksList: 0200000005000000000000000400000001000000
+  - iD: 5
+    setName: Fase 3 Set 1
+    AttacksList: 050000000000000002000000030000000100000004000000
+  - iD: 6
+    setName: Fase 3 Set 2
+    AttacksList: 050000000200000001000000000000000400000003000000
+  - iD: 7
+    setName: Fase 3 Set 3
+    AttacksList: 0100000000000000020000000400000005000000
   FungiUltimate: {fileID: 1185095447}
 --- !u!114 &1185095441
 MonoBehaviour:
@@ -7331,6 +7355,7 @@ MonoBehaviour:
   - {fileID: 252660067}
   - {fileID: 463415650}
   _shotForce: 5
+  _duration: 12
 --- !u!54 &1185095443
 Rigidbody:
   m_ObjectHideFlags: 0
