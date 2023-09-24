@@ -10,6 +10,7 @@ namespace Units.Funghy
         [SerializeField] private float _maxSize = 3.5f;
         [SerializeField] private AnimationCurve _evaluationCurve;
         [SerializeField] private Transform _sporeCloud;
+        [SerializeField] private float _duration = 3;
 
         private float _current;
         private Vector3 _castPos, _goalPos;
@@ -31,23 +32,22 @@ namespace Units.Funghy
             }
         }
 
-        private IEnumerator StartCloudExpansion(float timer)
+        public IEnumerator Run()
         {
             _funghy.ManageIdleMovement(false);
             _sporeCloud.localScale = Vector3.one / 2;
             _sporeCloud.gameObject.SetActive(true);
-            yield return new WaitForSeconds(timer);
+            yield return new WaitForSeconds(_duration);
             _isExpanding = true;
             _current = 0;
-            yield return new WaitForSeconds(timer);
+            yield return new WaitForSeconds(_duration);
             _isExpanding = false;
             _sporeCloud.gameObject.SetActive(false);
-            _funghy.RunStateMachine();
         }
 
         public void OnNotify()
         {
-            StartCoroutine(StartCloudExpansion(3));
+            StartCoroutine(Run());
         }
 
         public void Disable()

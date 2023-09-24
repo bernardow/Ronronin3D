@@ -50,7 +50,6 @@ namespace Units.Funghy
                 _isDashing = false;
                 _counter = 0;
                 _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);
-                _funghy.RunStateMachine();
             }
         }
 
@@ -72,9 +71,11 @@ namespace Units.Funghy
             
         }
 
-        private IEnumerator DashStartDelay()
+        public IEnumerator Run()
         {
-            yield return new WaitForSeconds(2f);
+            _funghy.ManageIdleMovement(false);
+            _isDashing = false;
+            yield return new WaitForSeconds(2);
             _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);
             yield return new WaitForSeconds(0.5f);
             _isDashing = true;
@@ -82,8 +83,7 @@ namespace Units.Funghy
 
         public void OnNotify()
         {
-            _funghy.ManageIdleMovement(false);
-            StartCoroutine(DashStartDelay());
+            StartCoroutine(Run());
         }
 
         public void Disable()

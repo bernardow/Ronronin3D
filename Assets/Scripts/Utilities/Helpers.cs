@@ -98,7 +98,15 @@ namespace Utilities
             }
         }
 
-        public static int GetRandomValueInList<T>(this List<T> currentList) => Random.Range(0, currentList.Count);
+        public static int GetRandomValueInList<T>(this List<T> currentList, int initialNumber = 0, int maxNumber = 0)
+        {
+            if (initialNumber != 0)
+                return Random.Range(initialNumber, maxNumber);
+            
+            if (maxNumber != 0)
+                return Random.Range(0, maxNumber);
+            return Random.Range(0, currentList.Count);
+        }
 
         public static T GetChildComponent<T>(this GameObject caller)
         {

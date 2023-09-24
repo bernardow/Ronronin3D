@@ -7,15 +7,12 @@ namespace Units.Funghy
     public class Spores : MonoBehaviour, IObserver
     {
         [SerializeField] private Transform _fungiCenter;
-        private Funghy _funghy;
         [SerializeField] private GameObject[] _sporePool;
         [SerializeField] private float _shotForce;
+        [SerializeField] private float _duration = 12;
 
         private bool _isShooting;
         
-        // Start is called before the first frame update
-        void Start() => _funghy = GetComponent<Funghy>();
-
         private void Update()
         {
             if (_isShooting)
@@ -51,18 +48,17 @@ namespace Units.Funghy
             }
         }
         
-        private IEnumerator SetAttackTime(float timer)
+        public IEnumerator Run()
         {
             _isShooting = true;
             StartCoroutine(Shooter());
-            yield return new WaitForSeconds(timer);
+            yield return new WaitForSeconds(_duration);
             _isShooting = false;
-            _funghy.RunStateMachine();
         }
         
         public void OnNotify()
         {
-            StartCoroutine(SetAttackTime(12));
+            StartCoroutine(Run());
         }
 
         public void Disable()

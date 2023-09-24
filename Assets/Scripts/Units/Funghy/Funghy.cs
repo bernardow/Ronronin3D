@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Units.Bosses.Base;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Utilities;
 using FungiAttacksSet = Units.Bosses.Base.FungiAttacksSet;
 
@@ -12,11 +9,12 @@ namespace Units.Funghy
     public class Funghy : MonoBehaviour, IBoss
     {
         [SerializeField] private List<FungiAttacksSet> _attacksSets = new List<FungiAttacksSet>();
-        private Queue<IObserver> _attackQueue;
-        
+        private Utilities.Queue<IObserver> _attackQueue;
+        private int _minAttackSetRange;
+        private int _maxAttackRange = 2;
         
         private FungiStates _currentState;
-        private List<FungiUtilities.FungiAttacks> _currentAtacks = new List<FungiUtilities.FungiAttacks>();
+        //private List<FungiUtilities.FungiAttacks> _currentAtacks = new List<FungiUtilities.FungiAttacks>();
 
         public Transform FungiTransform { get; private set; }
         public Transform FungiCenter { get; private set; }
@@ -48,7 +46,7 @@ namespace Units.Funghy
             _fungiIdle = GetComponent<FungiIdle>();
             FungiCenter = transform.GetChild(1);
 
-            _attackQueue = new Queue<IObserver>();
+            _attackQueue = new Utilities.Queue<IObserver>();
             
             _attacksComponents.Add(_spores);
             _attacksComponents.Add(_fungiDash);
@@ -58,16 +56,25 @@ namespace Units.Funghy
             _attacksComponents.Add(_fungiMinions);
             
             _currentState = FungiStates.PhaseOne;
-            CheckForAttacksUpdates();
+            //CheckForAttacksUpdates();
             RunStateMachine();
         }
 
-        private void FungiStateMachine()
+        private IEnumerator FungiStateMachine()
         {
-            int attackIndex = _currentAtacks.GetRandomValueInList();
-            _observableObject.NotifySingleObserver(attackIndex);
+            while (FunghyHealth.Life > 0)
+            {
+                int attackIndex = _attacksSets.GetRandomValueInList(_minAttackSetRange, _maxAttackRange);
+                RunAttackSet(attackIndex);
+                for (int i = 0; i < _attackQueue.Length; i++)
+                {
+                    yield return StartCoroutine(_attackQueue.GetNextInQueue().Run());
+                }
+                _attackQueue.ClearQueue();    
+            }
         }
 
+        /*
         private void CheckForAttacksUpdates()
         {
             switch (_currentState)
@@ -100,7 +107,7 @@ namespace Units.Funghy
                     break;
             }
         }
-
+        */
         private enum FungiStates
         {
             PhaseOne,
@@ -112,7 +119,7 @@ namespace Units.Funghy
         public void RunStateMachine()
         {
             ManageIdleMovement();
-            FungiStateMachine();
+            StartCoroutine(FungiStateMachine());
         }
 
         public IEnumerator StopStateMachine()
@@ -132,14 +139,20 @@ namespace Units.Funghy
             if (FunghyHealth.Life > FunghyHealth.InitialLife * 0.33f  && _currentState != FungiStates.PhaseTwo)
             {
                 _currentState = FungiStates.PhaseTwo;
-                CheckForAttacksUpdates();
+                StartCoroutine(StopAttackSet());
+                _minAttackSetRange = 2;
+                _maxAttackRange = 4;
+                //CheckForAttacksUpdates();
                 return;
             }
 
             if (FunghyHealth.Life < FunghyHealth.InitialLife * 0.33f && _currentState != FungiStates.PhaseThree)
             {
                 _currentState = FungiStates.PhaseThree;
-                CheckForAttacksUpdates();
+                StartCoroutine(StopAttackSet());
+                _minAttackSetRange = 5;
+                _maxAttackRange = 7;
+                //CheckForAttacksUpdates();
             }
         }
         #endregion
@@ -149,8 +162,6 @@ namespace Units.Funghy
         {
             if (_attackQueue.Length == 0)
             {
-                List<IObserver> attackSet = new List<IObserver>();
-                _attacksSets[index].AttacksList.Reverse();
                 foreach (FungiUtilities.FungiAttacks fungiAttack in _attacksSets[index].AttacksList)
                 {
                     IObserver currentAttack = GetRespectiveIObserver(fungiAttack);
@@ -159,11 +170,11 @@ namespace Units.Funghy
             }
         }
 
-        private void StopAttackSet(bool stopStateMachine = false)
+        private IEnumerator StopAttackSet(bool stopStateMachine = false)
         {
             _attackQueue.ClearQueue();
             if(stopStateMachine)
-                StartCoroutine(StopStateMachine());
+                yield return StartCoroutine(StopStateMachine());
         }
 
         private IObserver GetRespectiveIObserver(FungiUtilities.FungiAttacks attack)

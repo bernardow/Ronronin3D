@@ -16,7 +16,7 @@ namespace Units.Funghy
 
         private void Awake() => _funghy = GetComponent<Funghy>();
 
-        private IEnumerator SpawnMinions(float  timer)
+        public IEnumerator Run()
         {
             _funghy.FungiCenter.LookAt(Helpers.GetPlayerPosition());
             
@@ -28,14 +28,15 @@ namespace Units.Funghy
                 position.z = -1 * (position.x * position.x * 0.1f - 2);
                 minion.transform.localPosition += position;
                 minion.transform.SetParent(transform.parent.parent);
-                yield return new WaitForSeconds(timer);
+                yield return new WaitForSeconds(_spawnInterval);
             }
-            _funghy.RunStateMachine();
+
+            yield return null;
         }
 
         public void OnNotify()
         {
-            StartCoroutine(SpawnMinions(_spawnInterval));
+            StartCoroutine(Run());
         }
 
         public void Disable()

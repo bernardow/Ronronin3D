@@ -10,13 +10,10 @@ namespace Units.Funghy
         [SerializeField] private float _maxX, _minX, _maxZ, _minZ;
         [SerializeField] private GameObject _drop;
         [SerializeField] private float _spawnInterval;
+        [SerializeField] private float _duration;
         
-        private Funghy _funghy;
-
         private bool _isRaining;
         
-        private void Start() => _funghy = GetComponent<Funghy>();
-
         private Vector3 PickRandomPointInMap()
         {
             float randomX = Random.Range(_minX, _maxX);
@@ -34,21 +31,24 @@ namespace Units.Funghy
             }
         }
 
-        private IEnumerator RunRain(float timer)
+        public IEnumerator Run()
         {
-            yield return new WaitForSeconds(timer);
+            yield return new WaitForSeconds(_duration);
             _isRaining = true;
             StartCoroutine(SpawnRain());
-            yield return new WaitForSeconds(timer);
-            _funghy.RunStateMachine();
-            
+            yield return new WaitForSeconds(_duration);
+            StartCoroutine(Rain());
+        }
+
+        private IEnumerator Rain()
+        {
             yield return new WaitForSeconds(12f);
             _isRaining = false;
         }
         
         public void OnNotify()
         {
-            StartCoroutine(RunRain(2f));
+            StartCoroutine(Run());
         }
 
         public void Disable()
