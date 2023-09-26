@@ -12,7 +12,8 @@ public class PlayerDash : MonoBehaviour
     private bool _canDash = true;
     [SerializeField] private float _dashImpulse = 5;
     [SerializeField] private LayerMask _mask;
-
+    public bool IsDashing { get; private set; }
+    
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -38,8 +39,16 @@ public class PlayerDash : MonoBehaviour
             goalPos += _player.PlayerTransform.localPosition;
             goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
             _player.PlayerTransform.DOMove(goalPos, 0.25f).SetEase(Ease.Linear);
+            StartCoroutine(IsDashingPropHandler());
             StartCoroutine(SetDashCooldown());
         }
+    }
+
+    private IEnumerator IsDashingPropHandler()
+    {
+        IsDashing = true;
+        yield return new WaitForSeconds(0.25f);
+        IsDashing = false;
     }
 
     private IEnumerator SetDashCooldown()

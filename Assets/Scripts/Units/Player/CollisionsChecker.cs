@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Units.Player
@@ -13,6 +14,19 @@ namespace Units.Player
         private void Start()
         {
             _player = GetComponent<Player>();
+            OnCollision += StartKnockBack;
+            _player.PlayerInputs.OnDashActivate += DisableKnockBack;
+        }
+
+        private void DisableKnockBack()
+        {
+            StartCoroutine(DisableKnockBackCoroutine());
+        }
+
+        private IEnumerator DisableKnockBackCoroutine()
+        {
+            OnCollision -= StartKnockBack;
+            yield return new WaitForSeconds(0.25f);
             OnCollision += StartKnockBack;
         }
 

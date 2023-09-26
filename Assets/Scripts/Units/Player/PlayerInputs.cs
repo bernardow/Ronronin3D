@@ -11,6 +11,8 @@ namespace Units.Player
         public bool FireKunaiJoystick { get; private set; }
         public bool DashKeyboard { get; private set; }
         public bool DashJoystick { get; private set; }
+        public bool BasicAttackKeyboard { get; private set; }
+        public bool BasicAttackJoystick { get; private set; }
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
         public float HorizontalRaw { get; private set; }
@@ -22,6 +24,7 @@ namespace Units.Player
         public event Action OnFireSpecialAttack = delegate {  }; 
         public event Action OnFireKunai = delegate {  };
         public event Action OnDashActivate = delegate {  };
+        public event Action OnBasicAttack = delegate {  };
 
         private void Update()
         {
@@ -31,6 +34,8 @@ namespace Units.Player
             FireKunaiKeyboard = Input.GetKey(KeyCode.K);
             DashKeyboard = Input.GetKeyDown(KeyCode.L);
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
+            BasicAttackKeyboard = Input.GetKeyDown(KeyCode.J);
+            BasicAttackJoystick = Input.GetKeyDown(KeyCode.Joystick1Button2);
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");
             HorizontalRaw = Input.GetAxisRaw("Horizontal");
@@ -47,6 +52,9 @@ namespace Units.Player
             
             if(DashJoystick || DashKeyboard)
                 OnDashActivate.Invoke();
+            
+            if(BasicAttackJoystick || BasicAttackKeyboard)
+                OnBasicAttack.Invoke();
         }
     }
 }

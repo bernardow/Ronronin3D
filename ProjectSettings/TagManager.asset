@@ -7,8 +7,8 @@ TagManager:
   - Projectiles
   - Ground
   - Boss
-  - CenterArea
   - Setup
+  - Sword
   layers:
   - Default
   - TransparentFX

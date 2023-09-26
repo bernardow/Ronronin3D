@@ -21,6 +21,13 @@ namespace Units.Player
             _player.PlayerInputs.OnDashActivate += DisableMovement;
         }
 
+        private void Update()
+        {
+            Vector3 bossPosition = Helpers.GetBossPosition();
+            Vector3 lookPosition = new Vector3(bossPosition.x, 0, bossPosition.z) - _player.PlayerTransform.localPosition;
+            _player.PlayerTransform.localRotation = Quaternion.LookRotation(lookPosition);
+        }
+
         void FixedUpdate() => Move();
         
         private void Move()

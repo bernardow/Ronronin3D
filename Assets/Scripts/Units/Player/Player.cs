@@ -14,6 +14,7 @@ namespace Units.Player
 
         public PlayerInputs PlayerInputs { get; private set; }
         public CollisionsChecker PlayerCollisions { get; private set; }
+        public PlayerDash PlayerDash { get; private set; }
         public Collider PlayerCollider { get; private set; }
 
         [SerializeField] private Funghy.Funghy _funghy;
@@ -27,6 +28,7 @@ namespace Units.Player
             PlayerRigidbody = GetComponent<Rigidbody>();
             PlayerInputs = GetComponent<PlayerInputs>();
             PlayerCollisions = GetComponent<CollisionsChecker>();
+            PlayerDash = GetComponent<PlayerDash>();
             PlayerCollider = GetComponent<Collider>();
 
             PlayerCollisions.OnCollision += TakeDamage;
@@ -35,13 +37,13 @@ namespace Units.Player
 
         private void TakeDamage(object sender, OnCollisionArgs args)
         {
-            if(!PlayerAttack.IsSlashing)
+            if(!PlayerAttack.IsSlashing && !PlayerDash.IsDashing)
                 PlayerHealth.RemoveLife(args.Collider.Damage);
         }
         
         private void TakeDamage(object sender, OnUltimateArgs args)
         {
-            if(!PlayerAttack.IsSlashing)
+            if(!PlayerAttack.IsSlashing && !PlayerDash.IsDashing)
                 PlayerHealth.RemoveLife(args.Damage);
         }
     }
