@@ -63,7 +63,6 @@ namespace Utilities
             //Debug.DrawRay(currentPosition, currentDirection * 1);
             if (Physics.Raycast(ray, out RaycastHit hit, 4.5f, mask))
             {
-                Debug.Log("Pegou");
                 if (hit.collider.CompareTag("Setup"))
                 {
                     Bounds playerBounds = collider.bounds;

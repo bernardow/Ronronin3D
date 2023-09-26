@@ -49,10 +49,11 @@ public class FungiUltimate : MonoBehaviour, IObserver
     public IEnumerator Run()
     {
         CanTurnVulnerable = true;
+        Debug.Log("Casting Ultimate");
         _funghy.ManageIdleMovement(false);
         yield return new WaitForSeconds(_castingTimer);
         CanTurnVulnerable = false;
-        StartCoroutine(StartUltimate(_ultimateDuration));
+        yield return StartCoroutine(StartUltimate(_ultimateDuration));
     }
 
     private IEnumerator StartUltimate(float timer)
@@ -66,6 +67,12 @@ public class FungiUltimate : MonoBehaviour, IObserver
     private void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
     
     public void OnNotify() => StartCoroutine(Run());
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     public void Disable()
     {
         enabled = false;

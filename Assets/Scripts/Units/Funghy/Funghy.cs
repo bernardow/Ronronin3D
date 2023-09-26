@@ -20,6 +20,7 @@ namespace Units.Funghy
         public Transform FungiCenter { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
         public BaseUnit FunghyHealth { get; private set; }
+        public VulnerableState VulnerableState { get; private set; }
         private Spores _spores;
         private SporeCloud _sporeCloud;
         private FungiDash _fungiDash;
@@ -45,6 +46,7 @@ namespace Units.Funghy
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
             FungiCenter = transform.GetChild(1);
+            VulnerableState = GetComponent<VulnerableState>();
 
             _attackQueue = new Utilities.Queue<IObserver>();
             
@@ -62,7 +64,7 @@ namespace Units.Funghy
 
         private IEnumerator FungiStateMachine()
         {
-            while (FunghyHealth.Life > 0)
+            while (FunghyHealth.Life > 0 && !VulnerableState.InVulnerableState)
             {
                 int attackIndex = _attacksSets.GetRandomValueInList(_minAttackSetRange, _maxAttackRange);
                 RunAttackSet(attackIndex);
@@ -70,7 +72,7 @@ namespace Units.Funghy
                 {
                     yield return StartCoroutine(_attackQueue.GetNextInQueue().Run());
                 }
-                _attackQueue.ClearQueue();    
+                _attackQueue.ClearQueue();
             }
         }
 
@@ -129,6 +131,7 @@ namespace Units.Funghy
             yield return new WaitForSeconds(0.2f);
             foreach (IObserver attack in _attacksComponents)
                 attack.Enable();
+            StopAllCoroutines();
         }
 
         public void PhaseChecker()

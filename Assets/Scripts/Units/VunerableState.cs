@@ -1,34 +1,35 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Units;
 using UnityEngine;
-using Utilities;
 
-public class VulnerableState : MonoBehaviour
+namespace Units
 {
-    [SerializeField] private float _timer;
-    private IBoss _boss;
-    private SpecialUnit _baseUnit;
-
-    private void Awake()
+    public class VulnerableState : MonoBehaviour
     {
-        _boss = GameObject.FindWithTag("Boss").GetComponent<IBoss>();
-        _baseUnit = GetComponent<SpecialUnit>();
-    }
+        [SerializeField] private float _timer;
+        private IBoss _boss;
+        private SpecialUnit _baseUnit;
+        public bool InVulnerableState { get; private set; }
 
-    public void RunVulnerableState()
-    {
-        StartCoroutine(_boss.StopStateMachine());
-        StartCoroutine(SetVulnerableState(_timer));
-    }
+        private void Awake()
+        {
+            _boss = GameObject.FindWithTag("Boss").GetComponent<IBoss>();
+            _baseUnit = GetComponent<SpecialUnit>();
+        }
 
-    private IEnumerator SetVulnerableState(float timer)
-    {
-        _baseUnit.DamageMultiplier = 2;
-        yield return new WaitForSeconds(timer);
-        _baseUnit.DamageMultiplier = 1;
-        _boss.RunStateMachine();
+        public void RunVulnerableState()
+        {
+            StartCoroutine(_boss.StopStateMachine());
+            StartCoroutine(SetVulnerableState(_timer));
+        }
+
+        private IEnumerator SetVulnerableState(float timer)
+        {
+            _baseUnit.DamageMultiplier = 2;
+            InVulnerableState = true;
+            yield return new WaitForSeconds(timer);
+            InVulnerableState = false;
+            _baseUnit.DamageMultiplier = 1;
+            _boss.RunStateMachine();
+        }
     }
 }
