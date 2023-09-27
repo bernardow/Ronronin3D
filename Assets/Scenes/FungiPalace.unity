@@ -8379,6 +8379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 15
+  _knockBackForce: 50
 --- !u!65 &1424711048
 BoxCollider:
   m_ObjectHideFlags: 0

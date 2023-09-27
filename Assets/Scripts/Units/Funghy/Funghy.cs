@@ -70,7 +70,7 @@ namespace Units.Funghy
                 RunAttackSet(attackIndex);
                 for (int i = 0; i < _attackQueue.Length; i++)
                 {
-                    yield return StartCoroutine(_attackQueue.GetNextInQueue().Run());
+                    yield return StartCoroutine(_attackQueue.GetNextInQueue()!.Run());
                 }
                 _attackQueue.ClearQueue();
             }

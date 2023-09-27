@@ -7,10 +7,14 @@ namespace Units.Player
     public class SwordUnit : MonoBehaviour
     {
         [SerializeField] private float _damage;
+        [SerializeField] private float _knockBackForce = 5;
+
         private Transform _swordTransform;
         private Collider _swordCollider;
         private MeshRenderer _meshRenderer;
         private Player _player;
+
+        private bool _canAttack = true;
 
         private void Awake()
         {
@@ -34,19 +38,30 @@ namespace Units.Player
 
         private IEnumerator StartAttackCoroutine()
         {
-            if (_player.PlayerBasicAttack.CanAttack)
+            if (_canAttack)
             {
+                _canAttack = false;
                 EnableCollider();
                 _meshRenderer.enabled = true;
                 yield return new WaitForSeconds(0.5f);
                 DisableCollider();
-                _meshRenderer.enabled = false;   
+                _meshRenderer.enabled = false;
+                yield return new WaitForSeconds(0.5f);
+                _canAttack = true;
             }
         }
 
         private void EnableCollider() => _swordCollider.enabled = true;
 
         private void DisableCollider() => _swordCollider.enabled = false;
+
+        private void GenerateKnockBack(Vector3 myPosition, Rigidbody enemy)
+        {
+            Vector3 enemyPosition = enemy.GetComponent<Transform>().localPosition;
+            Vector3 direction = enemyPosition - myPosition;
+            direction.Normalize();
+            enemy.AddForce(direction * _knockBackForce, ForceMode.Impulse);
+        }
         
         private void OnTriggerEnter(Collider other)
         {
@@ -54,6 +69,7 @@ namespace Units.Player
             {
                 BaseUnit baseUnit = other.GetComponent<BaseUnit>()!;
                 baseUnit.RemoveLife(_damage);
+                GenerateKnockBack(_swordTransform.localPosition, other.GetComponent<Rigidbody>()!);
             }
         }
     }

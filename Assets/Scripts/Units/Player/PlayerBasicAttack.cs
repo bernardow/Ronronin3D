@@ -26,7 +26,7 @@ namespace Units.Player
 
         private IEnumerator BasicAttackCooldown(float timer)
         {
-            yield return new WaitForSeconds(0.49f);
+            yield return new WaitForSeconds(0.5f);
             CanAttack = false;
             yield return new WaitForSeconds(timer);
             CanAttack = true;
