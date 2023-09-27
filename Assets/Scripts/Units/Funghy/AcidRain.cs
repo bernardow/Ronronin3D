@@ -54,6 +54,7 @@ namespace Units.Funghy
         public void Disable()
         {
             enabled = false;
+            StopAllCoroutines();
         }
 
         public void Enable()
