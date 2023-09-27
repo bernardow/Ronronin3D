@@ -8,6 +8,7 @@ namespace Units.Player
     {
         private Player _player;
         [SerializeField] private float _knockbackTreshold;
+        [SerializeField] private LayerMask _mask;
         
         public event EventHandler<OnCollisionArgs> OnCollision = delegate {  };
 
@@ -26,7 +27,9 @@ namespace Units.Player
         private IEnumerator DisableKnockBackCoroutine()
         {
             OnCollision -= StartKnockBack;
+            _player.PlayerCollider.excludeLayers = _mask;
             yield return new WaitForSeconds(0.25f);
+            _player.PlayerCollider.excludeLayers = 0;
             OnCollision += StartKnockBack;
         }
 
