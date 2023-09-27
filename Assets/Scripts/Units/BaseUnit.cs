@@ -12,7 +12,7 @@ namespace Units
         public float InitialLife { get; private set; }
         public float Damage = 8;
 
-        public bool CanTakeDamage { get; set; }
+        public bool CanTakeDamage { get; set; } = true;
 
         private void Start()
         {
@@ -31,6 +31,7 @@ namespace Units
                 return;
             
             Life -= amount;
+            CheckLife();
         }
 
         public virtual void CheckLife()

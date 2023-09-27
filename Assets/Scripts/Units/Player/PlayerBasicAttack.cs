@@ -7,7 +7,8 @@ namespace Units.Player
     {
         [SerializeField] private MeshRenderer _swordPrefab;
         [SerializeField] private float _coolDownDuration = 0.25f;
-        private bool _canAttack = true;
+        public bool CanAttack { get; private set; } = true;
+    
         private Player _player;
 
         private void Start()
@@ -18,16 +19,17 @@ namespace Units.Player
         
         private void BasicAttack()
         {
-            if (!_canAttack)
+            if (!CanAttack)
                 return;
             StartCoroutine(BasicAttackCooldown(_coolDownDuration));
         }
 
         private IEnumerator BasicAttackCooldown(float timer)
         {
-            _canAttack = false;
+            yield return new WaitForSeconds(0.49f);
+            CanAttack = false;
             yield return new WaitForSeconds(timer);
-            _canAttack = true;
+            CanAttack = true;
         }
     }
 }

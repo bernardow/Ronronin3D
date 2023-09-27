@@ -34,11 +34,14 @@ namespace Units.Player
 
         private IEnumerator StartAttackCoroutine()
         {
-            EnableCollider();
-            _meshRenderer.enabled = true;
-            yield return new WaitForSeconds(0.5f);
-            DisableCollider();
-            _meshRenderer.enabled = false;
+            if (_player.PlayerBasicAttack.CanAttack)
+            {
+                EnableCollider();
+                _meshRenderer.enabled = true;
+                yield return new WaitForSeconds(0.5f);
+                DisableCollider();
+                _meshRenderer.enabled = false;   
+            }
         }
 
         private void EnableCollider() => _swordCollider.enabled = true;
