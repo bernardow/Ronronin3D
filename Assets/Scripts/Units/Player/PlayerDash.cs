@@ -26,7 +26,7 @@ namespace Units.Player
 
         private void Update()
         {
-            //Debug.DrawRay(_player.PlayerTransform.localPosition, _player.PlayerInputs.MovementDirectionRaw * _dashImpulse, Color.magenta);
+            Debug.DrawRay(_player.PlayerTransform.localPosition, _player.PlayerInputs.MovementDirectionRaw * _dashImpulse, Color.magenta);
         }
 
         private void Dash()

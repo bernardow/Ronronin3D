@@ -60,5 +60,10 @@ namespace Managers
             _optionsScreen.SetActive(!_optionsScreen.activeSelf);
             _menuScreen.SetActive(!_menuScreen.activeSelf);
         }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
     }
 }

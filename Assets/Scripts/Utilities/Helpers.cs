@@ -61,7 +61,7 @@ namespace Utilities
             Vector3 currentPosition = currentTransform.localPosition;
             Ray ray = new Ray(currentPosition, currentDirection);
             //Debug.DrawRay(currentPosition, currentDirection * 1);
-            if (Physics.Raycast(ray, out RaycastHit hit, 4.5f, mask))
+            if (Physics.Raycast(ray, out RaycastHit hit, 5.5f, mask))
             {
                 if (hit.collider.CompareTag("Setup"))
                 {
@@ -126,8 +126,8 @@ namespace Utilities
         public static Vector3 GetBossPosition()
         {
             Transform boss = GameObject.FindWithTag("Boss")!.transform!;
-            Vector3 o = Vector3.zero;
-            o = boss != null ? boss.position : o;
+            Vector3 o = Vector3.forward;
+            o = boss != null ? boss!.position : o;
             return o;
         }
         

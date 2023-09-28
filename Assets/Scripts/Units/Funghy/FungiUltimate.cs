@@ -53,7 +53,8 @@ public class FungiUltimate : MonoBehaviour, IObserver
         _funghy.ManageIdleMovement(false);
         yield return new WaitForSeconds(_castingTimer);
         CanTurnVulnerable = false;
-        yield return StartCoroutine(StartUltimate(_ultimateDuration));
+        StartCoroutine(StartUltimate(_ultimateDuration));
+        yield return new WaitForSeconds(_ultimateDuration);
     }
 
     private IEnumerator StartUltimate(float timer)
