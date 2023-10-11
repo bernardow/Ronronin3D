@@ -18,6 +18,7 @@ namespace Units.Player
         public Collider PlayerCollider { get; private set; }
         public PlayerBasicAttack PlayerBasicAttack { get; private set; }
 
+        [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
 
         private void Awake()
@@ -34,7 +35,8 @@ namespace Units.Player
             PlayerBasicAttack = GetComponent<PlayerBasicAttack>();
 
             PlayerCollisions.OnCollision += TakeDamage;
-            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+            if(!_inLobby)
+                _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
         }
 
         private void TakeDamage(object sender, OnCollisionArgs args)
