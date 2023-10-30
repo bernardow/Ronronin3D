@@ -79,6 +79,7 @@ namespace Units.Funghy
             _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);
             yield return new WaitForSeconds(0.5f);
             _isDashing = true;
+            yield return new WaitForSeconds(12);
         }
 
         public void OnNotify()
