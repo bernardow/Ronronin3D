@@ -31,7 +31,7 @@ namespace Units.Player
             FireJoystick = Input.GetKeyDown(KeyCode.Joystick1Button0);
             FireKeyboard = Input.GetKeyDown(KeyCode.Space);
             FireKunaiJoystick = Input.GetKey(KeyCode.Joystick1Button3);
-            FireKunaiKeyboard = Input.GetKey(KeyCode.K);
+            FireKunaiKeyboard = Input.GetKey(KeyCode.Mouse0);
             DashKeyboard = Input.GetKeyDown(KeyCode.L);
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
             BasicAttackKeyboard = Input.GetKeyDown(KeyCode.J);

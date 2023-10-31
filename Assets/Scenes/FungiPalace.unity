@@ -6953,6 +6953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72c70b1362dfb24aa24274ad2a2f12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inLobby: 0
   _funghy: {fileID: 1185095440}
 --- !u!54 &1178893212
 Rigidbody:
@@ -6994,8 +6995,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kunai: {fileID: 3643134206074831819, guid: 5ef49865b17cf54449d3eda7c56aace9, type: 3}
-  _kunaiSpeed: 8
+  _kunaiSpeed: 70
   _cooldownTimer: 0.3
+  _mouseShoot: 1
 --- !u!114 &1178893215
 MonoBehaviour:
   m_ObjectHideFlags: 0

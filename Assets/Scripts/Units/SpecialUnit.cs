@@ -47,8 +47,8 @@ namespace Units
 
         private void UpdateHealthBar()
         {
-            Material healthBarMaterial = _healthbar.GetComponent<Image>().material;
-            healthBarMaterial.SetFloat("_Life", Life / InitialLife);
+            Material healthBarMaterial = _healthbar.GetComponent<Image>()?.material;
+            healthBarMaterial!.SetFloat("_Life", Life / InitialLife);
         }
     
         private IEnumerator Invincibility()
