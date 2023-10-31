@@ -34,7 +34,7 @@ namespace Units.Player
             FireKunaiKeyboard = Input.GetKey(KeyCode.Mouse0);
             DashKeyboard = Input.GetKeyDown(KeyCode.LeftShift);
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
-            MeleeAttackKeyboard = Input.GetKeyDown(KeyCode.J);
+            MeleeAttackKeyboard = Input.GetKeyDown(KeyCode.Mouse1);
             MeleeAttackJoystick = Input.GetKeyDown(KeyCode.Joystick1Button2);
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");

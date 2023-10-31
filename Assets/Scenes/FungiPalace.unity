@@ -7041,7 +7041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kunai: {fileID: 3643134206074831819, guid: 5ef49865b17cf54449d3eda7c56aace9, type: 3}
-  _kunaiSpawnPosition: {fileID: 0}
+  _kunaiSpawnPosition: {fileID: 1575717958}
   _kunaiSpeed: 70
   _cooldownTimer: 0.3
   _mouseShoot: 1
