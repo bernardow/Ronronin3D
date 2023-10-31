@@ -55,7 +55,7 @@ namespace Units.Funghy
 
         private void OnCollisionEnter(Collision other)
         {
-            if (!other.collider.CompareTag("Ground"))
+            if (!other.collider.CompareTag("Ground") && other.collider.gameObject.layer != 8)
             {
                 _direction = FungiUtilities.ChangeDirection(_direction, FungiUtilities.ChangeTypes.CROSS);
                 _direction.Normalize();

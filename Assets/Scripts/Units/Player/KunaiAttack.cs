@@ -8,6 +8,7 @@ namespace Units.Player
     public class KunaiAttack : MonoBehaviour
     {
         [SerializeField] private GameObject _kunai;
+        [SerializeField] private Transform _kunaiSpawnPosition;
         [SerializeField] private float _kunaiSpeed;
         [SerializeField] private float _cooldownTimer;
         [SerializeField] private bool _mouseShoot;
@@ -41,7 +42,7 @@ namespace Units.Player
         {
             Vector3 goalPosition = _mouseShoot? ShootKunaiRaycast() - _player.PlayerTransform.localPosition : Helpers.GetBossPosition() - _player.PlayerTransform.position;
             goalPosition = new Vector3(goalPosition.x, _player.PlayerTransform.position.y, goalPosition.z);
-            Rigidbody kunaiRigidbody = Instantiate(_kunai, _player.PlayerTransform).GetComponent<Rigidbody>();
+            Rigidbody kunaiRigidbody = Instantiate(_kunai, _kunaiSpawnPosition.position,  Quaternion.identity, _player.PlayerTransform).GetComponent<Rigidbody>();
             kunaiRigidbody.transform.SetParent(transform.parent);
             kunaiRigidbody.AddForce(goalPosition.normalized * _kunaiSpeed, ForceMode.Impulse);
         }
