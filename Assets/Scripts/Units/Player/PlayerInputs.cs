@@ -13,6 +13,8 @@ namespace Units.Player
         public bool DashJoystick { get; private set; }
         public bool MeleeAttackKeyboard { get; private set; }
         public bool MeleeAttackJoystick { get; private set; }
+        public bool InteractKeyboard { get; private set; }
+        public bool InteractJoystick { get; private set; }
         public float Horizontal { get; private set; }
         public float Vertical { get; private set; }
         public float HorizontalRaw { get; private set; }
@@ -36,6 +38,8 @@ namespace Units.Player
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
             MeleeAttackKeyboard = Input.GetKeyDown(KeyCode.Mouse1);
             MeleeAttackJoystick = Input.GetKeyDown(KeyCode.Joystick1Button2);
+            InteractKeyboard = Input.GetKeyDown(KeyCode.E);
+            InteractJoystick = Input.GetKeyDown(KeyCode.Joystick1Button4);
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");
             HorizontalRaw = Input.GetAxisRaw("Horizontal");
