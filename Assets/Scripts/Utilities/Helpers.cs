@@ -125,10 +125,10 @@ namespace Utilities
         
         public static Vector3 GetBossPosition()
         {
+            if (GameObject.FindWithTag("Boss") == null) return Vector3.forward;
+            
             Transform boss = GameObject.FindWithTag("Boss")!.transform!;
-            Vector3 o = Vector3.forward;
-            o = boss != null ? boss!.position : o;
-            return o;
+            return boss!.position;
         }
         
         public static Vector3 SearchForWalls(Vector3 startPoint, Vector3 direction, LayerMask mask,float range = 2.5f)

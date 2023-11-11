@@ -34,9 +34,11 @@ namespace Units.Player
             PlayerCollider = GetComponent<Collider>();
             PlayerBasicAttack = GetComponent<PlayerBasicAttack>();
 
-            PlayerCollisions.OnCollision += TakeDamage;
-            if(!_inLobby)
-                _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+
+            if (_inLobby) return;
+            
+            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
         }
 
         private void TakeDamage(object sender, OnCollisionArgs args)
