@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Units.Player
@@ -37,8 +38,14 @@ namespace Units.Player
 
             if (_inLobby) return;
             
-            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;//?
-            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;//?
+            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+            PlayerCollisions.OnCollision += TakeDamage;
+        }
+
+        private void OnDestroy()
+        {
+            _funghy.FungiUltimate.LaserAttack.OnUltimateHit -= TakeDamage;
+            PlayerCollisions.OnCollision -= TakeDamage;        
         }
 
         private void TakeDamage(object sender, OnCollisionArgs args)

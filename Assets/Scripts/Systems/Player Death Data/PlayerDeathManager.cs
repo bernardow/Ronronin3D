@@ -4,8 +4,12 @@ namespace Systems.Player_Death_Data
 {
     public class PlayerDeathManager : MonoBehaviour
     {
+        [SerializeField] private bool _debug;
+        
         private void Awake()
         {
+            if(_debug) PlayerPrefs.SetInt("death_count", 0);
+            
             if (PlayerPrefs.HasKey("death_count")) return;
             WriteData();
         }
