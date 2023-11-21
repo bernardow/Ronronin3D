@@ -13,6 +13,7 @@ namespace Systems.Dialogs
         private PlayerInputs _playerInputs;
         public bool RunningDialog { get; set; }
         public bool FinishedSceneDialog { get; set; }
+        public bool InsideDialogRange { get; set; }
     
         public enum GameCharacters
         {
@@ -32,7 +33,7 @@ namespace Systems.Dialogs
 
         private void RunDialog()
         {
-            if(RunningDialog || FinishedSceneDialog) return;
+            if(RunningDialog || FinishedSceneDialog || !InsideDialogRange) return;
             
             _dialogBox.SetDialog(_dialogs[0], _dialogs[0].dialogContent[0].Character);
         }
