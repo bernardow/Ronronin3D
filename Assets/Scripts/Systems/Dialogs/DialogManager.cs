@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Units.Player;
 using UnityEngine;
 
 namespace Systems.Dialogs
@@ -9,6 +10,9 @@ namespace Systems.Dialogs
         [SerializeField] private List<Dialog> _dialogs = new List<Dialog>();
         [SerializeField] private List<Sprite> _charactersSprites = new List<Sprite>();
         private DialogBox _dialogBox;
+        private PlayerInputs _playerInputs;
+        public bool RunningDialog { get; set; }
+        public bool FinishedSceneDialog { get; set; }
     
         public enum GameCharacters
         {
@@ -19,15 +23,20 @@ namespace Systems.Dialogs
         private void Awake()
         {
             _dialogBox = GetComponent<DialogBox>();
+            _playerInputs = GameObject.FindWithTag("Player").GetComponent<PlayerInputs>();
+            _playerInputs.OnInteractPressed += RunDialog;
+            FinishedSceneDialog = false;
         }
 
-        private void Update()
+        private void OnDestroy() => _playerInputs.OnInteractPressed -= RunDialog;
+
+        private void RunDialog()
         {
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                _dialogBox.SetDialog(_dialogs[0], _dialogs[0].dialogContent[0].Character);
-            }
+            if(RunningDialog || FinishedSceneDialog) return;
+            
+            _dialogBox.SetDialog(_dialogs[0], _dialogs[0].dialogContent[0].Character);
         }
+        
 
         public Sprite GetSprite(GameCharacters character)
         {

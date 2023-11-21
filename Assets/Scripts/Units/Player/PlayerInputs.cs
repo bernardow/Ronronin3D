@@ -27,6 +27,7 @@ namespace Units.Player
         public event Action OnFireKunai = delegate {  };
         public event Action OnDashActivate = delegate {  };
         public event Action OnBasicAttack = delegate {  };
+        public event Action OnInteractPressed = delegate {  };
 
         private void Update()
         {
@@ -59,6 +60,9 @@ namespace Units.Player
             
             if(MeleeAttackJoystick || MeleeAttackKeyboard)
                 OnBasicAttack.Invoke();
+
+            if (InteractJoystick || InteractKeyboard)
+                OnInteractPressed.Invoke();
         }
     }
 }
