@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Systems.Player_Death_Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +10,13 @@ namespace Units
     {
         [SerializeField] private GameObject _healthbar;
         public float DamageMultiplier { get; set; }
-        public event Action PlayerDeath = delegate {  };
+        public event Action OnPlayerDeath = delegate {  };
 
         private void Awake()
         {
             DamageMultiplier = 1;
             UpdateHealthBar();
+            OnPlayerDeath += PlayerDeathManager.WriteData;
         }
 
         public override void AddLife(float amount)
@@ -41,7 +43,7 @@ namespace Units
             if (Life <= 0)
             {
                 SelfDestroy();
-                PlayerDeath.Invoke();
+                OnPlayerDeath.Invoke();
             }
         }
 

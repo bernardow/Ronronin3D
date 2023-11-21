@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Systems.Player_Death_Data;
 using Units.Player;
 using UnityEngine;
 
@@ -35,7 +36,7 @@ namespace Systems.Dialogs
         {
             if(RunningDialog || FinishedSceneDialog || !InsideDialogRange) return;
             
-            _dialogBox.SetDialog(_dialogs[0], _dialogs[0].dialogContent[0].Character);
+            _dialogBox.SetDialog(_dialogs[PlayerDeathManager.GetData()], _dialogs[0].dialogContent[0].Character);
         }
         
 
