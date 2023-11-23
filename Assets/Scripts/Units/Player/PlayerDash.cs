@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -9,32 +10,28 @@ namespace Units.Player
     {
         private Player _player;
         private bool _canDash = true;
-        [SerializeField] private float _dashImpulse = 5;
         [SerializeField] private LayerMask _mask;
         public bool IsDashing { get; private set; }
-    
-        private void Awake()
-        {
-            _player = GetComponent<Player>();
-        }
+        public bool HaveDash { get; set; }
+        public float DashImpulse = 5;
+        public float DashCooldown = 1;
+        
+        private void Awake() => _player = GetComponent<Player>();
+        
+        void Start() => _player.PlayerInputs.OnDashActivate += Dash;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            _player.PlayerInputs.OnDashActivate += Dash;
-        }
+        private void OnDestroy() => _player.PlayerInputs.OnDashActivate -= Dash;
 
-        private void Update()
-        {
-            Debug.DrawRay(_player.PlayerTransform.localPosition, _player.PlayerInputs.MovementDirectionRaw * _dashImpulse, Color.magenta);
-        }
+        //DEBUG
+        private void Update() => Debug.DrawRay(_player.PlayerTransform.localPosition, _player.PlayerInputs.MovementDirectionRaw * DashImpulse, Color.magenta);
+        
 
         private void Dash()
         {
-            if (_canDash)
+            if (_canDash && HaveDash)
             {
-                Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * _dashImpulse; //+ _player.PlayerTransform.localPosition;
-                goalPos = Helpers.CheckForInSetupCollision(goalPos, _player.PlayerTransform, _player.PlayerCollider, _mask);
+                Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * DashImpulse; //+ _player.PlayerTransform.localPosition;
+                goalPos = Helpers.CheckForInSetupCollision(goalPos, DashImpulse, _player.PlayerTransform, _player.PlayerCollider, _mask);
                 goalPos += _player.PlayerTransform.localPosition;
                 goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
                 _player.PlayerTransform.DOMove(goalPos, 0.25f).SetEase(Ease.Linear);
@@ -42,6 +39,7 @@ namespace Units.Player
                 StartCoroutine(SetDashCooldown());
             }
         }
+
 
         private IEnumerator IsDashingPropHandler()
         {
@@ -53,7 +51,7 @@ namespace Units.Player
         private IEnumerator SetDashCooldown()
         {
             _canDash = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(DashCooldown);
             _canDash = true;
         }
     }

@@ -55,13 +55,13 @@ namespace Utilities
             return newDestination;
         }
 
-        public static Vector3 CheckForInSetupCollision(Vector3 currentDirection, Transform currentTransform, Collider collider, LayerMask mask)
+        public static Vector3 CheckForInSetupCollision(Vector3 currentDirection, float dashImpulse,Transform currentTransform, Collider collider, LayerMask mask)
         {
             Vector3 newDirection = currentDirection;
             Vector3 currentPosition = currentTransform.localPosition;
             Ray ray = new Ray(currentPosition, currentDirection);
             //Debug.DrawRay(currentPosition, currentDirection * 1);
-            if (Physics.Raycast(ray, out RaycastHit hit, 5.5f, mask))
+            if (Physics.Raycast(ray, out RaycastHit hit, dashImpulse + 0.5f/*Size of the player*/, mask))
             {
                 if (hit.collider.CompareTag("Setup"))
                 {

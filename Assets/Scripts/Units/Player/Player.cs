@@ -44,6 +44,7 @@ namespace Units.Player
 
         private void OnDestroy()
         {
+            if (_inLobby) return;
             _funghy.FungiUltimate.LaserAttack.OnUltimateHit -= TakeDamage;
             PlayerCollisions.OnCollision -= TakeDamage;        
         }
