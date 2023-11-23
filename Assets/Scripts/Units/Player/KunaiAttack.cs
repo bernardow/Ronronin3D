@@ -10,21 +10,24 @@ namespace Units.Player
         [SerializeField] private GameObject _kunai;
         [SerializeField] private Transform _kunaiSpawnPosition;
         [SerializeField] private float _kunaiSpeed;
-        [SerializeField] private float _cooldownTimer;
         [SerializeField] private bool _mouseShoot;
         private Player _player;
-
+        private Camera _mainCamera;
+        
         private bool _canShoot = true;
+        public bool HaveKunai { get; set; }
+        public float CooldownTimer = 0.3f;//Max Level
 
         private void Start()
         {
             _player = GetComponent<Player>();
             _player.PlayerInputs.OnFireKunai += FireKunai;
+            _mainCamera = Camera.main;
         }
 
         private void FireKunai()
         {
-            if (_canShoot)
+            if (_canShoot && HaveKunai)
             {
                 StartCoroutine(ShootCooldown());
                 ShootKunai();
@@ -34,7 +37,7 @@ namespace Units.Player
         private IEnumerator ShootCooldown()
         {
             _canShoot = false;
-            yield return new WaitForSeconds(_cooldownTimer);
+            yield return new WaitForSeconds(CooldownTimer);
             _canShoot = true;
         }
 
@@ -49,7 +52,7 @@ namespace Units.Player
 
         private Vector3 ShootKunaiRaycast()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 return hitInfo.point;

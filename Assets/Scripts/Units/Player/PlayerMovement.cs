@@ -8,7 +8,7 @@ namespace Units.Player
     {
         #region Proprieties
         
-        [SerializeField] private float _speed = 1;
+        public float PlayerSpeed = 100;
         [SerializeField] private bool _rigidbody;
         private bool _canMove = true;
         private Player _player;
@@ -34,12 +34,12 @@ namespace Units.Player
         {
             if (!_rigidbody && _canMove)
             {
-                _player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * _speed * Time.deltaTime;
+                _player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * PlayerSpeed * Time.deltaTime;
                 return;
             }
             
             if(_canMove)
-                _player.PlayerRigidbody.AddForce(_player.PlayerInputs.MovementDirection * _speed, ForceMode.Force);
+                _player.PlayerRigidbody.AddForce(_player.PlayerInputs.MovementDirection * PlayerSpeed, ForceMode.Force);
         }
 
         private void DisableMovement()

@@ -18,6 +18,7 @@ namespace Units.Player
         public PlayerDash PlayerDash { get; private set; }
         public Collider PlayerCollider { get; private set; }
         public PlayerBasicAttack PlayerBasicAttack { get; private set; }
+        public KunaiAttack PlayerKunaiAttack { get; private set; }
 
         [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
@@ -34,7 +35,7 @@ namespace Units.Player
             PlayerDash = GetComponent<PlayerDash>();
             PlayerCollider = GetComponent<Collider>();
             PlayerBasicAttack = GetComponent<PlayerBasicAttack>();
-
+            PlayerKunaiAttack = GetComponent<KunaiAttack>();
 
             if (_inLobby) return;
             

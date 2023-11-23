@@ -10,7 +10,7 @@ namespace Units.Player
     {
         #region Proprieties
 
-        [SerializeField] private float _coolDownTimer;
+        public float SpecialCoolDownTimer;
         [SerializeField] private float _impulseForce = 5;
         public float AttackDamage = 8;
 
@@ -73,7 +73,7 @@ namespace Units.Player
                 _goalPos += direction.normalized * _impulseForce;
                 _goalPos = Helpers.CheckForOutScreen(_goalPos, _maxX, _minX, _maxZ, _minZ);
                 _player.PlayerTransform.DOMove(_goalPos, .5f).SetEase(Ease.OutSine);
-                StartCoroutine(SetAttackCooldown(_coolDownTimer));
+                StartCoroutine(SetAttackCooldown(SpecialCoolDownTimer));
             }
         }
 
