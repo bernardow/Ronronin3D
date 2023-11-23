@@ -14,6 +14,8 @@ namespace Systems.Upgrades
 
         public void SetUpgradeData()
         {
+            if (_player.PlayerMovement == null) return;
+
             switch (_currentLevel)
             {
                 case 1: _player.PlayerMovement.PlayerSpeed = 110;

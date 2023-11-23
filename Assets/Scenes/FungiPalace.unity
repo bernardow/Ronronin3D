@@ -6504,6 +6504,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6975094016700587410, guid: d2e3dd29253922c4b878d6ab90cd64d0,
+        type: 3}
+      propertyPath: _swordUnit
+      value: 
+      objectReference: {fileID: 1424711047}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8503,7 +8508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea19b243745708a4ea0d6c1555c0be4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
+  SwordDamage: 0
   _knockBackForce: 50
 --- !u!65 &1424711048
 BoxCollider:

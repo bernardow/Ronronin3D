@@ -19,8 +19,7 @@ namespace Units.Player
         
         private void BasicAttack()
         {
-            if (!CanAttack)
-                return;
+            if (!CanAttack) return;
             StartCoroutine(BasicAttackCooldown(_coolDownDuration));
         }
 

@@ -15,6 +15,8 @@ namespace Systems.Upgrades
 
         public void SetUpgradeData()
         {
+            if (_player.PlayerAttack == null) return;
+
             switch (_currentLevel)
             {
                 case 1: _player.PlayerAttack.AttackDamage = 100;

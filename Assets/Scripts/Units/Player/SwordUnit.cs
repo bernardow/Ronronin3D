@@ -6,7 +6,7 @@ namespace Units.Player
 {
     public class SwordUnit : MonoBehaviour
     {
-        [SerializeField] private float _damage;
+        public float SwordDamage;
         [SerializeField] private float _knockBackForce = 5;
 
         private Transform _swordTransform;
@@ -68,7 +68,7 @@ namespace Units.Player
             if (other.CompareTag("Boss") || other.CompareTag("Projectiles"))
             {
                 BaseUnit baseUnit = other.GetComponent<BaseUnit>()!;
-                baseUnit.RemoveLife(_damage);
+                baseUnit.RemoveLife(SwordDamage);
                 GenerateKnockBack(_swordTransform.localPosition, other.GetComponent<Rigidbody>()!);
             }
         }

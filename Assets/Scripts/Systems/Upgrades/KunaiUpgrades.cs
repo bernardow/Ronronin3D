@@ -17,6 +17,8 @@ namespace Systems.Upgrades
 
         public void SetUpgradeData()
         {
+            if (_player.PlayerKunaiAttack == null) return;
+            
             switch (_currentLevel)
             {
                 case 1: 
