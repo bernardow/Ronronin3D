@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using Units.Player;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Systems.Upgrades
     public class UpgradeStation : MonoBehaviour
     {
         [SerializeField] private GameObject _upgradeScreen;
+        [SerializeField] private TextMeshProUGUI _moneyCount;
         private bool _canInteract;
         private Player _player;
 
@@ -14,6 +16,7 @@ namespace Systems.Upgrades
         {
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
             _player.PlayerInputs.OnInteractPressed += OpenUpgradeStation;
+            _moneyCount.text = UpgradeManager.GetUpgradesData().PlayerMoney.ToString("0000");
         }
 
         private void OnDestroy() => _player.PlayerInputs.OnInteractPressed -= OpenUpgradeStation;

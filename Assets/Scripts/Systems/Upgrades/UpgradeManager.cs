@@ -30,7 +30,7 @@ namespace Systems.Upgrades
             UpdateUpgrades(data);
         }
 
-        public UpgradesData GetUpgradesData()
+        public static UpgradesData GetUpgradesData()
         {
             string json = File.ReadAllText(Application.persistentDataPath + "/UpgradesData.json");
             return JsonUtility.FromJson<UpgradesData>(json);
@@ -74,7 +74,7 @@ namespace Systems.Upgrades
             }
         }
 
-        private void OverrideUpgradeDataJSON(UpgradesData data)
+        public static void OverrideUpgradeDataJSON(UpgradesData data)
         {
             string json = JsonUtility.ToJson(data);
             File.WriteAllText(Application.persistentDataPath + "/UpgradesData.json", json);

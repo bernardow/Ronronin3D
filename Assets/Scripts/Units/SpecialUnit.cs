@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Systems.Player_Death_Data;
+using Systems.Upgrades;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,12 +12,22 @@ namespace Units
         [SerializeField] private GameObject _healthbar;
         public float DamageMultiplier { get; set; }
         public event Action OnPlayerDeath = delegate {  };
+        public event Action OnBossDeath = delegate {  };
 
         private void Awake()
         {
             DamageMultiplier = 1;
             UpdateHealthBar();
             OnPlayerDeath += PlayerDeathManager.WriteData;
+            OnPlayerDeath += AddPlayerDeathPoints;
+            OnBossDeath += AddBossDeathPoints;
+        }
+
+        private void OnDestroy()
+        {
+            OnPlayerDeath -= PlayerDeathManager.WriteData;
+            OnPlayerDeath -= AddPlayerDeathPoints;
+            OnBossDeath -= AddBossDeathPoints;
         }
 
         public override void AddLife(float amount)
@@ -43,7 +54,12 @@ namespace Units
             if (Life <= 0)
             {
                 SelfDestroy();
-                OnPlayerDeath.Invoke();
+                if (tag == "Player")
+                {
+                    OnPlayerDeath.Invoke();
+                    return;
+                }
+                OnBossDeath.Invoke();
             }
         }
 
@@ -61,6 +77,20 @@ namespace Units
             yield return new WaitForSeconds(1f);
             blinkMat!.SetInt("_Blink", 0);
             CanTakeDamage = true;
+        }
+
+        private void AddPlayerDeathPoints()
+        {
+            UpgradesData data = UpgradeManager.GetUpgradesData();
+            data.PlayerMoney += 50;
+            UpgradeManager.OverrideUpgradeDataJSON(data);
+        }
+        
+        private void AddBossDeathPoints()
+        {
+            UpgradesData data = UpgradeManager.GetUpgradesData();
+            data.PlayerMoney += 150;
+            UpgradeManager.OverrideUpgradeDataJSON(data);
         }
     }
 }
