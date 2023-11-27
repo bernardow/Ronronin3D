@@ -13,7 +13,7 @@ namespace Units.Player
         [SerializeField] private LayerMask _mask;
         public bool IsDashing { get; private set; }
         public bool HaveDash { get; set; }
-        public float DashImpulse = 5;
+        public float DashImpulse;
         public float DashCooldown = 1;
         
         private void Awake() => _player = GetComponent<Player>();

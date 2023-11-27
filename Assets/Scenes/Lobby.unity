@@ -5108,7 +5108,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5130,6 +5130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeScreen: {fileID: 626489515}
   _moneyCount: {fileID: 1827600084}
+  _upgradeManager: {fileID: 2041060798079715069}
 --- !u!1 &1561542494
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,16 +51,15 @@ namespace Units
 
         public override void CheckLife()
         {
-            if (Life <= 0)
+            if (!(Life <= 0)) return;
+            
+            SelfDestroy();
+            if (tag == "Player")
             {
-                SelfDestroy();
-                if (tag == "Player")
-                {
-                    OnPlayerDeath.Invoke();
-                    return;
-                }
-                OnBossDeath.Invoke();
+                OnPlayerDeath.Invoke();
+                return;
             }
+            OnBossDeath.Invoke();
         }
 
         private void UpdateHealthBar()
@@ -82,14 +81,14 @@ namespace Units
         private void AddPlayerDeathPoints()
         {
             UpgradesData data = UpgradeManager.GetUpgradesData();
-            data.PlayerMoney += 50;
+            data.PlayerMoney += 25;
             UpgradeManager.OverrideUpgradeDataJSON(data);
         }
         
         private void AddBossDeathPoints()
         {
             UpgradesData data = UpgradeManager.GetUpgradesData();
-            data.PlayerMoney += 150;
+            data.PlayerMoney += 75;
             UpgradeManager.OverrideUpgradeDataJSON(data);
         }
     }

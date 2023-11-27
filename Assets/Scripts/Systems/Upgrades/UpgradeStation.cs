@@ -9,6 +9,7 @@ namespace Systems.Upgrades
     {
         [SerializeField] private GameObject _upgradeScreen;
         [SerializeField] private TextMeshProUGUI _moneyCount;
+        [SerializeField] private UpgradeManager _upgradeManager;
         private bool _canInteract;
         private Player _player;
 
@@ -17,9 +18,14 @@ namespace Systems.Upgrades
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
             _player.PlayerInputs.OnInteractPressed += OpenUpgradeStation;
             _moneyCount.text = UpgradeManager.GetUpgradesData().PlayerMoney.ToString("0000");
+            _upgradeManager.OnUpgradeBuy += UpdatePlayerMoneyText;
         }
 
-        private void OnDestroy() => _player.PlayerInputs.OnInteractPressed -= OpenUpgradeStation;
+        private void OnDestroy()
+        {
+            _player.PlayerInputs.OnInteractPressed -= OpenUpgradeStation;
+            _upgradeManager.OnUpgradeBuy -= UpdatePlayerMoneyText;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -40,5 +46,7 @@ namespace Systems.Upgrades
         }
 
         public void CloseUpgradeTab() => _upgradeScreen.SetActive(!_upgradeScreen.activeSelf);
+        
+        public void UpdatePlayerMoneyText() => _moneyCount.text = UpgradeManager.GetUpgradesData().PlayerMoney.ToString("0000");
     }
 }

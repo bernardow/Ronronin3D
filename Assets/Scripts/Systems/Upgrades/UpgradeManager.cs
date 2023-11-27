@@ -9,6 +9,8 @@ namespace Systems.Upgrades
     {
         public List<IUpgrade> Upgrades = new List<IUpgrade>();
         
+        public event Action OnUpgradeBuy = delegate {  };
+        
         private void Start()
         {
             if (!PlayerPrefs.HasKey("upgrades_data_created"))
@@ -36,7 +38,7 @@ namespace Systems.Upgrades
             return JsonUtility.FromJson<UpgradesData>(json);
         }
 
-        public void UpgradeSkill(int upgradeTypes, int amount = 150)
+        public void UpgradeSkill(int upgradeTypes)
         {
             UpgradesData data = GetUpgradesData();
 
@@ -54,15 +56,13 @@ namespace Systems.Upgrades
                     break;
                 case 4: data.SpecialAttackUpgradeLevel++;
                     break;
-                case 5: data.PlayerMoney += amount;
-                    break;
                 default: throw new NullReferenceException("Upgrade type not found");
             }
-
-            if(upgradeTypes !=  5)
-                data.PlayerMoney -= 100;
+            
+            data.PlayerMoney -= 100;
             UpdateUpgrades(data);
             OverrideUpgradeDataJSON(data);
+            OnUpgradeBuy.Invoke();
         }
 
         private void UpdateUpgrades(UpgradesData data)

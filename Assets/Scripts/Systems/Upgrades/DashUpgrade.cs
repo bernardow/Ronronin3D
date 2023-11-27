@@ -23,12 +23,16 @@ namespace Systems.Upgrades
                     _player.PlayerDash.DashImpulse = 4;
                     break;
                 case 2:
+                    _player.PlayerDash.HaveDash = true;
                     _player.PlayerDash.DashImpulse = 8;
                     break;
                 case 3: 
+                    _player.PlayerDash.HaveDash = true;
                     _player.PlayerDash.DashImpulse = 12;
                     break;
                 case 4:
+                    _player.PlayerDash.HaveDash = true;
+                    _player.PlayerDash.DashImpulse = 12;
                     _player.PlayerDash.DashCooldown = 0.5f;
                     break;
                 default:
