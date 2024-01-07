@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +9,13 @@ namespace Managers
 {
     public class MenuManager : MonoBehaviour
     {
+        [SerializeField] private GameObject _loadingScreen;
         [SerializeField] private GameObject _optionsScreen;
         [SerializeField] private GameObject _menuScreen;
+        [SerializeField] private GameObject _lobbyScreen;
         [SerializeField] private RectTransform _pointer;
+
+        [SerializeField] private ConnectToServer _connectToServer;
         
         private Dictionary<int, Vector3> selectorDictionary = new Dictionary<int, Vector3>();
         private int _indexer;
@@ -41,7 +46,7 @@ namespace Managers
             else if(Input.GetKeyDown(KeyCode.Return)){
                 switch (_indexer)
                 {
-                    case 0: ChangeScene(1);
+                    case 0: LoadLobby();
                         break;
                     case 1: DisplayOptions();
                         break;
@@ -54,6 +59,21 @@ namespace Managers
         }
 
         public void ChangeScene(int index) => SceneManager.LoadScene(index);
+
+        public void LoadLobby()
+        {
+            _lobbyScreen.SetActive(true);
+            _menuScreen.SetActive(false);
+            _connectToServer.JoinLobby();
+        }
+
+        public void DisplayMenu()
+        {
+            _loadingScreen.SetActive(false);
+            _menuScreen.SetActive(true);
+            _lobbyScreen.SetActive(false);
+            _connectToServer.LeaveLobby();
+        }
 
         public void DisplayOptions()
         {

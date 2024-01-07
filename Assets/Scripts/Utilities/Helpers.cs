@@ -8,6 +8,19 @@ namespace Utilities
 {
     public static class Helpers
     {
+        public static string GetHashCode()
+        {
+            char[] hash = new char[8];
+            string hashCode = "";
+            for (int i = 0; i < 8; i++)
+            {
+                hash[i] = char.Parse(Random.Range(0, 9).ToString());
+                hashCode += hash[i];
+            }
+            
+            return hashCode;
+        }
+        
         private static Vector2 ClampedAngle(float angle)
         {
             switch (angle)
