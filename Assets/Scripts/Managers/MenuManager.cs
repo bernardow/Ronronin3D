@@ -2,13 +2,20 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Managers
 {
     public class MenuManager : MonoBehaviour
     {
+        [SerializeField] private GameObject _roomScreen;
+        [SerializeField] private TextMeshProUGUI _roomName;
+        [SerializeField] private Button _playButton;
+        [SerializeField] private GameObject[] _playersIcons;
+        
         [SerializeField] private GameObject _loadingScreen;
         [SerializeField] private GameObject _optionsScreen;
         [SerializeField] private GameObject _menuScreen;
@@ -16,6 +23,7 @@ namespace Managers
         [SerializeField] private RectTransform _pointer;
 
         [SerializeField] private ConnectToServer _connectToServer;
+        [SerializeField] private RoomsManager _roomsManager;
         
         private Dictionary<int, Vector3> selectorDictionary = new Dictionary<int, Vector3>();
         private int _indexer;
@@ -73,6 +81,16 @@ namespace Managers
             _menuScreen.SetActive(true);
             _lobbyScreen.SetActive(false);
             _connectToServer.LeaveLobby();
+        }
+
+        public void DisplayRoom()
+        {
+            _lobbyScreen.SetActive(false);
+            _roomScreen.SetActive(true);
+            _roomName.text = "Room Name:" + RoomsManager.GetRoomName();
+
+            if (!PhotonNetwork.IsMasterClient)
+                _playButton.interactable = false;
         }
 
         public void DisplayOptions()
