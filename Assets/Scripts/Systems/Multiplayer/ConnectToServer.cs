@@ -9,7 +9,16 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     [SerializeField] private MenuManager _menuManager;
     
-    private void Start() => PhotonNetwork.ConnectUsingSettings();
+    private void Start()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            _menuManager.DisplayMenu();
+            return;
+        }
+        
+        PhotonNetwork.ConnectUsingSettings();   
+    }
 
     public void JoinLobby() => PhotonNetwork.JoinLobby();
 

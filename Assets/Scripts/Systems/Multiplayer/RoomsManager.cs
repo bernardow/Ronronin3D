@@ -26,10 +26,7 @@ public class RoomsManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom() => PhotonNetwork.JoinRoom(_inputField.text);
 
-    public void Play()
-    {
-        PhotonNetwork.LoadLevel(1);
-    }
+    public void Play() => PhotonNetwork.LoadLevel(1);
     
     public static string GetRoomName() => PhotonNetwork.CurrentRoom.Name;
     

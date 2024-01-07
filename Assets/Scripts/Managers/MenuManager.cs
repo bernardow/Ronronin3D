@@ -80,14 +80,19 @@ namespace Managers
             _loadingScreen.SetActive(false);
             _menuScreen.SetActive(true);
             _lobbyScreen.SetActive(false);
+            _roomScreen.SetActive(false);
             _connectToServer.LeaveLobby();
+            
+            if (!PhotonNetwork.InRoom) return;
+            
+            PhotonNetwork.LeaveRoom();
         }
 
         public void DisplayRoom()
         {
             _lobbyScreen.SetActive(false);
             _roomScreen.SetActive(true);
-            _roomName.text = "Room Name:" + RoomsManager.GetRoomName();
+            _roomName.text = "Room Name: " + RoomsManager.GetRoomName();
 
             if (!PhotonNetwork.IsMasterClient)
                 _playButton.interactable = false;
