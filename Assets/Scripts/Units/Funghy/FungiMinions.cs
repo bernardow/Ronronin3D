@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using Utilities;
 
@@ -22,12 +23,12 @@ namespace Units.Funghy
             
             for (int i = 0; i < _minionsNumber; i++)
             {
-                Transform minion = Instantiate(_minionPrefab, _funghy.FungiCenter).transform;
+                Transform minion = PhotonNetwork.Instantiate(_minionPrefab.name, _funghy.FungiCenter.position, Quaternion.Euler(Vector3.left * 90)).transform;
                 Vector3 position = Vector3.zero;
                 position.x = (i - 2) * 0.5f;
                 position.z = -1 * (position.x * position.x * 0.1f - 2);
                 minion.transform.localPosition += position;
-                minion.transform.SetParent(transform.parent.parent);
+                minion.transform.SetParent(transform.parent);
                 yield return new WaitForSeconds(_spawnInterval);
             }
 

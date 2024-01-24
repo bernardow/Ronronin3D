@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using Photon.Pun;
 using Units.Funghy;
 using UnityEngine;
 using Utilities;
 
-public class FungiUltimate : MonoBehaviour, IObserver
+public class FungiUltimate : MonoBehaviourPunCallbacks, IObserver
 {
     public bool CanTurnVulnerable { get; private set; }
 
@@ -66,9 +67,12 @@ public class FungiUltimate : MonoBehaviour, IObserver
     }
 
     private void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
-    
-    public void OnNotify() => StartCoroutine(Run());
 
+    public void OnNotify() => photonView.RPC("RunUltimateRPC", RpcTarget.All);
+
+    [PunRPC]
+    public void RunUltimateRPC() => StartCoroutine(Run());
+    
     private void OnDisable()
     {
         StopAllCoroutines();

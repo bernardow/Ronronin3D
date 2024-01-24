@@ -39,6 +39,13 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - LoadGameScene
+  - ActivateSpore
+  - SelfDestroy
+  - AutoDestroy
+  - RunUltimateRPC
+  - RemoveBossLife
+  - SporeState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

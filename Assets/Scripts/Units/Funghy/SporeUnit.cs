@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Units.Funghy
@@ -17,7 +18,7 @@ namespace Units.Funghy
         private void OnCollisionEnter(Collision other)
         {
             if (other.collider.CompareTag("Player"))
-                _baseUnit.SelfDestroy();
+                _baseUnit.CallSelfDestroy();
 
             _baseUnit.RemoveLife(1);
         }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Units.Funghy
@@ -23,7 +24,7 @@ namespace Units.Funghy
 
         private IEnumerator SpawnDrop()
         {
-            Instantiate(_drop, transform.position + Vector3.up * 30, Quaternion.identity);
+            PhotonNetwork.Instantiate(_drop.name, transform.position + Vector3.up * 30, Quaternion.identity);
             yield return new WaitForSeconds(1 / _dropSpeed);
             Destroy(gameObject);
         }

@@ -1,4 +1,5 @@
 using System;
+using Photon.Pun;
 using Units;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,10 +21,15 @@ namespace Managers
         public void Pause()
         {
             _pauseScreen.SetActive(!_pauseScreen.activeSelf);
-            Time.timeScale = Time.timeScale >= 1 ? 0 : 1;
+            //Time.timeScale = Time.timeScale >= 1 ? 0 : 1;
         }
 
-        public void Quit() => SceneManager.LoadScene(0);
+        public void Quit()
+        {
+            SceneManager.LoadScene(0);
+            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LeaveLobby();
+        }
 
         public void InGameOptions()
         {

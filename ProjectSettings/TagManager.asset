@@ -9,6 +9,10 @@ TagManager:
   - Boss
   - Setup
   - Sword
+  - Bullet
+  - Upgrade
+  - Healthbar
+  - BossHealthbar
   layers:
   - Default
   - TransparentFX

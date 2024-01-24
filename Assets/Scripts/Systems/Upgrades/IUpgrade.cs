@@ -1,3 +1,5 @@
+using Units.Player;
+
 namespace Systems.Upgrades
 {
     public interface IUpgrade
@@ -5,5 +7,7 @@ namespace Systems.Upgrades
         public void LoadData(UpgradesData data);
         
         public void SetUpgradeData();
+
+        public void SetPlayer(Player player);
     }
 }

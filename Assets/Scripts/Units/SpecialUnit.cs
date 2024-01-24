@@ -9,7 +9,7 @@ namespace Units
 {
     public class SpecialUnit : BaseUnit
     {
-        [SerializeField] private GameObject _healthbar;
+        public GameObject Healthbar;
         public float DamageMultiplier { get; set; }
         public event Action OnPlayerDeath = delegate {  };
         public event Action OnBossDeath = delegate {  };
@@ -64,7 +64,7 @@ namespace Units
 
         private void UpdateHealthBar()
         {
-            Material healthBarMaterial = _healthbar.GetComponent<Image>()?.material;
+            Material healthBarMaterial = Healthbar.GetComponent<Image>()?.material;
             healthBarMaterial!.SetFloat("_Life", Life / InitialLife);
         }
     

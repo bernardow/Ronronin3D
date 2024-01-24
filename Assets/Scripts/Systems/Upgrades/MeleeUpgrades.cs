@@ -15,8 +15,11 @@ namespace Systems.Upgrades
         {
             if (_swordUnit == null) return;
 
-            
-            switch (_currentLevel)
+            /*
+             * Temporary
+             */
+            int level = 3;
+            switch (level)
             {
                 case 1: _swordUnit.SwordDamage = 12.5f;
                     break;
@@ -29,6 +32,11 @@ namespace Systems.Upgrades
                 default: _swordUnit.SwordDamage = 10;
                     break;
             }
+        }
+
+        public void SetPlayer(Player player)
+        {
+            
         }
     }
 }

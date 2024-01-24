@@ -1,3 +1,4 @@
+using System;
 using Units.Player;
 using UnityEngine;
 
@@ -8,15 +9,19 @@ namespace Systems.Upgrades
         private int _currentLevel;
         private Player _player;
 
-        private void Awake() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        //private void Start() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         public void LoadData(UpgradesData data) => _currentLevel = data.DashUpgradeLevel;
 
         public void SetUpgradeData()
         {
             if (_player.PlayerDash == null) return;
-
-            switch (_currentLevel)
+            
+            /*
+             * Temporary
+             */
+            int level = 3;
+            switch (level)
             {
                 case 1:
                     _player.PlayerDash.HaveDash = true;
@@ -40,5 +45,7 @@ namespace Systems.Upgrades
                     break;
             }
         }
+
+        public void SetPlayer(Player player) => _player = player;
     }
 }

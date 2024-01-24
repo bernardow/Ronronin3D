@@ -81,6 +81,8 @@ namespace Managers
             _menuScreen.SetActive(true);
             _lobbyScreen.SetActive(false);
             _roomScreen.SetActive(false);
+            
+            if(!PhotonNetwork.InLobby) return;
             _connectToServer.LeaveLobby();
             
             if (!PhotonNetwork.InRoom) return;

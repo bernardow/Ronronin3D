@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Units.Player;
 using UnityEngine;
 
 namespace Systems.Upgrades
@@ -11,7 +12,7 @@ namespace Systems.Upgrades
         
         public event Action OnUpgradeBuy = delegate {  };
         
-        private void Start()
+        public void Initialize(Player player)
         {
             if (!PlayerPrefs.HasKey("upgrades_data_created"))
             {
@@ -25,6 +26,7 @@ namespace Systems.Upgrades
             {
                 IUpgrade upgrade = transform.GetChild(i).GetComponent<IUpgrade>();
                 Upgrades.Add(upgrade);
+                upgrade.SetPlayer(player);
             }
             
             UpgradesData data = GetUpgradesData();
@@ -69,7 +71,7 @@ namespace Systems.Upgrades
         {
             foreach (IUpgrade upgrade in Upgrades)
             {
-                upgrade.LoadData(data);
+                //upgrade.LoadData(data); temporary
                 upgrade.SetUpgradeData();
             }
         }

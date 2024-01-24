@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
+using Photon.Pun;
+using Systems.Upgrades;
 
 namespace Units.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviourPunCallbacks
     {
         public PlayerAttack PlayerAttack { get; private set; }
-        public BaseUnit PlayerHealth { get; private set; }
+        public SpecialUnit PlayerHealth { get; private set; }
         public PlayerMovement PlayerMovement { get; private set; }
         
         public Transform PlayerTransform { get; private set; }
@@ -20,13 +22,15 @@ namespace Units.Player
         public PlayerBasicAttack PlayerBasicAttack { get; private set; }
         public KunaiAttack PlayerKunaiAttack { get; private set; }
 
+        private UpgradeManager _upgradeManager;
+
         [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
 
         private void Awake()
         {
             PlayerAttack = GetComponent<PlayerAttack>();
-            PlayerHealth = GetComponent<BaseUnit>();
+            PlayerHealth = GetComponent<SpecialUnit>();
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerTransform = transform;
             PlayerRigidbody = GetComponent<Rigidbody>();
@@ -38,7 +42,19 @@ namespace Units.Player
             PlayerKunaiAttack = GetComponent<KunaiAttack>();
 
             if (_inLobby) return;
-            
+
+            if (!photonView.IsMine)
+            {
+                DisablePlayer();
+                return;
+            }
+
+            _upgradeManager = GameObject.FindWithTag("Upgrade").GetComponent<UpgradeManager>();
+            _upgradeManager.Initialize(this);
+
+            PlayerHealth.Healthbar = GameObject.FindWithTag("Healthbar");
+
+            _funghy = GameObject.FindWithTag("Boss").GetComponent<Funghy.Funghy>();
             _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
             PlayerCollisions.OnCollision += TakeDamage;
         }
@@ -60,6 +76,18 @@ namespace Units.Player
         {
             if(!PlayerAttack.IsSlashing && !PlayerDash.IsDashing)
                 PlayerHealth.RemoveLife(args.Damage);
+        }
+
+        private void DisablePlayer()
+        {
+            PlayerAttack.enabled = false;
+            PlayerHealth.enabled = false;
+            PlayerMovement.enabled = false;
+            PlayerInputs.enabled = false;
+            PlayerCollisions.enabled = false;
+            PlayerDash.enabled = false;
+            PlayerBasicAttack.enabled = false;
+            PlayerKunaiAttack.enabled = false;
         }
     }
 }

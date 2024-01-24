@@ -8,7 +8,7 @@ namespace Systems.Upgrades
         private int _currentLevel;
         private Player _player;
 
-        private void Awake() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        //private void Awake() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         public void LoadData(UpgradesData data) => _currentLevel = data.GeneralUpgradeLevel;
 
@@ -16,7 +16,11 @@ namespace Systems.Upgrades
         {
             if (_player.PlayerMovement == null) return;
 
-            switch (_currentLevel)
+            /*
+             * Temporary
+             */
+            int level = 3;
+            switch (level)
             {
                 case 1: _player.PlayerMovement.PlayerSpeed = 110;
                     break;
@@ -30,5 +34,7 @@ namespace Systems.Upgrades
                     break;
             }
         }
+        
+        public void SetPlayer(Player player) => _player = player;
     }
 }

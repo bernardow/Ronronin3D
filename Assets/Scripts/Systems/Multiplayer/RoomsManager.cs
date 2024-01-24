@@ -10,7 +10,7 @@ using Utilities;
 
 public class RoomsManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private TextMeshProUGUI _inputField;
+    [SerializeField] private TMP_InputField _inputField;
     [SerializeField] private MenuManager _menuManager;
     
     public void CreateRoom()
@@ -26,7 +26,13 @@ public class RoomsManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom() => PhotonNetwork.JoinRoom(_inputField.text);
 
-    public void Play() => PhotonNetwork.LoadLevel(1);
+    public void Play() => photonView.RPC("LoadGameScene", RpcTarget.All);
+
+    [PunRPC]
+    public void LoadGameScene()
+    {
+        PhotonNetwork.LoadLevel("FungiPalace");
+    }
     
     public static string GetRoomName() => PhotonNetwork.CurrentRoom.Name;
     

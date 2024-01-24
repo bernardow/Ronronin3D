@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using Utilities;
 using FungiAttacksSet = Units.Bosses.Base.FungiAttacksSet;
@@ -19,7 +20,7 @@ namespace Units.Funghy
         public Transform FungiTransform { get; private set; }
         public Transform FungiCenter { get; private set; }
         public Rigidbody FungyRigidbody { get; private set; }
-        public BaseUnit FunghyHealth { get; private set; }
+        public SpecialUnit FunghyHealth { get; private set; }
         public VulnerableState VulnerableState { get; private set; }
         private Spores _spores;
         private SporeCloud _sporeCloud;
@@ -37,7 +38,7 @@ namespace Units.Funghy
         {
             FungiTransform = transform;
             FungyRigidbody = GetComponent<Rigidbody>();
-            FunghyHealth = GetComponent<BaseUnit>();
+            FunghyHealth = GetComponent<SpecialUnit>();
             _observableObject = new ObservableObject();
             _spores = GetComponent<Spores>();
             _fungiDash = GetComponent<FungiDash>();
@@ -47,6 +48,8 @@ namespace Units.Funghy
             _fungiIdle = GetComponent<FungiIdle>();
             FungiCenter = transform.GetChild(1);
             VulnerableState = GetComponent<VulnerableState>();
+
+            if (!PhotonNetwork.IsMasterClient) return;
 
             _attackQueue = new Utilities.Queue<IObserver>();
             
@@ -60,6 +63,8 @@ namespace Units.Funghy
             _currentState = FungiStates.PhaseOne;
             //CheckForAttacksUpdates();
             RunStateMachine();
+
+            FunghyHealth.Healthbar = GameObject.FindWithTag("BossHealthbar");
         }
 
         private IEnumerator FungiStateMachine()

@@ -1,12 +1,13 @@
 using System;
+using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
 
 namespace Units.Player
 {
-    public class KunaiUnit : MonoBehaviour
+    public class KunaiUnit : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private float _damage = 4;
+        [SerializeField] private int _damage = 4;
         [SerializeField] private float _life = 3;
 
         private void OnCollisionEnter(Collision other)
@@ -16,8 +17,8 @@ namespace Units.Player
             if (other.collider.CompareTag("Boss") || other.collider.CompareTag("Projectiles"))
             {
                 BaseUnit baseUnit = other.collider.GetComponent<BaseUnit>();
-                baseUnit.RemoveLife(_damage);
-                Destroy(gameObject);
+                baseUnit.CallBossRemoveRPC(_damage);
+                photonView.RPC("AutoDestroy", RpcTarget.All);
             }
             
             _life--;
@@ -27,7 +28,10 @@ namespace Units.Player
         private void CheckLife()
         {
             if (_life <= 0)
-                Destroy(gameObject);
+                photonView.RPC("AutoDestroy", RpcTarget.All);
         }
+        
+        [PunRPC]
+        public void AutoDestroy() => Destroy(gameObject);
     }
 }

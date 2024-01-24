@@ -8,7 +8,7 @@ namespace Systems.Upgrades
         private int _currentLevel;
         private Player _player;
 
-        private void Awake() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        //private void Awake() => _player = GameObject.FindWithTag("Player").GetComponent<Player>();
 
         public void LoadData(UpgradesData data) => _currentLevel = data.SpecialAttackUpgradeLevel;
     
@@ -17,7 +17,11 @@ namespace Systems.Upgrades
         {
             if (_player.PlayerAttack == null) return;
 
-            switch (_currentLevel)
+            /*
+             * Temporary
+             */
+            int level = 3;
+            switch (level)
             {
                 case 1: _player.PlayerAttack.AttackDamage = 100;
                     break;
@@ -32,5 +36,6 @@ namespace Systems.Upgrades
                     break;
             }
         }
+        public void SetPlayer(Player player) => _player = player;
     }
 }
