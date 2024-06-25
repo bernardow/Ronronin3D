@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Photon.Pun;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -13,17 +12,9 @@ namespace Managers
         
         private void Awake()
         {
-            Cursor.lockState = CursorLockMode.Confined;
+            Application.targetFrameRate = 90;
+            //Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale = 1;
-        }
-
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(3f);
-            if (PhotonNetwork.IsMasterClient)
-                PhotonNetwork.Instantiate(_bossPrefab.name, new Vector3(0, 0.86f, 7.1f), Quaternion.identity);
-            PhotonNetwork.Instantiate(_playerPrefab.name, Vector3.zero, quaternion.identity);
-            
         }
     }
 }

@@ -10,6 +10,8 @@ public class DPSMeter : MonoBehaviour
 
     private IEnumerator Start()
     {
+        if(!_enableDPSMeter) yield break;
+        
         BaseUnit bossUnit = GameObject.FindWithTag("Boss").GetComponent<BaseUnit>();
         
         while (_enableDPSMeter)

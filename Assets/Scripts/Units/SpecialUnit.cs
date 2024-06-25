@@ -3,6 +3,7 @@ using System.Collections;
 using Systems.Player_Death_Data;
 using Systems.Upgrades;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Units
@@ -14,20 +15,24 @@ namespace Units
         public event Action OnPlayerDeath = delegate {  };
         public event Action OnBossDeath = delegate {  };
 
-        private void Awake()
+        private void Start()
         {
             DamageMultiplier = 1;
             UpdateHealthBar();
             OnPlayerDeath += PlayerDeathManager.WriteData;
             OnPlayerDeath += AddPlayerDeathPoints;
+            OnPlayerDeath += ReloadScene;
             OnBossDeath += AddBossDeathPoints;
+            OnBossDeath += BossSpawner.Instance.DisableColliders;
         }
 
         private void OnDestroy()
         {
             OnPlayerDeath -= PlayerDeathManager.WriteData;
             OnPlayerDeath -= AddPlayerDeathPoints;
+            OnPlayerDeath -= ReloadScene;
             OnBossDeath -= AddBossDeathPoints;
+            OnBossDeath -= BossSpawner.Instance.DisableColliders;
         }
 
         public override void AddLife(float amount)
@@ -84,6 +89,8 @@ namespace Units
             data.PlayerMoney += 25;
             UpgradeManager.OverrideUpgradeDataJSON(data);
         }
+
+        private void ReloadScene() => SceneManager.LoadScene(0);
         
         private void AddBossDeathPoints()
         {

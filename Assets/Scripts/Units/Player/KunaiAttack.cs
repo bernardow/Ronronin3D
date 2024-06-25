@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 
@@ -45,8 +44,8 @@ namespace Units.Player
         private void ShootKunai()
         {
             Vector3 goalPosition = _mouseShoot? ShootKunaiRaycast() - _player.PlayerTransform.localPosition : Helpers.GetBossPosition() - _player.PlayerTransform.position;
-            goalPosition = new Vector3(goalPosition.x, _player.PlayerTransform.position.y, goalPosition.z);
-            Rigidbody kunaiRigidbody = PhotonNetwork.Instantiate(_kunai.name, _kunaiSpawnPosition.position,  Quaternion.identity).GetComponent<Rigidbody>();
+            goalPosition = new Vector3(goalPosition.x, 0, goalPosition.z);
+            Rigidbody kunaiRigidbody = Instantiate(_kunai, _kunaiSpawnPosition.position,  Quaternion.identity).GetComponent<Rigidbody>();
             kunaiRigidbody.transform.SetParent(transform.parent);
             kunaiRigidbody.AddForce(goalPosition.normalized * _kunaiSpeed, ForceMode.Impulse);
         }

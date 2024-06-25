@@ -10,6 +10,7 @@ namespace Units.Player
     {
         private Player _player;
         private bool _canDash = true;
+        [SerializeField] private float m_StaminaCost = 5;
         [SerializeField] private LayerMask _mask;
         public bool IsDashing { get; private set; }
         public bool HaveDash { get; set; }
@@ -28,12 +29,14 @@ namespace Units.Player
 
         private void Dash()
         {
+            if(PlayerStamina.Instance.Stamina < m_StaminaCost) return;
+            
             if (_canDash && HaveDash)
             {
                 Vector3 goalPos = _player.PlayerInputs.MovementDirectionRaw * DashImpulse; //+ _player.PlayerTransform.localPosition;
                 goalPos = Helpers.CheckForInSetupCollision(goalPos, DashImpulse, _player.PlayerTransform, _player.PlayerCollider, _mask);
                 goalPos += _player.PlayerTransform.localPosition;
-                goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
+                //goalPos = Helpers.CheckForOutScreen(goalPos, 22, -20, 17.7f, -8.7f);
                 _player.PlayerTransform.DOMove(goalPos, 0.25f).SetEase(Ease.Linear);
                 StartCoroutine(IsDashingPropHandler());
                 StartCoroutine(SetDashCooldown());

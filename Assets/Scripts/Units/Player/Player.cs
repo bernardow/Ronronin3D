@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
-using Photon.Pun;
 using Systems.Upgrades;
 
 namespace Units.Player
 {
-    public class Player : MonoBehaviourPunCallbacks
+    public class Player : MonoBehaviour
     {
         public PlayerAttack PlayerAttack { get; private set; }
         public SpecialUnit PlayerHealth { get; private set; }
@@ -24,11 +23,16 @@ namespace Units.Player
 
         private UpgradeManager _upgradeManager;
 
+        public static Player Instance;
+
         [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
 
         private void Awake()
         {
+            if (Instance == null)
+                Instance = this;
+            
             PlayerAttack = GetComponent<PlayerAttack>();
             PlayerHealth = GetComponent<SpecialUnit>();
             PlayerMovement = GetComponent<PlayerMovement>();
@@ -43,26 +47,26 @@ namespace Units.Player
 
             if (_inLobby) return;
 
-            if (!photonView.IsMine)
-            {
-                DisablePlayer();
-                return;
-            }
-
             _upgradeManager = GameObject.FindWithTag("Upgrade").GetComponent<UpgradeManager>();
             _upgradeManager.Initialize(this);
 
             PlayerHealth.Healthbar = GameObject.FindWithTag("Healthbar");
 
-            _funghy = GameObject.FindWithTag("Boss").GetComponent<Funghy.Funghy>();
-            _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+            GameObject boss = GameObject.FindWithTag("Boss");
+            if (boss != null)
+            {
+                _funghy = boss.GetComponent<Funghy.Funghy>();
+                _funghy.FungiUltimate.LaserAttack.OnUltimateHit += TakeDamage;
+            }
+                
             PlayerCollisions.OnCollision += TakeDamage;
         }
 
         private void OnDestroy()
         {
             if (_inLobby) return;
-            _funghy.FungiUltimate.LaserAttack.OnUltimateHit -= TakeDamage;
+            if(_funghy != null)
+                _funghy.FungiUltimate.LaserAttack.OnUltimateHit -= TakeDamage;
             PlayerCollisions.OnCollision -= TakeDamage;        
         }
 

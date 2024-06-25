@@ -12,6 +12,8 @@ namespace Units.Player
 
         public float SpecialCoolDownTimer;
         [SerializeField] private float _impulseForce = 5;
+        [SerializeField] private float m_StaminaCost = 75;
+            
         public int AttackDamage = 8;
 
         [SerializeField] private AnimationCurve _evaluationCurve; //Used to create smoother movements
@@ -43,7 +45,7 @@ namespace Units.Player
         {
             if (IsSlashing)
             {
-                e.Collider.CallBossRemoveRPC(AttackDamage);
+                e.Collider.RemoveBossLife(AttackDamage);
                 if (e.Collider.CompareTag("Boss"))
                 {
                     VulnerableState vulnerableState = e.Collider.GetComponent<VulnerableState>();
@@ -59,6 +61,8 @@ namespace Units.Player
         /// </summary>
         private void Slash()
         {
+            if (PlayerStamina.Instance.Stamina < m_StaminaCost) return;
+            
             if (_canSlash)
             {
                 _player.PlayerMovement.enabled = false;

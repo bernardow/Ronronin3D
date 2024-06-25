@@ -1,11 +1,10 @@
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 
 namespace Units.Funghy
 {
-    public class SporeCloud : MonoBehaviourPunCallbacks, IObserver
+    public class SporeCloud : MonoBehaviour, IObserver
     {
         [SerializeField] private float _scaleSpeed = 1;
         [SerializeField] private float _maxSize = 3.5f;
@@ -37,13 +36,13 @@ namespace Units.Funghy
         {
             _funghy.ManageIdleMovement(false);
             _sporeCloud.localScale = Vector3.one / 2;
-            photonView.RPC("SporeState", RpcTarget.All, true);
+            SporeState(true);
             yield return new WaitForSeconds(_duration);
             _isExpanding = true;
             _current = 0;
             yield return new WaitForSeconds(_duration);
             _isExpanding = false;
-            photonView.RPC("SporeState", RpcTarget.All, false);
+            SporeState(false);
         }
 
         public void OnNotify()
@@ -62,7 +61,6 @@ namespace Units.Funghy
             enabled = true;
         }
 
-        [PunRPC]
         public void SporeState(bool activationState) => _sporeCloud.gameObject.SetActive(activationState);
     }
 }

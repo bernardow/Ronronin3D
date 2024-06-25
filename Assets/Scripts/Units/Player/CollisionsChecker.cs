@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Units.Player
 {
@@ -36,7 +38,8 @@ namespace Units.Player
         private void OnCollisionEnter(Collision other) => CheckColliders(other.collider);
 
         private void OnTriggerEnter(Collider other) => CheckColliders(other);
-        
+
+        private void OnTriggerExit(Collider other) => CheckBossSpawn(other);
 
         private void CheckColliders(Collider other)
         {
@@ -48,6 +51,19 @@ namespace Units.Player
                 };
                 OnCollision.Invoke(null, args);
             }
+            
+            
+        }
+
+        private void CheckBossSpawn(Collider other)
+        {
+            if(other.CompareTag("BossSpawner"))
+                BossSpawner.Instance.SpawnBoss();
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            CheckColliders(hit.collider);
         }
 
         private void StartKnockBack(object sender, OnCollisionArgs args)
@@ -63,7 +79,8 @@ namespace Units.Player
             Vector3 direction = playerPosition - enemyPosition;
             direction = enemyPosition == playerPosition ? Vector3.up : direction;
             float knockbackForce = _knockbackTreshold / Vector3.Distance(enemyPosition, playerPosition); 
-            _player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
+            //_player.PlayerRigidbody.AddForce(direction * knockbackForce, ForceMode.Impulse);
+            //_player.PlayerMovement.CharacterController.SimpleMove(direction * knockbackForce);
         }
     }
 }

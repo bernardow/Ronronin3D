@@ -33,7 +33,7 @@ namespace Systems.Upgrades
                     break;
                 case 3: 
                     _player.PlayerDash.HaveDash = true;
-                    _player.PlayerDash.DashImpulse = 12;
+                    _player.PlayerDash.DashImpulse = 8;
                     break;
                 case 4:
                     _player.PlayerDash.HaveDash = true;

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using Photon.Pun;
 using Units.Funghy;
 using UnityEngine;
 using Utilities;
 
-public class FungiUltimate : MonoBehaviourPunCallbacks, IObserver
+public class FungiUltimate : MonoBehaviour, IObserver
 {
     public bool CanTurnVulnerable { get; private set; }
 
@@ -27,6 +26,10 @@ public class FungiUltimate : MonoBehaviourPunCallbacks, IObserver
     // Update is called once per frame
     void Update()
     {
+        // for (int i = 0; i < LaserAttack.Lasers.Length; i++)
+        //     LaserAttack.Lasers[i].SetPosition(0, transform.position);
+        //
+        
         if (_shootLaser)
         {
             RotateCenter();
@@ -68,9 +71,8 @@ public class FungiUltimate : MonoBehaviourPunCallbacks, IObserver
 
     private void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
 
-    public void OnNotify() => photonView.RPC("RunUltimateRPC", RpcTarget.All);
+    public void OnNotify() => RunUltimateRPC();
 
-    [PunRPC]
     public void RunUltimateRPC() => StartCoroutine(Run());
     
     private void OnDisable()

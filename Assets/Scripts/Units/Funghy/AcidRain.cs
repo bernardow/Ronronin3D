@@ -1,5 +1,4 @@
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 
@@ -27,7 +26,7 @@ namespace Units.Funghy
         {
             while (_isRaining)
             {
-                PhotonNetwork.Instantiate(_drop.name, PickRandomPointInMap() + Vector3.up * 30, Quaternion.identity);
+                Instantiate(_drop, PickRandomPointInMap() + Vector3.up * 30, Quaternion.identity);
                 yield return new WaitForSeconds(_spawnInterval);
             }
         }

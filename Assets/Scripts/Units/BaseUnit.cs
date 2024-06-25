@@ -1,5 +1,4 @@
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,18 +6,21 @@ using UnityEngine.UI;
 namespace Units
 {
     //todo fix healthbar texture
-    public class BaseUnit : MonoBehaviourPunCallbacks
+    public class BaseUnit : MonoBehaviour
     {
         public float Life;
         public float InitialLife { get; private set; }
         public float Damage = 8;
+        
+        public bool IsAlive { get; private set; }
 
         public bool CanTakeDamage { get; set; } = true;
 
-        private void Start()
+        private void OnEnable()
         {
             InitialLife = Life;
             CanTakeDamage = true;
+            IsAlive = true;
         }
 
         public virtual void AddLife(float amount)
@@ -39,19 +41,19 @@ namespace Units
         {
             if (Life <= 0)
             {
-                CallSelfDestroy();
+                SelfDestroy();
             }
                 
         }
         
-        public void CallSelfDestroy() => photonView.RPC("SelfDestroy", RpcTarget.All);
 
-        public void CallBossRemoveRPC(int amount) => photonView.RPC("RemoveBossLife", RpcTarget.All, amount);
         
-        [PunRPC]
-        public void SelfDestroy() => gameObject.SetActive(false);
+        public void SelfDestroy()
+        {
+            IsAlive = false;
+            gameObject.SetActive(false);
+        }
 
-        [PunRPC]
         public void RemoveBossLife(int amount) => RemoveLife(amount);
     }
 }

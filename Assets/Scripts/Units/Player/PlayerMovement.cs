@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace Units.Player
@@ -12,6 +14,7 @@ namespace Units.Player
         [SerializeField] private bool _rigidbody;
         private bool _canMove = true;
         private Player _player;
+        public CharacterController CharacterController;
         
         #endregion
 
@@ -19,27 +22,39 @@ namespace Units.Player
         {
             _player = GetComponent<Player>();
             _player.PlayerInputs.OnDashActivate += DisableMovement;
+            CharacterController = GetComponent<CharacterController>();
         }
 
         private void Update()
         {
             Vector3 bossPosition = Helpers.GetBossPosition();
-            Vector3 lookPosition = new Vector3(bossPosition.x, 0, bossPosition.z) - _player.PlayerTransform.localPosition;
+            Vector3 lookPosition =
+                new Vector3(bossPosition.x, 0, bossPosition.z) - _player.PlayerTransform.localPosition;
             _player.PlayerTransform.localRotation = Quaternion.LookRotation(lookPosition);
+             CharacterController characterController = new CharacterController();
+             
+             Move();
         }
-
-        void FixedUpdate() => Move();
+         
+        // /void FixedUpdate() => Move();
         
         private void Move()
         {
             if (!_rigidbody && _canMove)
             {
-                _player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * PlayerSpeed * Time.deltaTime;
+                CharacterController.SimpleMove(_player.PlayerInputs.MovementDirection * PlayerSpeed);
+                //_player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * PlayerSpeed * Time.deltaTime;
                 return;
             }
             
             if(_canMove)
                 _player.PlayerRigidbody.AddForce(_player.PlayerInputs.MovementDirection * PlayerSpeed, ForceMode.Force);
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.collider.CompareTag("DeadZone"))
+                SceneManager.LoadScene(1);
         }
 
         private void DisableMovement()

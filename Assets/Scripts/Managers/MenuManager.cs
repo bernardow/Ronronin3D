@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,9 +20,6 @@ namespace Managers
         [SerializeField] private GameObject _menuScreen;
         [SerializeField] private GameObject _lobbyScreen;
         [SerializeField] private RectTransform _pointer;
-
-        [SerializeField] private ConnectToServer _connectToServer;
-        [SerializeField] private RoomsManager _roomsManager;
         
         private Dictionary<int, Vector3> selectorDictionary = new Dictionary<int, Vector3>();
         private int _indexer;
@@ -54,7 +50,7 @@ namespace Managers
             else if(Input.GetKeyDown(KeyCode.Return)){
                 switch (_indexer)
                 {
-                    case 0: LoadLobby();
+                    case 0: ChangeScene(1);
                         break;
                     case 1: DisplayOptions();
                         break;
@@ -68,36 +64,9 @@ namespace Managers
 
         public void ChangeScene(int index) => SceneManager.LoadScene(index);
 
-        public void LoadLobby()
-        {
-            _lobbyScreen.SetActive(true);
-            _menuScreen.SetActive(false);
-            _connectToServer.JoinLobby();
-        }
-
         public void DisplayMenu()
         {
-            _loadingScreen.SetActive(false);
             _menuScreen.SetActive(true);
-            _lobbyScreen.SetActive(false);
-            _roomScreen.SetActive(false);
-            
-            if(!PhotonNetwork.InLobby) return;
-            _connectToServer.LeaveLobby();
-            
-            if (!PhotonNetwork.InRoom) return;
-            
-            PhotonNetwork.LeaveRoom();
-        }
-
-        public void DisplayRoom()
-        {
-            _lobbyScreen.SetActive(false);
-            _roomScreen.SetActive(true);
-            _roomName.text = "Room Name: " + RoomsManager.GetRoomName();
-
-            if (!PhotonNetwork.IsMasterClient)
-                _playButton.interactable = false;
         }
 
         public void DisplayOptions()

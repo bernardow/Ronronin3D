@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 
 namespace Units.Funghy
 {
-    public class Spores : MonoBehaviourPunCallbacks, IObserver
+    public class Spores : MonoBehaviour, IObserver
     {
         [SerializeField] private Transform _fungiCenter;
         [SerializeField] private List<GameObject> _sporePool = new List<GameObject>();
@@ -32,10 +31,8 @@ namespace Units.Funghy
                 RotateCenter();
         }
 
-        [PunRPC]
-        public void ActivateSpore(int id)
+        public void ActivateSpore(GameObject spore)
         {
-            GameObject spore = PhotonView.Find(id).gameObject;
             spore.SetActive(true);
         }
 
@@ -45,7 +42,7 @@ namespace Units.Funghy
             {
                 if (!spore.activeSelf)
                 {
-                    photonView.RPC("ActivateSpore", RpcTarget.All, spore.GetComponent<PhotonView>().ViewID);
+                    ActivateSpore(spore);
                     spore.transform.position = _fungiCenter.position;
                     Rigidbody newSporeRb = spore.GetComponent<Rigidbody>();
                     newSporeRb.AddForce(direction * _shotForce, ForceMode.Impulse);

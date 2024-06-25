@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 using FungiAttacksSet = Units.Bosses.Base.FungiAttacksSet;
@@ -48,9 +47,7 @@ namespace Units.Funghy
             _fungiIdle = GetComponent<FungiIdle>();
             FungiCenter = transform.GetChild(1);
             VulnerableState = GetComponent<VulnerableState>();
-
-            if (!PhotonNetwork.IsMasterClient) return;
-
+            
             _attackQueue = new Utilities.Queue<IObserver>();
             
             _attacksComponents.Add(_spores);

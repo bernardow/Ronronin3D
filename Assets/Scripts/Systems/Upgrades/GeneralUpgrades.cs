@@ -22,15 +22,15 @@ namespace Systems.Upgrades
             int level = 3;
             switch (level)
             {
-                case 1: _player.PlayerMovement.PlayerSpeed = 110;
+                case 1: _player.PlayerMovement.PlayerSpeed = 15;
                     break;
-                case 2: _player.PlayerMovement.PlayerSpeed = 120;
+                case 2: _player.PlayerMovement.PlayerSpeed = 15;
                     break;
-                case 3: _player.PlayerMovement.PlayerSpeed = 135;
+                case 3: _player.PlayerMovement.PlayerSpeed = 15;
                     break;
-                case 4: _player.PlayerMovement.PlayerSpeed = 150;
+                case 4: _player.PlayerMovement.PlayerSpeed = 15;
                     break;
-                default: _player.PlayerMovement.PlayerSpeed = 100;
+                default: _player.PlayerMovement.PlayerSpeed = 15;
                     break;
             }
         }

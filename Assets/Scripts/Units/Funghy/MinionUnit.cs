@@ -1,5 +1,4 @@
 using System.Collections;
-using Photon.Pun;
 using UnityEngine;
 using Utilities;
 using Random = UnityEngine.Random;
@@ -41,7 +40,7 @@ namespace Units.Funghy
         private IEnumerator SetLifeTime(float timer)
         {
             yield return new WaitForSeconds(timer);
-            _baseUnit.CallSelfDestroy();
+            _baseUnit.SelfDestroy();
         }
     }
 }
