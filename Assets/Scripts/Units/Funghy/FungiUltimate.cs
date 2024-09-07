@@ -26,10 +26,6 @@ public class FungiUltimate : MonoBehaviour, IObserver
     // Update is called once per frame
     void Update()
     {
-        // for (int i = 0; i < LaserAttack.Lasers.Length; i++)
-        //     LaserAttack.Lasers[i].SetPosition(0, transform.position);
-        //
-        
         if (_shootLaser)
         {
             RotateCenter();
