@@ -27,7 +27,7 @@ namespace Units.Funghy
         private void OnCollisionEnter(Collision other)
         {
             if (other.collider.CompareTag("Player"))
-                _baseUnit.SelfDestroy();
+                _baseUnit.Kill();
 
             _baseUnit.RemoveLife(1);
         }

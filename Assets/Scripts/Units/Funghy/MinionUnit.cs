@@ -40,7 +40,7 @@ namespace Units.Funghy
         private IEnumerator SetLifeTime(float timer)
         {
             yield return new WaitForSeconds(timer);
-            _baseUnit.SelfDestroy();
+            _baseUnit.Kill();
         }
     }
 }

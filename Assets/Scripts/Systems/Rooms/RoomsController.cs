@@ -1,14 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Systems;
 using UnityEngine;
 
-public class RoomsController : MonoBehaviour
+public class RoomsController : Controller<RoomsController>
 {
     public Room[] Rooms;
     public Room CurrentRoom;
-}
 
-public class Room : MonoBehaviour
-{
-    
+    public static event Action<Room> OnPlayerEnterRoom;
+    public static event Action<Room> OnPlayerLeftRoom;
 }

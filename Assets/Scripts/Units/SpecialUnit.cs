@@ -54,11 +54,11 @@ namespace Units
                 StartCoroutine(Invincibility());
         }
 
-        public override void CheckLife()
+        protected override void CheckLife()
         {
             if (!(Life <= 0)) return;
             
-            SelfDestroy();
+            Kill();
             if (tag == "Player")
             {
                 OnPlayerDeath.Invoke();

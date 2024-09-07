@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Units
-{
-    //todo fix healthbar texture
+{ 
     public class BaseUnit : MonoBehaviour
     {
         public float Life;
@@ -16,9 +16,14 @@ namespace Units
 
         public bool CanTakeDamage { get; set; } = true;
 
-        private void OnEnable()
+        private void Awake()
         {
             InitialLife = Life;
+        }
+
+        public void Spawn()
+        {
+            Life = InitialLife;
             CanTakeDamage = true;
             IsAlive = true;
         }
@@ -37,20 +42,19 @@ namespace Units
             CheckLife();
         }
 
-        public virtual void CheckLife()
+        protected virtual void CheckLife()
         {
             if (Life <= 0)
             {
-                SelfDestroy();
+                Kill();
             }
                 
         }
         
-
-        
-        public void SelfDestroy()
+        public void Kill()
         {
             IsAlive = false;
+            CanTakeDamage = false;
             gameObject.SetActive(false);
         }
 
