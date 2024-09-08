@@ -11,4 +11,13 @@ public class RoomsController : Controller<RoomsController>
 
     public static event Action<Room> OnPlayerEnterRoom;
     public static event Action<Room> OnPlayerLeftRoom;
+
+    public void ChangeRoom(Room newRoom)
+    {
+        OnPlayerLeftRoom?.Invoke(CurrentRoom);
+
+        CurrentRoom = newRoom;
+        
+        OnPlayerEnterRoom?.Invoke(CurrentRoom);
+    }
 }

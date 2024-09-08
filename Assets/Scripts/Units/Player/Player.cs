@@ -28,6 +28,8 @@ namespace Units.Player
         [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
 
+        public Vector3 PlayerLastFramePosition;
+        
         private void Awake()
         {
             if (Instance == null)
@@ -60,6 +62,11 @@ namespace Units.Player
             }
                 
             PlayerCollisions.OnCollision += TakeDamage;
+        }
+
+        private void LateUpdate()
+        {
+            PlayerLastFramePosition = transform.position;
         }
 
         private void OnDestroy()

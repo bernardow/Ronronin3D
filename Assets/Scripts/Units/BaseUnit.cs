@@ -26,6 +26,7 @@ namespace Units
             Life = InitialLife;
             CanTakeDamage = true;
             IsAlive = true;
+            gameObject.SetActive(true);
         }
 
         public virtual void AddLife(float amount)
