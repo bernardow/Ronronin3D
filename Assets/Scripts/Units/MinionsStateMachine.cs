@@ -13,10 +13,3 @@ public class MinionsStateMachine : MonoBehaviour
         
     }
 }
-
-public enum MinionsStates
-{
-    ROAMING,
-    ESCAPING,
-    ATTACKING
-}

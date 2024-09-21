@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class State : MonoBehaviour
 {
+    public MinionsStates StateType;
+    
     public abstract void Enter();
     public abstract void Exit();
     
