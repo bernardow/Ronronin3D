@@ -6,10 +6,13 @@ using UnityEngine;
 
 public class EscapeState : State
 {
+    private MinionsStateMachine stateMachine;
     private Vector3[] rayDirections;
 
     private void Awake()
     {
+        stateMachine = GetComponent<MinionsStateMachine>();
+        
         Vector3 right = transform.right;
         Vector3 left = -right;
         Vector3 forward = transform.forward;
@@ -30,7 +33,6 @@ public class EscapeState : State
 
     public override void Exit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void DoAction()
@@ -43,6 +45,8 @@ public class EscapeState : State
         KeyValuePair<Vector3, float> betterRoute = LookForBetterRoute();
 
         transform.position += betterRoute.Key * (betterRoute.Value - 2);
+        
+        stateMachine.ChangeState(MinionsStates.ROAMING);
     }
 
     private KeyValuePair<Vector3, float> LookForBetterRoute()
