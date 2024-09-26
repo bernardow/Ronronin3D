@@ -14,6 +14,10 @@ GameObject:
   - component: {fileID: 1208922348155062379}
   - component: {fileID: 4386179899300016534}
   - component: {fileID: 255002505942556229}
+  - component: {fileID: 7089698661849920888}
+  - component: {fileID: 5903891276604922232}
+  - component: {fileID: 96304779329673800}
+  - component: {fileID: 7311945441898062317}
   m_Layer: 7
   m_Name: Dummy
   m_TagString: Projectiles
@@ -121,8 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 12
   Damage: 8
-  DistanceToPlayerThreshold: 50
-  SporeSpeed: 10
+  Bomb: {fileID: 1987553650788785109, guid: 47775dc2b7fb2984e97c621ba631ddb3, type: 3}
+  Force: 10
 --- !u!54 &255002505942556229
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,3 +154,60 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &7089698661849920888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532098627398189116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696d8e41222438047997b9285ad34a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  escapeState: {fileID: 5903891276604922232}
+  roamingState: {fileID: 96304779329673800}
+  attackState: {fileID: 7311945441898062317}
+  CurrentState: {fileID: 96304779329673800}
+--- !u!114 &5903891276604922232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532098627398189116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be8efe37fbb0274baca870db21a3d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateType: 1
+--- !u!114 &96304779329673800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532098627398189116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cff84fbdb3c64e4e8b533d366bb873d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateType: 0
+  range: 10
+--- !u!114 &7311945441898062317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532098627398189116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336a38457fd500d428c4c54a95b5948e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateType: 2
+  intervalBetweenAttacks: 3
