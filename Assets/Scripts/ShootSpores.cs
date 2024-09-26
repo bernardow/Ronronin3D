@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Units;
@@ -11,19 +12,38 @@ public class ShootSpores : BaseUnit, IAttack
     
     public void Attack()
     {
-        StartCoroutine(SpawnSpores());
+        SpawnSpores();
     }
 
-    private IEnumerator SpawnSpores()
+#if UNITY_EDITOR
+    private void Update()
     {
+        Vector3 myPosition = transform.position;
         Vector3 playerPosition = Player.Instance.PlayerTransform.position;
+        Vector3 playerRight = Vector3.Cross(playerPosition - myPosition, Vector3.up) + playerPosition;
+        Vector3 playerLeft = Vector3.Cross(playerPosition - myPosition, -Vector3.up) + playerPosition;
+        
+        Debug.DrawLine(playerPosition, myPosition, Color.blue);
+        Debug.DrawLine(playerLeft, myPosition, Color.red);
+        Debug.DrawLine(playerRight, myPosition, Color.green);
+    }
+#endif
+    
+    private void SpawnSpores()
+    {
+        Vector3 myPosition = transform.position;
+        Vector3 playerPosition = Player.Instance.PlayerTransform.position;
+        Vector3 playerRight = Vector3.Cross(playerPosition - myPosition, Vector3.up) + playerPosition;
+        Vector3 playerLeft = Vector3.Cross(playerPosition - myPosition, -Vector3.up) + playerPosition;
+        
+        SpawnSpore(playerPosition - myPosition);
+        SpawnSpore(playerRight - myPosition);
+        SpawnSpore(playerLeft - myPosition);
+    }
 
-        for (int i = 0; i < 3; i++)
-        {
-            Rigidbody spore = Instantiate(sporePrefab, transform).GetComponent<Rigidbody>();
-            spore.AddForce((playerPosition - transform.position).normalized * sporeForce, ForceMode.Impulse);
-            
-            yield return new WaitForSeconds(0.5f);
-        }
+    private void SpawnSpore(Vector3 direction)
+    {
+        Rigidbody spore = Instantiate(sporePrefab, transform).GetComponent<Rigidbody>();
+        spore.AddForce(direction.normalized * sporeForce, ForceMode.Impulse);
     }
 }
