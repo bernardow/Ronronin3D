@@ -16,7 +16,7 @@ namespace Units.Player
             if (other.collider.CompareTag("Boss") || other.collider.CompareTag("Projectiles"))
             {
                 BaseUnit baseUnit = other.collider.GetComponent<BaseUnit>();
-                baseUnit.RemoveBossLife(_damage);
+                //baseUnit.RemoveBossLife(_damage);
                 AutoDestroy();
             }
             
