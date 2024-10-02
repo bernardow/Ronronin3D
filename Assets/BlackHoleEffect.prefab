@@ -160,7 +160,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 704
+    m_Bits: 576
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -180,8 +180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf22e42f18d570a4280e1cbbf9d8eefb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravitationalForce: 10
-  orbitSpeed: 25.6
+  damage: 10
+  lifeTime: 10
+  gravityForce: 1.5
+  orbitSpeed: 25
+  explosionForce: 75
+  minDistance: 4
+  MaxDistance: 15
 --- !u!1 &8035934272998193029
 GameObject:
   m_ObjectHideFlags: 0
