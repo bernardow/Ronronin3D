@@ -15,6 +15,7 @@ TagManager:
   - BossHealthbar
   - DeadZone
   - BossSpawner
+  - SunBlocks
   layers:
   - Default
   - TransparentFX

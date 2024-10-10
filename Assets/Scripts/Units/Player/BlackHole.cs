@@ -18,11 +18,13 @@ public class BlackHole : MonoBehaviour
     [SerializeField] private float minDistance = 3;
     public float MaxDistance = 15;
 
+    private Rigidbody rigidbody;
     private List<BlackHoleProjectile> projectilesInBlackHole;
 
     private void OnEnable()
     {
         projectilesInBlackHole = new List<BlackHoleProjectile>();
+        rigidbody = GetComponent<Rigidbody>();
         StartCoroutine(RunLifeCycle());
     }
 
@@ -30,6 +32,9 @@ public class BlackHole : MonoBehaviour
     {
         while (lifeTime > 0)
         {
+            if (lifeTime <= 8f && !rigidbody.isKinematic)
+                rigidbody.isKinematic = true;
+            
             lifeTime -= Time.deltaTime;
             yield return null;
         }
@@ -37,10 +42,10 @@ public class BlackHole : MonoBehaviour
         Explode();
         gameObject.SetActive(false);
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Projectiles"))
+        if (other.CompareTag("Projectiles") || other.CompareTag("BlackHoleBlocks"))
         {
             StartCoroutine(OrbitAround(other.gameObject));
         }
@@ -49,7 +54,10 @@ public class BlackHole : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (!other.collider.CompareTag("Projectiles") && !other.collider.CompareTag("Boss") &&
-            !other.collider.CompareTag("Boss") && !other.collider.CompareTag("Player")) return;
+            !other.collider.CompareTag("Boss") && !other.collider.CompareTag("Player") && !other.collider.CompareTag("BlackHoleBlocks")) return;
+
+        if (other.collider.CompareTag("BlackHoleBlocks"))
+            Destroy(other.collider.gameObject);
         
         if (other.gameObject.TryGetComponent(typeof(BaseUnit), out Component unit))
             StartCoroutine(DealDamage((BaseUnit)unit));
@@ -120,6 +128,10 @@ public class BlackHole : MonoBehaviour
             BlackHoleProjectile blackHoleProjectile = projectilesInBlackHole[i];
             
             if (!blackHoleProjectile.Available) continue;
+
+            if (blackHoleProjectile.Projectile.CompareTag("BlackHoleBlocks"))
+                blackHoleProjectile.Projectile.isKinematic = false;
+            
             blackHoleProjectile.InUse = false;
             Vector3 direction = blackHoleProjectile.Projectile.transform.forward;
             direction.y = 0;
