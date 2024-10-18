@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Units;
 using Units.Player;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ShootSpores : BaseUnit, IAttack
@@ -43,7 +44,7 @@ public class ShootSpores : BaseUnit, IAttack
 
     private void SpawnSpore(Vector3 direction)
     {
-        Rigidbody spore = Instantiate(sporePrefab, transform).GetComponent<Rigidbody>();
+        Rigidbody spore = Instantiate(sporePrefab, transform.position, quaternion.identity).GetComponent<Rigidbody>();
         spore.AddForce(direction.normalized * sporeForce, ForceMode.Impulse);
     }
 }

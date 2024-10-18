@@ -15,10 +15,12 @@ namespace Units
         public bool IsAlive { get; private set; }
 
         public bool CanTakeDamage { get; set; } = true;
+        private Vector3 awakePosition;
 
         private void Awake()
         {
             InitialLife = Life;
+            awakePosition = transform.position;
         }
 
         public void Spawn()
@@ -27,6 +29,7 @@ namespace Units
             CanTakeDamage = true;
             IsAlive = true;
             gameObject.SetActive(true);
+            transform.position = awakePosition;
         }
 
         public virtual void AddLife(float amount)

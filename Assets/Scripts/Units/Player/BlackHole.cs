@@ -57,7 +57,7 @@ public class BlackHole : MonoBehaviour
             !other.collider.CompareTag("Boss") && !other.collider.CompareTag("Player") && !other.collider.CompareTag("BlackHoleBlocks")) return;
 
         if (other.collider.CompareTag("BlackHoleBlocks"))
-            Destroy(other.collider.gameObject);
+            other.collider.GetComponent<Rigidbody>().isKinematic = false;
         
         if (other.gameObject.TryGetComponent(typeof(BaseUnit), out Component unit))
             StartCoroutine(DealDamage((BaseUnit)unit));

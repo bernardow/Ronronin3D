@@ -16,6 +16,7 @@ TagManager:
   - DeadZone
   - BossSpawner
   - SunBlocks
+  - BlackHoleBlocks
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - Minions
   - PlayerProjectile
   - Player
-  - 
-  - 
+  - Ground
+  - Obstacle
   - 
   - 
   - 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Units;
+using Units.Player;
 using UnityEngine;
 
 public class AttackState : State
@@ -41,6 +42,12 @@ public class AttackState : State
     {
         while (inUse)
         {
+            if (Vector3.Distance(transform.position, Player.Instance.PlayerTransform.position) > 20)
+            {
+                stateMachine.ChangeState(MinionsStates.ROAMING);
+                yield break;
+            }
+            
             if (baseUnit.Life <= baseUnit.InitialLife * 0.2f)
                 stateMachine.ChangeState(MinionsStates.ESCAPING);
             else attack.Attack();
