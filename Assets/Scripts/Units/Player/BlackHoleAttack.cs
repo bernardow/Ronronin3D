@@ -9,6 +9,8 @@ public class BlackHoleAttack : MonoBehaviour
 {
     [SerializeField] private GameObject blackHolePrefab;
     [SerializeField] private float shootForce;
+    [SerializeField] private float staminaCost = 75;
+    
     private Camera mainCamera;
     
     private void Start()
@@ -24,20 +26,14 @@ public class BlackHoleAttack : MonoBehaviour
 
     private void Shoot()
     {
+        if (PlayerStamina.Instance.Stamina < staminaCost) return;
+        
+        PlayerStamina.Instance.RemoveStamina(staminaCost);
         Rigidbody blackHole = Instantiate(blackHolePrefab, transform.position, quaternion.identity).GetComponent<Rigidbody>();
-        Vector3 direction = (ShootRaycast() - Player.Instance.PlayerTransform.position).normalized;
+        blackHole.transform.SetParent(transform.parent);
+        Vector3 direction = Player.Instance.ShootRaycast() - Player.Instance.PlayerTransform.localPosition;
         direction.y = 0;
-        blackHole.AddForce(direction * shootForce, ForceMode.Impulse);
-    }
-    
-    private Vector3 ShootRaycast()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            return hitInfo.point;
-        }
-
-        throw new NullReferenceException("Shooting out of the screen");
+        
+        blackHole.AddForce(direction.normalized * shootForce, ForceMode.Impulse);
     }
 }

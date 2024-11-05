@@ -27,6 +27,7 @@ namespace Units.Player
 
         [SerializeField] private bool _inLobby;
         [SerializeField] private Funghy.Funghy _funghy;
+        private Camera mainCamera;
 
         public Vector3 PlayerLastFramePosition;
         
@@ -34,7 +35,8 @@ namespace Units.Player
         {
             if (Instance == null)
                 Instance = this;
-            
+
+            mainCamera = Camera.main;
             PlayerAttack = GetComponent<PlayerAttack>();
             PlayerHealth = GetComponent<SpecialUnit>();
             PlayerMovement = GetComponent<PlayerMovement>();
@@ -99,6 +101,17 @@ namespace Units.Player
             PlayerDash.enabled = false;
             PlayerBasicAttack.enabled = false;
             PlayerKunaiAttack.enabled = false;
+        }
+        
+        public Vector3 ShootRaycast()
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
+            {
+                return new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
+            }
+
+            throw new NullReferenceException("Shooting out of the screen");
         }
     }
 }

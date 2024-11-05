@@ -8,6 +8,7 @@ public class SunAttack : MonoBehaviour
 {
     [SerializeField] private GameObject sunPrefab;
     [SerializeField] private float shootForce = 220;
+    [SerializeField] private float staminaCost = 65;
     private Camera mainCamera;
 
     private void Awake()
@@ -27,20 +28,13 @@ public class SunAttack : MonoBehaviour
 
     private void ShootSun()
     {
+        if (PlayerStamina.Instance.Stamina < staminaCost) return;
+        
+        PlayerStamina.Instance.RemoveStamina(staminaCost);
         Rigidbody sun = Instantiate(sunPrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-        Vector3 direction = (ShootRaycast() - Player.Instance.PlayerTransform.position).normalized;
+        sun.transform.SetParent(transform.parent);
+        Vector3 direction = Player.Instance.ShootRaycast() - Player.Instance.PlayerTransform.localPosition;
         direction.y = 0;
-        sun.AddForce(direction * shootForce, ForceMode.Impulse);
-    }
-    
-    private Vector3 ShootRaycast()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo))
-        {
-            return hitInfo.point;
-        }
-
-        throw new NullReferenceException("Shooting out of the screen");
+        sun.AddForce(direction.normalized * shootForce, ForceMode.Impulse);
     }
 }

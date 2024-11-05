@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 786831}
   - component: {fileID: 786830}
   - component: {fileID: 786834}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall
   m_TagString: BlackHoleBlocks
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 55138698}
   - component: {fileID: 55138697}
   - component: {fileID: 55138701}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (4)
   m_TagString: BlackHoleBlocks
   m_Icon: {fileID: 0}
@@ -1145,6 +1145,11 @@ PrefabInstance:
       propertyPath: PlayerSpeed
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 4499252437514608817, guid: 0e1e3ab50571737429cd4e433b2f3095,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5789618087447554099, guid: 0e1e3ab50571737429cd4e433b2f3095,
         type: 3}
       propertyPath: m_Enabled
@@ -1440,6 +1445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stamina: 100
+  baseStaminaGain: 15
 --- !u!143 &183904895
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1481,6 +1487,7 @@ MonoBehaviour:
   blackHolePrefab: {fileID: 6625647218332448866, guid: 77ab395a711ecf147828026c0fece1c4,
     type: 3}
   shootForce: 220
+  staminaCost: 75
 --- !u!114 &183904927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,6 +1503,7 @@ MonoBehaviour:
   sunPrefab: {fileID: 8357554768751936588, guid: 907033a484ec0bd4598411a1413282e0,
     type: 3}
   shootForce: 10000
+  staminaCost: 65
 --- !u!1001 &196214526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3015,7 +3023,7 @@ GameObject:
   - component: {fileID: 287771284}
   - component: {fileID: 287771283}
   - component: {fileID: 287771287}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (3)
   m_TagString: SunBlocks
   m_Icon: {fileID: 0}
@@ -3280,12 +3288,12 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 0.86602545
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
+  m_SensorSize: {x: 1, y: 1}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -4300,7 +4308,7 @@ GameObject:
   - component: {fileID: 415312409}
   - component: {fileID: 415312408}
   - component: {fileID: 415312412}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall
   m_TagString: SunBlocks
   m_Icon: {fileID: 0}
@@ -11403,7 +11411,7 @@ GameObject:
   - component: {fileID: 1207650879}
   - component: {fileID: 1207650878}
   - component: {fileID: 1207650882}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (3)
   m_TagString: BlackHoleBlocks
   m_Icon: {fileID: 0}
@@ -11698,7 +11706,7 @@ GameObject:
   - component: {fileID: 1237380181}
   - component: {fileID: 1237380180}
   - component: {fileID: 1237380184}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (1)
   m_TagString: BlackHoleBlocks
   m_Icon: {fileID: 0}
@@ -13280,7 +13288,7 @@ GameObject:
   - component: {fileID: 1395678508}
   - component: {fileID: 1395678507}
   - component: {fileID: 1395678511}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (1)
   m_TagString: SunBlocks
   m_Icon: {fileID: 0}
@@ -14357,7 +14365,7 @@ GameObject:
   - component: {fileID: 1501756738}
   - component: {fileID: 1501756737}
   - component: {fileID: 1501756741}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (2)
   m_TagString: BlackHoleBlocks
   m_Icon: {fileID: 0}
@@ -19342,7 +19350,7 @@ GameObject:
   - component: {fileID: 1510090513}
   - component: {fileID: 1510090512}
   - component: {fileID: 1510090516}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (4)
   m_TagString: SunBlocks
   m_Icon: {fileID: 0}
@@ -24081,7 +24089,7 @@ GameObject:
   - component: {fileID: 2090292339}
   - component: {fileID: 2090292338}
   - component: {fileID: 2090292342}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall (2)
   m_TagString: SunBlocks
   m_Icon: {fileID: 0}
@@ -24225,7 +24233,7 @@ GameObject:
   - component: {fileID: 2110518201}
   - component: {fileID: 2110518200}
   - component: {fileID: 2110518199}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pilar (1)
   m_TagString: Setup
   m_Icon: {fileID: 0}

@@ -57,6 +57,8 @@ namespace Units
         
         public void Kill()
         {
+            if (!gameObject.CompareTag("Player"))
+                PlayerStamina.Instance.AddStamina();
             IsAlive = false;
             CanTakeDamage = false;
             gameObject.SetActive(false);
