@@ -21,8 +21,8 @@ namespace Units.Player
         public float VerticalRaw { get; private set; }
         public Vector3 MovementDirection { get; private set; }
         public Vector3 MovementDirectionRaw { get; private set; }
-        
-        
+        public Vector3 SecondaryJoystickDirection { get; private set; }
+
         public event Action OnFireSpecialAttack = delegate {  }; 
         public event Action OnFireKunai = delegate {  };
         public event Action OnDashActivate = delegate {  };
@@ -33,7 +33,7 @@ namespace Units.Player
         {
             FireJoystick = Input.GetKeyDown(KeyCode.Joystick1Button0);
             FireKeyboard = Input.GetKeyDown(KeyCode.Space);
-            FireKunaiJoystick = Input.GetKey(KeyCode.Joystick1Button3);
+            FireKunaiJoystick = Input.GetKey(KeyCode.Joystick1Button5);
             FireKunaiKeyboard = Input.GetKey(KeyCode.Mouse0);
             DashKeyboard = Input.GetKeyDown(KeyCode.LeftShift);
             DashJoystick = Input.GetKeyDown(KeyCode.Joystick1Button1);
@@ -48,6 +48,10 @@ namespace Units.Player
 
             MovementDirection = new Vector3(Horizontal, 0, Vertical);
             MovementDirectionRaw = new Vector3(HorizontalRaw, 0, VerticalRaw);
+
+            float secondaryJoystickHorizontal = Input.GetAxis("SecondaryJoystickHorizontal");
+            float secondaryJoystickVertical = Input.GetAxis("SecondaryJoystickVertical");
+            SecondaryJoystickDirection = new Vector3(secondaryJoystickHorizontal, 0, secondaryJoystickVertical);
             
             if (FireJoystick || FireKeyboard)
                 OnFireSpecialAttack.Invoke(); 

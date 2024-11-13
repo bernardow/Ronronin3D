@@ -42,7 +42,11 @@ namespace Units.Player
         {
             if (!_rigidbody && _canMove)
             {
-                CharacterController.SimpleMove(_player.PlayerInputs.MovementDirection * PlayerSpeed);
+                Vector3 cameraRight = Camera.main.transform.right * _player.PlayerInputs.Horizontal;
+                Vector3 cameraUp = Camera.main.transform.up * _player.PlayerInputs.Vertical;
+                Vector3 directionToMove = (cameraRight + cameraUp) * PlayerSpeed;
+                directionToMove.y = 0.5f;
+                CharacterController.SimpleMove(directionToMove);
                 //_player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * PlayerSpeed * Time.deltaTime;
                 return;
             }
