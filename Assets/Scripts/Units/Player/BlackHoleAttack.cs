@@ -31,8 +31,8 @@ public class BlackHoleAttack : MonoBehaviour
         PlayerStamina.Instance.RemoveStamina(staminaCost);
         Rigidbody blackHole = Instantiate(blackHolePrefab, transform.position, quaternion.identity).GetComponent<Rigidbody>();
         blackHole.transform.SetParent(transform.parent);
-        Vector3 direction = Player.Instance.ShootRaycast() - Player.Instance.PlayerTransform.localPosition;
-        direction.y = 0;
+        Vector3 direction = Player.Instance.PlayerInputs.SecondatyJoystickDirectionAligned;
+        direction = direction == Vector3.zero ? Player.Instance.transform.forward : direction;
         
         blackHole.AddForce(direction.normalized * shootForce, ForceMode.Impulse);
     }

@@ -43,14 +43,9 @@ namespace Units.Player
 
         private void ShootKunai()
         {
-            Vector3 cameraRight = _mainCamera.transform.right * _player.PlayerInputs.SecondaryJoystickDirection.x;
-            Vector3 cameraUp = _mainCamera.transform.up * -_player.PlayerInputs.SecondaryJoystickDirection.z;
-            Vector3 direction = cameraRight + cameraUp;
-            direction.y = 0;
+            Vector3 direction = _player.PlayerInputs.SecondatyJoystickDirectionAligned;
             direction = direction == Vector3.zero ? transform.forward : direction;
             
-            Vector3 goalPosition = _mouseShoot? _player.ShootRaycast() - _player.PlayerTransform.localPosition : Helpers.GetBossPosition() - _player.PlayerTransform.position;
-            goalPosition.y = 0;
             Rigidbody kunaiRigidbody = Instantiate(_kunai, _kunaiSpawnPosition.position,  Quaternion.identity).GetComponent<Rigidbody>();
             kunaiRigidbody.transform.SetParent(transform.parent);
             kunaiRigidbody.AddForce(direction.normalized * _kunaiSpeed, ForceMode.Impulse);

@@ -73,6 +73,8 @@ namespace Units.Funghy
 
         public IEnumerator Run()
         {
+            if (_funghy == null)
+                _funghy = GetComponent<Funghy>();
             _funghy.ManageIdleMovement(false);
             _isDashing = false;
             yield return new WaitForSeconds(2);

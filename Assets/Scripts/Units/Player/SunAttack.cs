@@ -33,8 +33,8 @@ public class SunAttack : MonoBehaviour
         PlayerStamina.Instance.RemoveStamina(staminaCost);
         Rigidbody sun = Instantiate(sunPrefab, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
         sun.transform.SetParent(transform.parent);
-        Vector3 direction = Player.Instance.ShootRaycast() - Player.Instance.PlayerTransform.localPosition;
-        direction.y = 0;
+        Vector3 direction = Player.Instance.PlayerInputs.SecondatyJoystickDirectionAligned;
+        direction = direction == Vector3.zero ? Player.Instance.transform.forward : direction;
         sun.AddForce(direction.normalized * shootForce, ForceMode.Impulse);
     }
 }

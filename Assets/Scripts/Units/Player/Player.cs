@@ -56,7 +56,7 @@ namespace Units.Player
 
             PlayerHealth.Healthbar = GameObject.FindWithTag("Healthbar");
 
-            GameObject boss = GameObject.FindWithTag("Boss");
+            GameObject boss = FindObjectOfType<Funghy.Funghy>(true).gameObject;//GameObject.FindWithTag("Boss");
             if (boss != null)
             {
                 _funghy = boss.GetComponent<Funghy.Funghy>();

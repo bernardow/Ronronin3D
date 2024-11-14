@@ -50,6 +50,8 @@ public class FungiUltimate : MonoBehaviour, IObserver
     {
         CanTurnVulnerable = true;
         Debug.Log("Casting Ultimate");
+        if (_funghy == null)
+            _funghy = GetComponent<Funghy>();
         _funghy.ManageIdleMovement(false);
         yield return new WaitForSeconds(_castingTimer);
         CanTurnVulnerable = false;
