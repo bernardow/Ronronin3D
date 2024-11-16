@@ -198,6 +198,12 @@ namespace Units.Funghy
                     return FungiUltimate;
                 case FungiUtilities.FungiAttacks.Dash:
                     return _fungiDash;
+                case FungiUtilities.FungiAttacks.Spores:
+                    return GetComponent<ShootSpores>();
+                case FungiUtilities.FungiAttacks.Bombs:
+                    return GetComponent<ShooterMinion>();
+                case FungiUtilities.FungiAttacks.Jump:
+                    return GetComponent<JumpAttack>();
                 default:
                     Debug.LogError("Attack not found");
                     return null;

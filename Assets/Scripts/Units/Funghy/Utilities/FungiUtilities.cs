@@ -41,6 +41,9 @@ public static class FungiUtilities
         AcidRain,
         Dash,
         Minions,
-        Ultimate
+        Ultimate,
+        Spores,
+        Bombs,
+        Jump
     }
 }

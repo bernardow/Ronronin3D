@@ -48,9 +48,7 @@ public class AttackState : State
                 yield break;
             }
             
-            if (baseUnit.Life <= baseUnit.InitialLife * 0.2f)
-                stateMachine.ChangeState(MinionsStates.ESCAPING);
-            else attack.Attack();
+            attack.Attack();
             
             yield return new WaitForSeconds(intervalBetweenAttacks);
         }

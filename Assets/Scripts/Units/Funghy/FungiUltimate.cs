@@ -12,7 +12,7 @@ public class FungiUltimate : MonoBehaviour, IObserver
     [SerializeField] private float _ultimateDuration;
     [SerializeField] private float _rotationAnglesPerTime;
 
-    [SerializeField] private Transform _fungiCenter;
+    public Transform _fungiCenter;
     
     private bool _shootLaser;
     private Funghy _funghy;
@@ -67,8 +67,9 @@ public class FungiUltimate : MonoBehaviour, IObserver
         _shootLaser = false;
     }
 
-    private void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
-
+    public void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
+    public void RotateCenter(float angle) => _fungiCenter.Rotate(Vector3.up, angle);
+    
     public void OnNotify() => RunUltimateRPC();
 
     public void RunUltimateRPC() => StartCoroutine(Run());

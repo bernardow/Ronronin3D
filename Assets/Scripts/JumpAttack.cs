@@ -2,14 +2,19 @@ using System.Collections;
 using Units;
 using Units.Player;
 using UnityEngine;
+using Utilities;
 
-public class JumpAttack : BaseUnit, IAttack
+public class JumpAttack : MonoBehaviour, IAttack, IObserver
 {
     private readonly int ATTACK_ANIMATION_ID = Animator.StringToHash("Attack");
+    private readonly int BOSS_ATTACK_ANIMATION_ID = Animator.StringToHash("JumpAttack");
+    
     
     private Animator animator;
     private Collider collider;
     private Rigidbody rigidbody;
+
+    public bool FinishedAttack { get; private set; }
     
     private void Awake()
     {
@@ -20,6 +25,7 @@ public class JumpAttack : BaseUnit, IAttack
 
     public void Attack()
     {
+        FinishedAttack = false;
         animator.SetTrigger(ATTACK_ANIMATION_ID);
     }
 
@@ -36,6 +42,7 @@ public class JumpAttack : BaseUnit, IAttack
     
     private IEnumerator JumpCoroutine()
     {
+        
         Vector3 targetPosition = Player.Instance.PlayerTransform.position;
         Vector3 initialPosition = transform.position;
 
@@ -47,5 +54,34 @@ public class JumpAttack : BaseUnit, IAttack
             transform.position = Vector3.Lerp(initialPosition, targetPosition, current);
             yield return null;
         }
+
+        FinishedAttack = true;
+    }
+
+    public void OnNotify()
+    {
+        StartCoroutine(Run());
+    }
+
+    public IEnumerator Run()
+    {
+        FinishedAttack = false;
+        animator.SetTrigger(ATTACK_ANIMATION_ID);
+
+        while (!FinishedAttack)
+        {
+            yield return null;
+        }
+    }
+
+    public void Disable()
+    {
+        StopAllCoroutines();
+        enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
     }
 }

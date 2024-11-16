@@ -5,17 +5,24 @@ using Cinemachine;
 using Units;
 using Units.Player;
 using UnityEngine;
+using Utilities;
 
-public class ShooterMinion : BaseUnit, IAttack
+public class ShooterMinion : MonoBehaviour, IAttack, IObserver
 {
     public GameObject Bomb;
-    public float Force = 10;
     
-    private Transform Transform => transform;
+    private Transform Transform;
 
-    private IEnumerator ShooterLogic()
+    private void Awake()
     {
-        Vector3 myPosition = Transform.position;
+        Transform = transform;
+    }
+
+    public bool FinishedAttack { get; private set; }
+    
+    private IEnumerator ShooterLogic(Vector3 spawnPosition = new Vector3())
+    {
+        Vector3 myPosition = spawnPosition == new Vector3()? Transform.position : spawnPosition;
         
         for (int i = 0; i < 3; i++)
         {
@@ -25,6 +32,8 @@ public class ShooterMinion : BaseUnit, IAttack
                 
             yield return new WaitForSeconds(0.5f);
         }
+
+        FinishedAttack = true;
     }
 
     private IEnumerator ShootBomb(Transform bombTransform)
@@ -43,6 +52,31 @@ public class ShooterMinion : BaseUnit, IAttack
 
     public void Attack()
     {
+        FinishedAttack = false;
         StartCoroutine(ShooterLogic());
+    }
+
+    public void OnNotify()
+    {
+        Transform = GetComponentInChildren<MeshRenderer>().transform;
+        StartCoroutine(Run());
+    }
+
+    public IEnumerator Run()
+    {
+        Transform = GetComponentInChildren<MeshRenderer>().transform;
+        yield return ShooterLogic(transform.position);
+        yield return ShooterLogic(transform.position);
+    }
+
+    public void Disable()
+    {
+        StopAllCoroutines();
+        enabled = false;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
     }
 }

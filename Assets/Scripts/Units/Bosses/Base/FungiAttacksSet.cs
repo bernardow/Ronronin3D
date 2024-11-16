@@ -15,7 +15,7 @@ namespace Units.Bosses.Base
         public int ID
         {
             get => iD;
-            set => value = iD;
+            set => iD = value;
         }
 
         public string SetName { get; set; }
