@@ -16,6 +16,8 @@ namespace Units.Player
         public bool HaveDash { get; set; }
         public float DashImpulse;
         public float DashCooldown = 1;
+
+        public bool Unlocked;
         
         private void Awake() => _player = GetComponent<Player>();
         
@@ -29,7 +31,7 @@ namespace Units.Player
 
         private void Dash()
         {
-            if(PlayerStamina.Instance.Stamina < m_StaminaCost) return;
+            if (!Unlocked) return;
             
             if (_canDash && HaveDash)
             {

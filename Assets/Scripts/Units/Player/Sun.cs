@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Units;
 using UnityEngine;
 
 public class Sun : MonoBehaviour
@@ -29,10 +30,13 @@ public class Sun : MonoBehaviour
         if (!other.CompareTag("Projectiles") && !other.CompareTag("Boss") &&
             !other.CompareTag("Boss") && !other.CompareTag("Player") && !other.CompareTag("SunBlocks")) return;
 
+        Rigidbody minionRigidbody = null;
+        if (other.GetComponentInParent<IAttack>() != null) 
+            minionRigidbody = other.GetComponentInParent<Rigidbody>();
         SunPlanet sunPlanet = new SunPlanet
         {
             Sun = this,
-            Planet = other.GetComponent<Rigidbody>()
+            Planet = minionRigidbody != null? minionRigidbody : other.GetComponent<Rigidbody>()
         };
         
         projectilesInRange.Add(sunPlanet);
@@ -75,7 +79,12 @@ public class Sun : MonoBehaviour
             
             Vector3 direction = projectilesInRange[i].Planet.position - transform.position;
             direction.y = 0;
-            projectilesInRange[i].Planet.AddForce(direction.normalized * explosionForce, ForceMode.Impulse);
+            if (!projectilesInRange[i].Planet.CompareTag("Boss"))
+                projectilesInRange[i].Planet.AddForce(direction.normalized * explosionForce, ForceMode.Impulse);
+
+            BaseUnit baseUnit = projectilesInRange[i].Planet.GetComponentInChildren<BaseUnit>();
+            if (baseUnit != null)
+                baseUnit.RemoveLife(25);
         }
         
         Destroy(gameObject);

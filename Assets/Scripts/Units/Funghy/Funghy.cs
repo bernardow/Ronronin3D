@@ -46,7 +46,7 @@ namespace Units.Funghy
             _acidRain = GetComponent<AcidRain>();
             _fungiMinions = GetComponent<FungiMinions>();
             _fungiIdle = GetComponent<FungiIdle>();
-            FungiCenter = transform.GetChild(1);
+            FungiCenter = transform.GetChild(0).GetChild(2);
             VulnerableState = GetComponent<VulnerableState>();
             
             _attackQueue = new Utilities.Queue<IObserver>();
@@ -61,8 +61,6 @@ namespace Units.Funghy
             _currentState = FungiStates.PhaseOne;
             //CheckForAttacksUpdates();
             RunStateMachine();
-
-            FunghyHealth.Healthbar = GameObject.FindWithTag("BossHealthbar");
         }
 
         private void Update()

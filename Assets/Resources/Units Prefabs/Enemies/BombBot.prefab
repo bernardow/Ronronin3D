@@ -1446,7 +1446,6 @@ GameObject:
   - component: {fileID: 4653799926715653557}
   - component: {fileID: 7907675507159778636}
   - component: {fileID: 5717946277049190451}
-  - component: {fileID: 63918651125313958}
   m_Layer: 7
   m_Name: BombBot
   m_TagString: Projectiles
@@ -1528,20 +1527,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bomb: {fileID: 1987553650788785109, guid: 47775dc2b7fb2984e97c621ba631ddb3, type: 3}
   spawnPoint: {fileID: 6684334754472439477}
---- !u!114 &63918651125313958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8177606655166793149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e4b1c10b01f53469806d143f37a20f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Life: 12
-  Damage: 8
 --- !u!1 &8237923312810133471
 GameObject:
   m_ObjectHideFlags: 0

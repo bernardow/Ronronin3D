@@ -11,6 +11,8 @@ public class BlackHoleAttack : MonoBehaviour
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private float shootForce;
     [SerializeField] private float staminaCost = 75;
+
+    public bool Unlocked;
     
     private Camera mainCamera;
     
@@ -27,6 +29,8 @@ public class BlackHoleAttack : MonoBehaviour
 
     private void Shoot()
     {
+        if (!Unlocked) return;
+        
         if (PlayerStamina.Instance.Stamina < staminaCost) return;
         
         PlayerStamina.Instance.RemoveStamina(staminaCost);

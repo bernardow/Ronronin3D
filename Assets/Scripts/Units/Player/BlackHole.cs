@@ -48,6 +48,16 @@ public class BlackHole : MonoBehaviour
         if (other.CompareTag("Projectiles") || other.CompareTag("BlackHoleBlocks"))
         {
             StartCoroutine(OrbitAround(other.gameObject));
+
+            if (other.CompareTag("BlackHoleBlocks"))
+            {
+                BlockingDoor[] blockingDoors = other.transform.parent.GetComponentsInChildren<BlockingDoor>();
+                for (int i = 0; i < blockingDoors.Length; i++)
+                {
+                    if (blockingDoors[i].gameObject == other.gameObject) continue;
+                    StartCoroutine(OrbitAround(blockingDoors[i].gameObject));
+                }
+            }
         }
     }
 
@@ -74,7 +84,11 @@ public class BlackHole : MonoBehaviour
             yield return null;
         }
 
-        Rigidbody projectileRigidbody = projectile.GetComponent<Rigidbody>(); 
+        Rigidbody projectileRigidbody = projectile.GetComponentInChildren<Rigidbody>();
+
+        if (projectile.GetComponentInParent<IAttack>() != null)
+            projectileRigidbody = projectile.transform.parent.GetComponent<Rigidbody>();
+        
         projectileRigidbody.useGravity = false;
 
         BlackHoleProjectile blackHoleProjectile = new BlackHoleProjectile

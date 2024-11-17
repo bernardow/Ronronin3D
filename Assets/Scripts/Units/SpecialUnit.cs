@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Managers;
 using Systems.Player_Death_Data;
 using Systems.Upgrades;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Units
 {
     public class SpecialUnit : BaseUnit
     {
-        public GameObject Healthbar;
+        public Material Healthbar;
         public float DamageMultiplier { get; set; }
         public event Action OnPlayerDeath = delegate {  };
         public event Action OnBossDeath = delegate {  };
@@ -24,6 +25,7 @@ namespace Units
             OnPlayerDeath += ReloadScene;
             OnBossDeath += AddBossDeathPoints;
             OnBossDeath += BossSpawner.Instance.DisableColliders;
+            OnBossDeath += GameManager.Instance.ShowGameOverScreen;
         }
 
         private void OnDestroy()
@@ -33,6 +35,7 @@ namespace Units
             OnPlayerDeath -= ReloadScene;
             OnBossDeath -= AddBossDeathPoints;
             OnBossDeath -= BossSpawner.Instance.DisableColliders;
+            OnBossDeath -= GameManager.Instance.ShowGameOverScreen;
         }
 
         public override void AddLife(float amount)
@@ -69,8 +72,7 @@ namespace Units
 
         private void UpdateHealthBar()
         {
-            Material healthBarMaterial = Healthbar.GetComponent<Image>()?.material;
-            healthBarMaterial!.SetFloat("_Life", Life / InitialLife);
+            Healthbar.SetFloat("_Life", Life / InitialLife);
         }
     
         private IEnumerator Invincibility()

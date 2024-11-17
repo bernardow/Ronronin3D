@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Units
@@ -28,8 +29,16 @@ namespace Units
             Life = InitialLife;
             CanTakeDamage = true;
             IsAlive = true;
-            gameObject.SetActive(true);
-            transform.position = awakePosition;
+
+            MinionsStateMachine stateMachine = GetComponentInParent<MinionsStateMachine>();
+            if ( stateMachine != null)
+                stateMachine.transform.position = awakePosition;
+
+            JumpAttack jumpAttack = GetComponentInParent<JumpAttack>();
+            if (jumpAttack != null)
+            {
+                jumpAttack.ManageColliders(true);
+            }
         }
 
         public virtual void AddLife(float amount)
@@ -57,11 +66,18 @@ namespace Units
         
         public void Kill()
         {
+            if (gameObject.CompareTag("Boss"))
+            {
+                Destroy(gameObject.transform.parent.parent.gameObject);
+                return;
+            }
+            
             if (!gameObject.CompareTag("Player"))
                 PlayerStamina.Instance.AddStamina();
             IsAlive = false;
             CanTakeDamage = false;
-            gameObject.SetActive(false);
+            if (GetComponentInParent<MinionsStateMachine>(true) != null)
+                GetComponentInParent<MinionsStateMachine>(true).gameObject.SetActive(false);
         }
 
         public void RemoveBossLife(int amount) => RemoveLife(amount);

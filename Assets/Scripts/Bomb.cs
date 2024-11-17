@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Units.Player;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 public class Bomb : MonoBehaviour
 {
+    [SerializeField] private float damage = 15;
+    
     private Renderer renderer;
     private SphereCollider collider;
     private Rigidbody rigidbody;
@@ -52,7 +55,10 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Player")) return;
+        if (collision.collider.CompareTag("Player"))
+        {
+            Player.Instance.PlayerHealth.RemoveLife(damage);
+        }
 
         StartCoroutine(Explode());
     }

@@ -14,6 +14,8 @@ public class JumpAttack : MonoBehaviour, IAttack, IObserver
     private Collider collider;
     private Rigidbody rigidbody;
 
+    private Vector3 initialLocalPosition;
+    
     public bool FinishedAttack { get; private set; }
     
     private void Awake()
@@ -21,11 +23,14 @@ public class JumpAttack : MonoBehaviour, IAttack, IObserver
         animator = GetComponentInChildren<Animator>();
         collider = GetComponentInChildren<Collider>();
         rigidbody = transform.GetComponentInChildren<Rigidbody>();
+        initialLocalPosition = collider.transform.localPosition;
+        animator.enabled = false;
     }
 
     public void Attack()
     {
         FinishedAttack = false;
+        animator.enabled = true;
         animator.SetTrigger(ATTACK_ANIMATION_ID);
     }
 
@@ -38,6 +43,7 @@ public class JumpAttack : MonoBehaviour, IAttack, IObserver
     {
         rigidbody.isKinematic = !enable;
         collider.enabled = enable;
+        collider.transform.localPosition = initialLocalPosition;
     }
     
     private IEnumerator JumpCoroutine()
@@ -56,6 +62,9 @@ public class JumpAttack : MonoBehaviour, IAttack, IObserver
         }
 
         FinishedAttack = true;
+
+        yield return new WaitForSeconds(1.5f);
+        animator.enabled = false;
     }
 
     public void OnNotify()

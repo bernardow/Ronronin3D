@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public BaseUnit[] EnemiesInRoom;
+    public MinionsStateMachine[] EnemiesInRoom;
     public Entry[] Entries;
 
 #if UNITY_EDITOR
@@ -32,7 +32,9 @@ public class Room : MonoBehaviour
         
         for (int i = 0; i < EnemiesInRoom.Length; i++)
         {
-            EnemiesInRoom[i].Spawn();
+            EnemiesInRoom[i].gameObject.SetActive(true);
+            EnemiesInRoom[i].GetComponentInChildren<BaseUnit>(true).Spawn();
+
         }
     }
 
@@ -42,7 +44,8 @@ public class Room : MonoBehaviour
         
         for (int i = 0; i < EnemiesInRoom.Length; i++)
         {
-            EnemiesInRoom[i].Kill();
+            EnemiesInRoom[i].gameObject.SetActive(false);
+            EnemiesInRoom[i].GetComponentInChildren<BaseUnit>(true).Kill();
         }
     }
 

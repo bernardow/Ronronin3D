@@ -8,12 +8,15 @@ public class PlayerStamina : MonoBehaviour
     public static PlayerStamina Instance;
     public float Stamina = 100;
     [SerializeField] private float baseStaminaGain = 15;
+    [SerializeField] private Material staminaMaterial;
     
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else Destroy(gameObject);
+        
+        staminaMaterial.SetFloat("_Life", 1);
     }
 
 #if UNITY_EDITOR
@@ -28,7 +31,13 @@ public class PlayerStamina : MonoBehaviour
     {
         float currentAmount = amount == 0 ? baseStaminaGain : amount;
         Stamina = Mathf.Min(Stamina + currentAmount, 100);
+        
+        staminaMaterial.SetFloat("_Life", Stamina / 100);
     }
 
-    public void RemoveStamina(float amount) => Stamina = Mathf.Max(Stamina - amount, 0);
+    public void RemoveStamina(float amount)
+    {
+        Stamina = Mathf.Max(Stamina - amount, 0);
+        staminaMaterial.SetFloat("_Life", Stamina / 100);
+    }
 }

@@ -19,7 +19,10 @@ namespace Units.Player
         public Collider PlayerCollider { get; private set; }
         public PlayerBasicAttack PlayerBasicAttack { get; private set; }
         public KunaiAttack PlayerKunaiAttack { get; private set; }
-
+        public PlayerStamina PlayerStamina { get; private set; }
+        public BlackHoleAttack BlackHoleAttack { get; private set; }
+        public SunAttack SunAttack { get; private set; }
+        
         private UpgradeManager _upgradeManager;
 
         public static Player Instance;
@@ -46,14 +49,15 @@ namespace Units.Player
             PlayerCollider = GetComponent<Collider>();
             PlayerBasicAttack = GetComponent<PlayerBasicAttack>();
             PlayerKunaiAttack = GetComponent<KunaiAttack>();
+            SunAttack = GetComponent<SunAttack>();
+            BlackHoleAttack = GetComponent<BlackHoleAttack>();
+            PlayerStamina = GetComponent<PlayerStamina>();
 
             if (_inLobby) return;
 
             _upgradeManager = GameObject.FindWithTag("Upgrade").GetComponent<UpgradeManager>();
             _upgradeManager.Initialize(this);
-
-            PlayerHealth.Healthbar = GameObject.FindWithTag("Healthbar");
-
+            
             GameObject boss = FindObjectOfType<Funghy.Funghy>(true).gameObject;//GameObject.FindWithTag("Boss");
             if (boss != null)
             {

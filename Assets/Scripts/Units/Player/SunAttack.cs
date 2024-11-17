@@ -12,6 +12,8 @@ public class SunAttack : MonoBehaviour
     [SerializeField] private float staminaCost = 65;
     private Camera mainCamera;
 
+    public bool Unlocked;
+    
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -29,6 +31,8 @@ public class SunAttack : MonoBehaviour
 
     private void ShootSun()
     {
+        if (!Unlocked) return;
+        
         if (PlayerStamina.Instance.Stamina < staminaCost) return;
         
         PlayerStamina.Instance.RemoveStamina(staminaCost);
