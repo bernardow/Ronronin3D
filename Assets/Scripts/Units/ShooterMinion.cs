@@ -10,7 +10,7 @@ using Utilities;
 public class ShooterMinion : MonoBehaviour, IAttack, IObserver
 {
     public GameObject Bomb;
-    
+    [SerializeField] private Transform spawnPoint;
     private Transform Transform;
 
     private void Awake()
@@ -18,12 +18,18 @@ public class ShooterMinion : MonoBehaviour, IAttack, IObserver
         Transform = transform;
     }
 
+    private void Update()
+    {   
+        if (gameObject.CompareTag("Boss")) return;
+        Transform.LookAt(Player.Instance.transform);
+    }
+
     public bool FinishedAttack { get; private set; }
     
     private IEnumerator ShooterLogic(Vector3 spawnPosition = new Vector3())
     {
-        Vector3 myPosition = spawnPosition == new Vector3()? Transform.position : spawnPosition;
-        
+        Vector3 myPosition = spawnPosition == new Vector3()? spawnPoint.position : spawnPosition;
+
         for (int i = 0; i < 3; i++)
         {
             Transform bombTransform = Instantiate(Bomb, myPosition, Quaternion.identity).GetComponent<Transform>();
@@ -64,9 +70,9 @@ public class ShooterMinion : MonoBehaviour, IAttack, IObserver
 
     public IEnumerator Run()
     {
-        Transform = GetComponentInChildren<MeshRenderer>().transform;
-        yield return ShooterLogic(transform.position);
-        yield return ShooterLogic(transform.position);
+        Transform = GetComponentInChildren<Renderer>().transform;
+        yield return ShooterLogic();
+        yield return ShooterLogic();
     }
 
     public void Disable()

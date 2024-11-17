@@ -12,6 +12,9 @@ namespace Units.Player
         
         public float PlayerSpeed = 100;
         [SerializeField] private bool _rigidbody;
+        public Transform SkateTransform;
+        public Transform BodyTransform;
+        
         private bool _canMove = true;
         private Player _player;
         public CharacterController CharacterController;
@@ -27,13 +30,14 @@ namespace Units.Player
 
         private void Update()
         {
-            Vector3 bossPosition = Helpers.GetBossPosition();
-            Vector3 lookPosition =
-                new Vector3(bossPosition.x, 0, bossPosition.z) - _player.PlayerTransform.localPosition;
-            //_player.PlayerTransform.localRotation = Quaternion.LookRotation(lookPosition);
-             CharacterController characterController = new CharacterController();
-             
              Move();
+
+
+             if (_player.PlayerInputs.SecondatyJoystickDirectionAligned == Vector3.zero)
+                 BodyTransform.rotation = Quaternion.LookRotation(Vector3.up, -SkateTransform.up);
+             else
+                 BodyTransform.rotation = Quaternion.LookRotation(Vector3.up, -_player.PlayerInputs.SecondatyJoystickDirectionAligned);
+
         }
          
         // /void FixedUpdate() => Move();
@@ -46,6 +50,8 @@ namespace Units.Player
                 Vector3 cameraUp = Camera.main.transform.up * _player.PlayerInputs.Vertical;
                 Vector3 directionToMove = (cameraRight + cameraUp) * PlayerSpeed;
                 directionToMove.y = 0.5f;
+                SkateTransform.rotation = Quaternion.LookRotation(Vector3.up, directionToMove);
+                
                 CharacterController.SimpleMove(directionToMove);
                 //_player.PlayerTransform.position += _player.PlayerInputs.MovementDirection * PlayerSpeed * Time.deltaTime;
                 return;

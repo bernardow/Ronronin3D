@@ -19,8 +19,8 @@ public class JumpAttack : MonoBehaviour, IAttack, IObserver
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        collider = GetComponent<Collider>();
-        rigidbody = GetComponent<Rigidbody>();
+        collider = GetComponentInChildren<Collider>();
+        rigidbody = transform.GetComponentInChildren<Rigidbody>();
     }
 
     public void Attack()

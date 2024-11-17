@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace Units.Funghy
         {
             FungiTransform = transform;
             FungyRigidbody = GetComponent<Rigidbody>();
-            FunghyHealth = GetComponent<SpecialUnit>();
+            FunghyHealth = GetComponentInChildren<SpecialUnit>();
             _observableObject = new ObservableObject();
             _spores = GetComponent<Spores>();
             _fungiDash = GetComponent<FungiDash>();
@@ -62,6 +63,19 @@ namespace Units.Funghy
             RunStateMachine();
 
             FunghyHealth.Healthbar = GameObject.FindWithTag("BossHealthbar");
+        }
+
+        private void Update()
+        {
+            if (!FungiUltimate.ShootLaser)
+                transform.LookAt(Player.Player.Instance.PlayerTransform);
+            else
+            {
+                Quaternion currentRotation = transform.rotation;
+                currentRotation.x = 0;
+                currentRotation.z = 0;
+                transform.rotation = currentRotation;
+            }
         }
 
         private IEnumerator FungiStateMachine()
@@ -122,7 +136,7 @@ namespace Units.Funghy
         #region IBoss
         public void RunStateMachine()
         {
-            ManageIdleMovement();
+            //ManageIdleMovement();
             StartCoroutine(FungiStateMachine());
         }
 

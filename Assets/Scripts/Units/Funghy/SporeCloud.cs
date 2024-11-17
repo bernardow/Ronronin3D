@@ -34,7 +34,7 @@ namespace Units.Funghy
 
         public IEnumerator Run()
         {
-            _funghy.ManageIdleMovement(false);
+            //_funghy.ManageIdleMovement(false);
             _sporeCloud.localScale = Vector3.one / 2;
             SporeState(true);
             yield return new WaitForSeconds(_duration);

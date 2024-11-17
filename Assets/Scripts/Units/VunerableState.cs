@@ -12,7 +12,7 @@ namespace Units
 
         private void Awake()
         {
-            _boss = GameObject.FindWithTag("Boss").GetComponent<IBoss>();
+            _boss = GetComponent<IBoss>();
             _baseUnit = GetComponent<SpecialUnit>();
         }
 

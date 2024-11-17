@@ -10,6 +10,7 @@ using Utilities;
 public class ShootSpores : MonoBehaviour, IAttack, IObserver
 {
     [SerializeField] private GameObject sporePrefab;
+    [SerializeField] private Transform spawnPoint;
     [SerializeField] private float sporeForce = 3;
     
     public bool FinishedAttack { get; private set; }
@@ -19,9 +20,9 @@ public class ShootSpores : MonoBehaviour, IAttack, IObserver
         SpawnSpores();
     }
 
-#if UNITY_EDITOR
     private void Update()
     {
+#if UNITY_EDITOR
         Vector3 myPosition = transform.position;
         Vector3 playerPosition = Player.Instance.PlayerTransform.position;
         Vector3 playerRight = Vector3.Cross(playerPosition - myPosition, Vector3.up) + playerPosition;
@@ -30,8 +31,10 @@ public class ShootSpores : MonoBehaviour, IAttack, IObserver
         Debug.DrawLine(playerPosition, myPosition, Color.blue);
         Debug.DrawLine(playerLeft, myPosition, Color.red);
         Debug.DrawLine(playerRight, myPosition, Color.green);
-    }
 #endif
+        if (gameObject.CompareTag("Boss")) return;
+        transform.LookAt(Player.Instance.PlayerTransform);
+    }
     
     private void SpawnSpores()
     {
@@ -47,7 +50,7 @@ public class ShootSpores : MonoBehaviour, IAttack, IObserver
 
     private void SpawnSpore(Vector3 direction, Vector3 origin = new Vector3())
     {
-        Vector3 spawnPoint = origin == new Vector3() ? transform.position : origin;
+        Vector3 spawnPoint = origin == new Vector3() ? this.spawnPoint.position : origin;
         Rigidbody spore = Instantiate(sporePrefab, spawnPoint, quaternion.identity).GetComponent<Rigidbody>();
         spore.AddForce(direction.normalized * sporeForce, ForceMode.Impulse);
     }

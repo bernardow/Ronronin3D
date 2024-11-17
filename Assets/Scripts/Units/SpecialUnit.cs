@@ -75,11 +75,11 @@ namespace Units
     
         private IEnumerator Invincibility()
         {
-            Material blinkMat = GetComponent<MeshRenderer>().sharedMaterial;
-            blinkMat!.SetInt("_Blink", 1);
+            //Material blinkMat = GetComponent<MeshRenderer>().sharedMaterial;
+            //blinkMat!.SetInt("_Blink", 1);
             CanTakeDamage = false;
             yield return new WaitForSeconds(1f);
-            blinkMat!.SetInt("_Blink", 0);
+            //blinkMat!.SetInt("_Blink", 0);
             CanTakeDamage = true;
         }
 

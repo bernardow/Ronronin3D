@@ -75,7 +75,7 @@ namespace Units.Funghy
         {
             if (_funghy == null)
                 _funghy = GetComponent<Funghy>();
-            _funghy.ManageIdleMovement(false);
+            //_funghy.ManageIdleMovement(false);
             _isDashing = false;
             yield return new WaitForSeconds(2);
             _funghy.FungyRigidbody.AddForce(_direction * _dashForce * 0.5f, ForceMode.Impulse);

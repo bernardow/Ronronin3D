@@ -6,7 +6,6 @@ namespace Units.Player
 {
     public class Player : MonoBehaviour
     {
-        public PlayerAttack PlayerAttack { get; private set; }
         public SpecialUnit PlayerHealth { get; private set; }
         public PlayerMovement PlayerMovement { get; private set; }
         
@@ -37,7 +36,6 @@ namespace Units.Player
                 Instance = this;
 
             mainCamera = Camera.main;
-            PlayerAttack = GetComponent<PlayerAttack>();
             PlayerHealth = GetComponent<SpecialUnit>();
             PlayerMovement = GetComponent<PlayerMovement>();
             PlayerTransform = transform;
@@ -81,19 +79,18 @@ namespace Units.Player
 
         private void TakeDamage(object sender, OnCollisionArgs args)
         {
-            if(!PlayerAttack.IsSlashing && !PlayerDash.IsDashing)
+            if(!PlayerDash.IsDashing)
                 PlayerHealth.RemoveLife(args.Collider.Damage);
         }
         
         private void TakeDamage(object sender, OnUltimateArgs args)
         {
-            if(!PlayerAttack.IsSlashing && !PlayerDash.IsDashing)
+            if(!PlayerDash.IsDashing)
                 PlayerHealth.RemoveLife(args.Damage);
         }
 
         private void DisablePlayer()
         {
-            PlayerAttack.enabled = false;
             PlayerHealth.enabled = false;
             PlayerMovement.enabled = false;
             PlayerInputs.enabled = false;

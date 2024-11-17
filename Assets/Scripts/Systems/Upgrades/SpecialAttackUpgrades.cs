@@ -15,26 +15,26 @@ namespace Systems.Upgrades
 
         public void SetUpgradeData()
         {
-            if (_player.PlayerAttack == null) return;
-
-            /*
-             * Temporary
-             */
-            int level = 3;
-            switch (level)
-            {
-                case 1: _player.PlayerAttack.AttackDamage = 100;
-                    break;
-                case 2: _player.PlayerAttack.SpecialCoolDownTimer = 25;
-                    break;
-                case 3: _player.PlayerAttack.SpecialCoolDownTimer = 20;
-                    break;
-                case 4: _player.PlayerAttack.AttackDamage = 150;
-                    break;
-                default: _player.PlayerAttack.AttackDamage = 50;
-                    _player.PlayerAttack.SpecialCoolDownTimer = 30;
-                    break;
-            }
+            // if (_player.PlayerAttack == null) return;
+            //
+            // /*
+            //  * Temporary
+            //  */
+            // int level = 3;
+            // switch (level)
+            // {
+            //     case 1: _player.PlayerAttack.AttackDamage = 100;
+            //         break;
+            //     case 2: _player.PlayerAttack.SpecialCoolDownTimer = 25;
+            //         break;
+            //     case 3: _player.PlayerAttack.SpecialCoolDownTimer = 20;
+            //         break;
+            //     case 4: _player.PlayerAttack.AttackDamage = 150;
+            //         break;
+            //     default: _player.PlayerAttack.AttackDamage = 50;
+            //         _player.PlayerAttack.SpecialCoolDownTimer = 30;
+            //         break;
+            // }
         }
         public void SetPlayer(Player player) => _player = player;
     }

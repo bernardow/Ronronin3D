@@ -8,6 +8,7 @@ using UnityEngine;
 public class BlackHoleAttack : MonoBehaviour
 {
     [SerializeField] private GameObject blackHolePrefab;
+    [SerializeField] private Transform spawnPosition;
     [SerializeField] private float shootForce;
     [SerializeField] private float staminaCost = 75;
     
@@ -29,7 +30,7 @@ public class BlackHoleAttack : MonoBehaviour
         if (PlayerStamina.Instance.Stamina < staminaCost) return;
         
         PlayerStamina.Instance.RemoveStamina(staminaCost);
-        Rigidbody blackHole = Instantiate(blackHolePrefab, transform.position, quaternion.identity).GetComponent<Rigidbody>();
+        Rigidbody blackHole = Instantiate(blackHolePrefab, spawnPosition.position, quaternion.identity).GetComponent<Rigidbody>();
         blackHole.transform.SetParent(transform.parent);
         Vector3 direction = Player.Instance.PlayerInputs.SecondatyJoystickDirectionAligned;
         direction = direction == Vector3.zero ? Player.Instance.transform.forward : direction;

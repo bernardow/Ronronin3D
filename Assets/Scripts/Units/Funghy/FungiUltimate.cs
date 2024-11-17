@@ -14,7 +14,7 @@ public class FungiUltimate : MonoBehaviour, IObserver
 
     public Transform _fungiCenter;
     
-    private bool _shootLaser;
+    public bool ShootLaser;
     private Funghy _funghy;
     public LaserAttack LaserAttack;
     
@@ -26,7 +26,7 @@ public class FungiUltimate : MonoBehaviour, IObserver
     // Update is called once per frame
     void Update()
     {
-        if (_shootLaser)
+        if (ShootLaser)
         {
             RotateCenter();
             Vector3 forward = _fungiCenter.forward;
@@ -52,19 +52,19 @@ public class FungiUltimate : MonoBehaviour, IObserver
         Debug.Log("Casting Ultimate");
         if (_funghy == null)
             _funghy = GetComponent<Funghy>();
-        _funghy.ManageIdleMovement(false);
+        //_funghy.ManageIdleMovement(false);
         yield return new WaitForSeconds(_castingTimer);
         CanTurnVulnerable = false;
         StartCoroutine(StartUltimate(_ultimateDuration));
         yield return new WaitForSeconds(_ultimateDuration);
+        ShootLaser = false;
     }
 
     private IEnumerator StartUltimate(float timer)
     {
-        _shootLaser = true;
+        ShootLaser = true;
         yield return new WaitForSeconds(timer * 0.33f);
         yield return StartCoroutine(LaserAttack.LaserBehaviour(timer));
-        _shootLaser = false;
     }
 
     public void RotateCenter() => _fungiCenter.Rotate(Vector3.up, _rotationAnglesPerTime * Time.deltaTime);
@@ -82,7 +82,7 @@ public class FungiUltimate : MonoBehaviour, IObserver
     public void Disable()
     {
         enabled = false;
-        _shootLaser = false;
+        ShootLaser = false;
         StopAllCoroutines();
     }
 
